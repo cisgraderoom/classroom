@@ -7,7 +7,7 @@ build_app:
    image: node:alpine
    stage: build
    only:
-      - master
+      - main
    script:
       - npm install
       - npm run build
