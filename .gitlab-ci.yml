@@ -1,10 +1,14 @@
-image: build
-services:
-  - docker:dind
-stages:
-  - deploy
-step-deploy-prod:
+pages: # the job must be named pages
+  image: node:latest
   stage: deploy
   script:
-    - docker build -t app/classroom .
-    - docker run -d -p 80:80 --rm --name classroom app/classroom
+    - npm ci
+    - npm run build
+    - mv public public-vue # GitLab Pages hooks on the public folder
+    - mv dist public 
+    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
