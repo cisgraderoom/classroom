@@ -40,9 +40,12 @@
 </template>
 
 <script>
+// import { logger } from "@cisclassroom/logger";
 export default {
   name: "App",
-
+  mounted() {
+    // logger.info("app mouted");
+  },
   data: () => ({
     //
   }),
