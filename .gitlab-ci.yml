@@ -1,7 +1,7 @@
 stages:
-  - deploy_production
+  - deploy
 
-deploy_production:
+deploy:
   image: node:latest
   stage: deploy
   environment: Production
