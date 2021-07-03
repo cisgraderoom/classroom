@@ -9,12 +9,12 @@ cache:
     - node_modules/
     
 stages:
-  - deploy
+  - develop
   
-deploy:
-  stage: deploy
+develop:
+  stage: develop
   only:
-    - main
+    - develop
   script:
     - npm run build
-    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_DEV_KEY
