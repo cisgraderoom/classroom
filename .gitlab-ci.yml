@@ -9,10 +9,10 @@ cache:
     - node_modules/
     
 stages:
-  - build
+  - deploy
   
-build:
-  stage: build
+deploy:
+  stage: deploy
   only:
     - main
   script:
