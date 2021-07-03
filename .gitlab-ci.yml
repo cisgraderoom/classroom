@@ -6,7 +6,7 @@ pages:
     - yarn build
     - rm -rf public
     - mkdir public
-    - cp -r dist/* public
+    - mv dist public
   artifacts:
     paths:
       - public
