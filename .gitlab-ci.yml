@@ -1,3 +1,6 @@
+stages:
+  - deploy_production
+
 deploy_production:
   image: node:latest
   stage: deploy
