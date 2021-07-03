@@ -44,7 +44,7 @@
 export default {
   name: "App",
   mounted() {
-    // logger.info("app mouted");
+    // logger.fail("Fail")
   },
   data: () => ({
     //
