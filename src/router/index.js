@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Index from "../views/Index.vue";
+import Account from "../views/Account.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/Index",
     name: "Index",
     component: Index,
+  },
+  {
+    path: "/Account",
+    name: "Account",
+    component: Account,
   },
 ];
 

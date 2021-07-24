@@ -1,13 +1,15 @@
 <template>
   <div>
-    <v-container class="container">
+    <div class="container">
       <v-form>
         <v-row>
           <v-col
             md="6"
             offset-md="3"
-            class="px-12 py-16 rounded-lg shadow-lg white"
+            class="px-12 py-16 rounded-lg white"
             elevation="12"
+            xl="4"
+            offset-xl="4"
           >
             <v-img
               alt="CISClassroom Logo"
@@ -19,7 +21,7 @@
             />
             <v-text-field
               v-model="username"
-              label="๊Username"
+              label="Username"
               required
             ></v-text-field>
             <v-text-field
@@ -35,7 +37,7 @@
           </v-col>
         </v-row>
       </v-form>
-    </v-container>
+    </div>
   </div>
 </template>
 
