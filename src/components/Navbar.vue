@@ -3,7 +3,7 @@
     <div class="d-flex align-center">
       <v-img
         alt="CISClassroom Logo"
-        class="shrink mr-2"
+        class="shrink mr-2 ml-2"
         contain
         src="../assets/ciskmutnb.png"
         transition="scale-transition"
@@ -13,20 +13,35 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
-      target="_blank"
-      text
-    >
-      <span class="mr-2">Latest Release</span>
-      <v-icon>mdi-open-in-new</v-icon>
-    </v-btn>
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn icon v-bind="attrs" v-on="on">
+          <v-icon large>mdi-account-circle</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          link
+          v-for="(link, index) in link"
+          :key="index"
+          :to="link.route"
+        >
+          <v-list-item-title>{{ link.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
   </v-app-bar>
 </template>
 
 <script>
 export default {
   name: "Navbar",
+  data: () => ({
+    link: [
+      { title: "Account", route: "/Account" },
+      { title: "Logout", route: "/" },
+    ],
+  }),
 };
 </script>
 
