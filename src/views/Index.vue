@@ -9,23 +9,19 @@
         </v-col>
       </v-row>
       <v-row class="mt-0 mb-10">
-        <v-col md="3" elevation="12" xl="2">
-          <Classcard />
-        </v-col>
-        <v-col md="3" elevation="12" xl="2">
-          <Classcard />
-        </v-col>
-        <v-col md="3" elevation="12" xl="2">
-          <Classcard />
-        </v-col>
-        <v-col md="3" elevation="12" xl="2">
-          <Classcard />
-        </v-col>
-        <v-col md="3" elevation="12" xl="2">
-          <Classcard />
-        </v-col>
-        <v-col md="3" elevation="12" xl="2">
-          <Classcard />
+        <v-col
+          md="3"
+          elevation="12"
+          xl="2"
+          v-for="(classroom, index) in classroom"
+          :key="index"
+        >
+          <Classcard
+            :title="classroom.title"
+            :section="classroom.section"
+            :teacher="classroom.teacher"
+            :path="classroom.path"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -45,5 +41,13 @@ export default {
     Addclassroom,
     Joinclassroom,
   },
+  data: () => ({
+    classroom: [
+      { title: "CS1", section: "1", teacher: "a", path: "/" },
+      { title: "CS2", section: "2", teacher: "b", path: "/" },
+      { title: "CS3", section: "3", teacher: "c", path: "/" },
+      { title: "CS4", section: "4", teacher: "d", path: "/" },
+    ],
+  }),
 };
 </script>

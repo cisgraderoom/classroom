@@ -2,7 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Index from "../views/Index.vue";
-import Account from "../views/Account.vue";
+import Editaccount from "../views/Editaccount.vue";
+import Classroom from "../views/Classroom/Classroom.vue";
+import Allproblem from "../views/Classroom/Allproblem.vue";
+import Problem from "../views/Classroom/Problem.vue";
 
 Vue.use(VueRouter);
 
@@ -18,9 +21,24 @@ const routes = [
     component: Index,
   },
   {
-    path: "/Account",
-    name: "Account",
-    component: Account,
+    path: "/Editaccount",
+    name: "Editaccount",
+    component: Editaccount,
+  },
+  {
+    path: "/Classroom",
+    name: "Classroom",
+    component: Classroom,
+  },
+  {
+    path: "/Classroom/Allproblem",
+    name: "Allproblem",
+    component: Allproblem,
+  },
+  {
+    path: "/Classroom/Problem",
+    name: "Problem",
+    component: Problem,
   },
 ];
 
