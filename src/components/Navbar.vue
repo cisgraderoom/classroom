@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="#FFFFFF">
-    <div class="d-flex align-center">
+    <div class="d-flex align-center" to="/Index">
       <v-img
         alt="CISClassroom Logo"
         class="shrink mr-2 ml-2"
@@ -10,7 +10,6 @@
         width="45"
       />
     </div>
-
     <v-spacer></v-spacer>
 
     <v-menu offset-y>
@@ -38,7 +37,7 @@ export default {
   name: "Navbar",
   data: () => ({
     link: [
-      { title: "Account", route: "/Account" },
+      { title: "Account", route: "/editaccount" },
       { title: "Logout", route: "/" },
     ],
   }),

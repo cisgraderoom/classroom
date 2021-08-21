@@ -45,7 +45,7 @@
 <script>
 import Navbar from "../components/Navbar";
 export default {
-  name: "Account",
+  name: "Editaccount",
   components: {
     Navbar,
   },
