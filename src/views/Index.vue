@@ -43,10 +43,10 @@ export default {
   },
   data: () => ({
     classroom: [
-      { title: "CS1", section: "1", teacher: "a", path: "/" },
-      { title: "CS2", section: "2", teacher: "b", path: "/" },
-      { title: "CS3", section: "3", teacher: "c", path: "/" },
-      { title: "CS4", section: "4", teacher: "d", path: "/" },
+      { title: "CS1", section: "1", teacher: "a", path: "/classroom" },
+      { title: "CS2", section: "2", teacher: "b", path: "/classroom" },
+      { title: "CS3", section: "3", teacher: "c", path: "/classroom" },
+      { title: "CS4", section: "4", teacher: "d", path: "/classroom" },
     ],
   }),
 };

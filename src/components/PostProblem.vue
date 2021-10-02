@@ -4,7 +4,7 @@
       class="px-7 py-7 rounded white mb-5"
       :class="{ 'on-hover': hover }"
       :elevation="hover ? 5 : 2"
-      to="/Classroom/Problem"
+      :to="{ path }"
     >
       <v-row align="center">
         <v-col md="1">
@@ -28,7 +28,7 @@
 <script>
 export default {
   name: "PostProblem",
-  props: ["problemid", "problemtext", "who", "date"],
+  props: ["problemid", "problemtext", "who", "date", "path"],
   data: () => ({}),
 };
 </script>
