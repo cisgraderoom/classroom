@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app color="#FFFFFF">
-    <div class="d-flex align-center" to="/Index">
+    <!-- <div class="d-flex align-center" to="/Index">
       <v-img
         alt="CISClassroom Logo"
         class="shrink mr-2 ml-2"
@@ -9,7 +9,17 @@
         transition="scale-transition"
         width="45"
       />
-    </div>
+    </div> -->
+    <v-btn icon v-bind="attrs" v-on="on" plain to="/index">
+      <v-img
+        alt="CISClassroom Logo"
+        class="shrink mr-2 ml-2"
+        contain
+        src="../assets/ciskmutnb.png"
+        transition="scale-transition"
+        width="45"
+      />
+    </v-btn>
     <v-spacer></v-spacer>
 
     <v-menu offset-y>

@@ -16,27 +16,37 @@ const routes = [
     component: Login,
   },
   {
-    path: "/Index",
+    path: "/index",
     name: "Index",
     component: Index,
   },
   {
-    path: "/Editaccount",
+    path: "/editaccount",
     name: "Editaccount",
     component: Editaccount,
   },
+  // {
+  //   path: "/classroom",
+  //   name: "Classroom",
+  //   component: Classroom,
+  // },
   {
-    path: "/Classroom",
-    name: "Classroom",
+    path: "/classroom/:code",
+    name: "Classroomcode",
     component: Classroom,
   },
+  // {
+  //   path: "/classroom/allproblem",
+  //   name: "Allproblem",
+  //   component: Allproblem,
+  // },
   {
-    path: "/Classroom/Allproblem",
+    path: "/classroom/:code/allproblem",
     name: "Allproblem",
     component: Allproblem,
   },
   {
-    path: "/Classroom/Problem",
+    path: "/classroom/problem",
     name: "Problem",
     component: Problem,
   },
