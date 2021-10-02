@@ -9,6 +9,11 @@
             <caption>
               Section
             </caption>
+            <caption>
+              {{
+                $route.params.code
+              }}
+            </caption>
             <br />
             <caption>
               Nametecher
