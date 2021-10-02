@@ -18,11 +18,15 @@
       </v-row>
       <v-row>
         <v-col md="10" offset-md="1" elevation="12" xl="6" offset-xl="3">
-          <v-btn to="/classroom" elevation="2" color="primary" class="mr-1"
+          <v-btn
+            :to="`/classroom/${$route.params.code}/`"
+            elevation="2"
+            color="primary"
+            class="mr-1"
             >All post</v-btn
           >
           <v-btn
-            to="/classroom/allproblem"
+            :to="`/classroom/${$route.params.code}/allproblem`"
             elevation="2"
             color="primary"
             disabled
@@ -42,7 +46,7 @@
             :problemtext="problem.problemtext"
             :who="problem.who"
             :date="problem.date"
-            :path="problem.path"
+            :path="`/classroom/${$route.params.code}/problem/${problem.problemid}`"
           />
         </v-col>
       </v-row>
@@ -67,7 +71,7 @@ export default {
           "กล่องปริศนาใบนี้บรรจุสิ่งต่าง ๆ ไว้มากมาย กล่องใบนี้จะมีอะไรบ้าง",
         who: "ธนภัทร์ อนุศาสน์อมรกุล",
         date: "01/01/2021",
-        path: "/classroom/problem",
+        path: "/problem/1",
       },
       {
         problemid: "2",
@@ -75,7 +79,7 @@ export default {
           "ครับ สำหรับท่านที่เดินผ่านไปผ่านมานะครับ วันนี้ เฉาก๊วยชากังราวของเรานะครับ ก็ได้มาบริการท่านพ่อแม่พี่น้องกันอีกแล้วครับ อากาศร้อนๆ อย่างนี้นะครับ สำหรับท่านที่เดินผ่านไปผ่านมา ลองมาแวะชิมเฉาก๊วยแท้ๆ กันก่อนนะครับ เฉาก๊วยชากังราวของเราเป็นที่รู้จักไปทั่ว",
         who: "เฉาก๊วยชากังราว",
         date: "01/01/2021",
-        path: "/classroom/problem",
+        path: "/problem/2",
       },
     ],
   }),

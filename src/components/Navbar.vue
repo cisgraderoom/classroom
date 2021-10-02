@@ -21,7 +21,9 @@
       />
     </v-btn>
     <v-spacer></v-spacer>
-
+    <v-btn icon v-bind="attrs" v-on="on" plain to="/notifiacation">
+      <v-icon>mdi-bell</v-icon>
+    </v-btn>
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">

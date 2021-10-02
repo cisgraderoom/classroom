@@ -32,7 +32,7 @@
               required
             ></v-text-field>
 
-            <v-btn router-link to="/Index" elevation="2" color="primary" block
+            <v-btn router-link to="/index" elevation="2" color="primary" block
               >Change Password</v-btn
             >
           </v-col>
