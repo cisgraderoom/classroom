@@ -18,25 +18,28 @@
       </v-row>
       <v-row>
         <v-col md="10" offset-md="1" elevation="12" xl="6" offset-xl="3">
-          <v-btn to="/Classroom" elevation="2" color="primary" class="mr-1"
+          <v-btn
+            :to="`/classroom/${$route.params.code}/`"
+            elevation="2"
+            color="primary"
+            class="mr-1"
             >All post</v-btn
           >
           <v-btn
-            to="/Classroom/Allproblem"
+            :to="`/classroom/${$route.params.code}/allproblem`"
             elevation="2"
             color="primary"
-            disabled
             >All problem</v-btn
           >
         </v-col>
       </v-row>
       <v-row>
         <v-col md="6" offset-md="3" elevation="12" xl="4" offset-xl="4">
-          <h1>All Problem</h1>
+          <h1>Problem</h1>
         </v-col>
       </v-row>
       <v-row v-for="(problem, index) in problem" :key="index"
-        ><v-col md="6" offset-md="3" xl="4" offset-xl="4" link to="/Classroom"
+        ><v-col md="6" offset-md="3" xl="4" offset-xl="4"
           ><Problemauto
             :problemid="problem.problemid"
             :problemtext="problem.problemtext"

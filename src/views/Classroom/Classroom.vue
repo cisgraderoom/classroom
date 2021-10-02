@@ -26,7 +26,10 @@
           <v-btn elevation="2" color="primary" class="mr-1" disabled
             >All post</v-btn
           >
-          <v-btn to="/classroom/allproblem" elevation="2" color="primary"
+          <v-btn
+            :to="`/classroom/${$route.params.code}/allproblem`"
+            elevation="2"
+            color="primary"
             >All problem</v-btn
           >
         </v-col>

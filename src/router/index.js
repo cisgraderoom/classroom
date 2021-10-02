@@ -25,28 +25,18 @@ const routes = [
     name: "Editaccount",
     component: Editaccount,
   },
-  // {
-  //   path: "/classroom",
-  //   name: "Classroom",
-  //   component: Classroom,
-  // },
   {
     path: "/classroom/:code",
     name: "Classroomcode",
     component: Classroom,
   },
-  // {
-  //   path: "/classroom/allproblem",
-  //   name: "Allproblem",
-  //   component: Allproblem,
-  // },
   {
     path: "/classroom/:code/allproblem",
     name: "Allproblem",
     component: Allproblem,
   },
   {
-    path: "/classroom/problem",
+    path: "/classroom/:code/problem/:problemid",
     name: "Problem",
     component: Problem,
   },
