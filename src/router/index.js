@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "../views/Login.vue";
-import Index from "../views/Index.vue";
-import Editaccount from "../views/Editaccount.vue";
-import Classroom from "../views/Classroom/Classroom.vue";
-import Allproblem from "../views/Classroom/Allproblem.vue";
-import Problem from "../views/Classroom/Problem.vue";
+import LoginPage from "../views/LoginPage.vue";
+import IndexPage from "../views/IndexPage.vue";
+import EditaccountPage from "../views/EditaccountPage.vue";
+import NotificationPage from "../views/NotificationPage.vue";
+import ClassroomPage from "../views/Classroom/ClassroomPage.vue";
+import AllproblemPage from "../views/Classroom/AllproblemPage.vue";
+import ProblemPage from "../views/Classroom/ProblemPage.vue";
 
 Vue.use(VueRouter);
 
@@ -13,32 +14,37 @@ const routes = [
   {
     path: "/",
     name: "Login",
-    component: Login,
+    component: LoginPage,
   },
   {
     path: "/index",
     name: "Index",
-    component: Index,
+    component: IndexPage,
   },
   {
     path: "/editaccount",
     name: "Editaccount",
-    component: Editaccount,
+    component: EditaccountPage,
+  },
+  {
+    path: "/notifiacation",
+    name: "Notifiacation",
+    component: NotificationPage,
   },
   {
     path: "/classroom/:code",
     name: "Classroomcode",
-    component: Classroom,
+    component: ClassroomPage,
   },
   {
     path: "/classroom/:code/allproblem",
     name: "Allproblem",
-    component: Allproblem,
+    component: AllproblemPage,
   },
   {
     path: "/classroom/:code/problem/:problemid",
     name: "Problem",
-    component: Problem,
+    component: ProblemPage,
   },
 ];
 
