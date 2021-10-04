@@ -10,23 +10,8 @@ cache:
     
 stages:
   - lint
-  - build
-  - deploy
 
 lint:
   stage: lint
   script:
     - npm run lint
-
-build:
-  stage: build
-  script:
-    - npm run build
-    
-deploy:
-  stage: deploy
-  only:
-    - main
-  script:
-    - npm run build
-    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
