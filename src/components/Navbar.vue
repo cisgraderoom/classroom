@@ -10,10 +10,10 @@
         width="45"
       />
     </div> -->
-    <v-btn icon v-bind="attrs" v-on="on" plain to="/index">
+    <v-btn icon v-bind="attrs" v-on="on" plain to="/index" class="ml-15">
       <v-img
         alt="CISClassroom Logo"
-        class="shrink mr-2 ml-2"
+        class="shrink"
         contain
         src="../assets/ciskmutnb.png"
         transition="scale-transition"
@@ -21,12 +21,12 @@
       />
     </v-btn>
     <v-spacer></v-spacer>
-    <v-btn icon v-bind="attrs" v-on="on" plain to="/notifiacation">
+    <v-btn hidden icon v-bind="attrs" v-on="on" plain to="/notifiacation">
       <v-icon>mdi-bell</v-icon>
     </v-btn>
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" v-on="on">
+        <v-btn icon v-bind="attrs" v-on="on" class="mr-15">
           <v-icon large>mdi-account-circle</v-icon>
         </v-btn>
       </template>
