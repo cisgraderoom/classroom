@@ -21,11 +21,13 @@
             />
             <v-text-field
               v-model="username"
+              :rules="usernameRules"
               label="Username"
               required
             ></v-text-field>
             <v-text-field
               v-model="password"
+              :rules="passwordRules"
               :type="show1 ? 'text' : 'password'"
               label="Password"
               required
@@ -36,6 +38,16 @@
             >
           </v-col>
         </v-row>
+        <v-row>
+          <v-col
+            ><p class="text-center">
+              ติดต่อสอบถามและแก้ปัญหาระบบ :
+              <a href="https://discord.gg/w9cvvB9yWv" target="_blank"
+                >Discord</a
+              >
+            </p>
+          </v-col>
+        </v-row>
       </v-form>
     </div>
   </div>
@@ -44,6 +56,13 @@
 <script>
 export default {
   name: "Login",
+  data: () => ({
+    valid: false,
+    username: "",
+    usernameRules: [(v) => !!v || "Username is required"],
+    password: "",
+    passwordRules: [(v) => !!v || "Password is required"],
+  }),
 };
 </script>
 

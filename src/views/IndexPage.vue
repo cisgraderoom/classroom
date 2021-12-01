@@ -4,7 +4,7 @@
     <v-container>
       <v-row>
         <v-col md="2" class="my-13"> <Joinclassroom /> </v-col>
-        <v-col md="2" class="my-13 mx-2">
+        <v-col hidden md="2" class="my-13 mx-2">
           <Addclassroom />
         </v-col>
       </v-row>
