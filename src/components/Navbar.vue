@@ -31,13 +31,11 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item
-          link
-          v-for="(link, index) in link"
-          :key="index"
-          :to="link.route"
-        >
-          <v-list-item-title>{{ link.title }}</v-list-item-title>
+        <v-list-item link to="/editaccount">
+          <v-list-item-title>Account</v-list-item-title>
+        </v-list-item>
+        <v-list-item link @click="logout">
+          <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -47,12 +45,13 @@
 <script>
 export default {
   name: "Navbar",
-  data: () => ({
-    link: [
-      { title: "Account", route: "/editaccount" },
-      { title: "Logout", route: "/" },
-    ],
-  }),
+  data: () => ({}),
+  methods: {
+    logout() {
+      this.$store.dispatch("authentication/logout");
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 

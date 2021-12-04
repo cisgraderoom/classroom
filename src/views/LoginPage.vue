@@ -32,8 +32,10 @@
               label="Password"
               required
             ></v-text-field>
-
-            <v-btn router-link to="/index" elevation="2" color="primary" block
+            <v-alert text type="error" v-show="loginfail == true"
+              >Username or password is incorrect</v-alert
+            >
+            <v-btn @click="handleSubmit" elevation="2" color="primary" block
               >login</v-btn
             >
           </v-col>
@@ -56,13 +58,37 @@
 <script>
 export default {
   name: "Login",
-  data: () => ({
-    valid: false,
-    username: "",
-    usernameRules: [(v) => !!v || "Username is required"],
-    password: "",
-    passwordRules: [(v) => !!v || "Password is required"],
-  }),
+  data() {
+    return {
+      username: "",
+      usernameRules: [(v) => !!v || "Username is required"],
+      password: "",
+      passwordRules: [(v) => !!v || "Password is required"],
+      submitted: false,
+      loginfail: false,
+    };
+  },
+  computed: {
+    loggingIn() {
+      return this.$store.state.authentication.status.loggingIn;
+    },
+  },
+  created() {
+    // reset login status
+    this.$store.dispatch("authentication/logout");
+  },
+  methods: {
+    handleSubmit() {
+      this.submitted = true;
+      const { username, password } = this;
+      const { dispatch } = this.$store;
+      if (username && password) {
+        dispatch("authentication/login", { username, password });
+      } else {
+        this.loginfail = true;
+      }
+    },
+  },
 };
 </script>
 

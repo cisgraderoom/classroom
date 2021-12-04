@@ -3,8 +3,14 @@
     <Navbar />
     <v-container>
       <v-row>
-        <v-col md="2" class="my-13"> <Joinclassroom /> </v-col>
-        <v-col hidden md="2" class="my-13 mx-2">
+        <v-col v-show="checkAddClassroom == 0" md="2" class="my-13">
+          <Joinclassroom />
+        </v-col>
+        <v-col
+          v-show="checkAddClassroom == 1 || checkAddClassroom == 2"
+          md="2"
+          class="my-13 mx-2"
+        >
           <Addclassroom />
         </v-col>
       </v-row>
@@ -41,7 +47,19 @@ export default {
     Addclassroom,
     Joinclassroom,
   },
+  computed: {
+    user() {
+      return this.$store.state.authentication.user;
+    },
+    users() {
+      return this.$store.state.users.all;
+    },
+  },
+  created() {
+    this.$store.dispatch("users/getAll");
+  },
   data: () => ({
+    checkAddClassroom: JSON.parse(localStorage.getItem("user")).role,
     classroom: [
       { title: "CS1", section: "1", teacher: "a", path: "/classroom/1" },
       { title: "CS2", section: "2", teacher: "b", path: "/classroom/2" },

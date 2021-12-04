@@ -1,4 +1,4 @@
 export const setting = {
-  backendURL: "http://api.cisgraderoom.xyz",
+  backendURL: "http://localhost:3000",
 };
 export default setting;

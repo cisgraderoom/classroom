@@ -15,24 +15,29 @@
             <h1>Edit Account</h1>
             <v-text-field
               v-model="oldpassword"
+              :rules="oldpasswordRules"
               :type="show1 ? 'text' : 'password'"
               label="Old password"
               required
             ></v-text-field>
             <v-text-field
               v-model="newpassword"
+              :rules="newpasswordRules"
               :type="show1 ? 'text' : 'password'"
               label="New password"
               required
             ></v-text-field>
             <v-text-field
               v-model="confirmpassword"
+              :rules="confirmpasswordRules"
               :type="show1 ? 'text' : 'password'"
               label="Confirm password"
               required
             ></v-text-field>
-
-            <v-btn router-link to="/index" elevation="2" color="primary" block
+            <v-alert text type="error" v-show="error == true">{{
+              errormessage
+            }}</v-alert>
+            <v-btn @click="handleSubmit" elevation="2" color="primary" block
               >Change Password</v-btn
             >
           </v-col>
@@ -48,6 +53,47 @@ export default {
   name: "Editaccount",
   components: {
     Navbar,
+  },
+  data() {
+    return {
+      oldpassword: "",
+      oldpasswordRules: [(v) => !!v || "Oldpassword is required"],
+      newpassword: "",
+      newpasswordRules: [(v) => !!v || "Newpassword is required"],
+      confirmpassword: "",
+      confirmpasswordRules: [(v) => !!v || "Confirmpassword is required"],
+      submitted: false,
+      error: false,
+      errormessage: "",
+    };
+  },
+
+  methods: {
+    handleSubmit() {
+      this.submitted = true;
+      const { oldpassword, newpassword, confirmpassword } = this;
+      if (oldpassword == "" && newpassword == "" && confirmpassword == "") {
+        this.errormessage = "Please enter your info";
+        return (this.error = true);
+      }
+      if (oldpassword == "") {
+        this.errormessage = "Please enter your Old password";
+        return (this.error = true);
+      }
+      if (newpassword == "" || confirmpassword == "") {
+        this.errormessage =
+          "Please enter your New password and Confirm password";
+        return (this.error = true);
+      }
+      if (newpassword !== confirmpassword) {
+        this.errormessage = "New password and Confirm password not match";
+        return (this.error = true);
+      }
+      const { dispatch } = this.$store;
+      if (oldpassword && newpassword == confirmpassword && newpassword != "") {
+        dispatch("authentication/changepassword", { oldpassword, newpassword });
+      }
+    },
   },
 };
 </script>
