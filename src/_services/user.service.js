@@ -41,6 +41,7 @@ function logout() {
 // }
 
 async function changepassword(oldpassword, newpassword) {
+  let response = {};
   const { data } = await httpClient
     .put(
       `/user/changepassword`,
@@ -51,14 +52,15 @@ async function changepassword(oldpassword, newpassword) {
       { headers: authHeader() }
     )
     .catch((err) => {
-      return null, err?.response?.data?.error;
+      response = err?.response?.data;
+      return response;
     });
-
   if (data?.status) {
+    response = data;
     alert("Password changed");
-    // location.reload(true);
+    location.reload(true);
   }
-  return data;
+  return response;
 }
 
 // function handleResponse(response) {

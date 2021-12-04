@@ -41,7 +41,11 @@
 export default {
   name: "Post",
   props: ["postid", "posttext", "who", "date"],
-  data: () => ({}),
+  data() {
+    return {
+      comment: "",
+    };
+  },
 };
 </script>
 

@@ -51,13 +51,12 @@ export default {
     user() {
       return this.$store.state.authentication.user;
     },
+
     users() {
       return this.$store.state.users.all;
     },
   },
-  created() {
-    this.$store.dispatch("users/getAll");
-  },
+
   data: () => ({
     checkAddClassroom: JSON.parse(localStorage.getItem("user")).role,
     classroom: [

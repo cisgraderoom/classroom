@@ -27,20 +27,15 @@ export const authentication = {
 
     changepassword({ commit }, { oldpassword, newpassword }) {
       commit("changepasswordRequest", { oldpassword, newpassword });
-      userService.changepassword(oldpassword, newpassword).then(
-        // (user) => {
-        //   // console.log(user);
-        //   commit("changepasswordSuccess", user);
-        // },
-        // (error) => {
-        //   console.log(error);
-        //   commit("changepasswordFailure", error);
-        //   dispatch("alert/error", error, { root: true });
-        // }
-        (data) => {
-          console.log(data);
-        }
-      );
+      commit("changepasswordLoading", true);
+      userService.changepassword(oldpassword, newpassword).then((response) => {
+        response?.status
+          ? commit("changepasswordSuccess")
+          : commit("changepasswordFailure", {
+              loading: false,
+              message: response.error,
+            });
+      });
     },
 
     logout({ commit }) {
@@ -66,16 +61,18 @@ export const authentication = {
       state.user = null;
     },
     changepasswordRequest(state, user) {
-      state.status = { loggingIn: true };
+      state.status = {};
       state.user = user;
     },
     changepasswordSuccess(state) {
-      state.status = { loggedIn: true };
-      state.user = user;
+      state.status = true;
     },
-    changepasswordFailure(state) {
-      state.status = { loggedIn: true };
-      state.user = user;
+    changepasswordFailure(state, data) {
+      state.loading = data.loading;
+      state.message = data.message;
+    },
+    changepasswordLoading(state, status) {
+      state.loading = status;
     },
   },
 };

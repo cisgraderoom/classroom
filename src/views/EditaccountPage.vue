@@ -16,27 +16,27 @@
             <v-text-field
               v-model="oldpassword"
               :rules="oldpasswordRules"
-              :type="show1 ? 'text' : 'password'"
+              type="password"
               label="Old password"
               required
             ></v-text-field>
             <v-text-field
               v-model="newpassword"
               :rules="newpasswordRules"
-              :type="show1 ? 'text' : 'password'"
+              type="password"
               label="New password"
               required
             ></v-text-field>
             <v-text-field
               v-model="confirmpassword"
               :rules="confirmpasswordRules"
-              :type="show1 ? 'text' : 'password'"
+              type="password"
               label="Confirm password"
               required
             ></v-text-field>
-            <v-alert text type="error" v-show="error == true">{{
-              errormessage
-            }}</v-alert>
+            <v-alert text type="error" v-show="error == true">
+              {{ errormessage }}
+            </v-alert>
             <v-btn @click="handleSubmit" elevation="2" color="primary" block
               >Change Password</v-btn
             >
@@ -92,7 +92,18 @@ export default {
       const { dispatch } = this.$store;
       if (oldpassword && newpassword == confirmpassword && newpassword != "") {
         dispatch("authentication/changepassword", { oldpassword, newpassword });
+        if (!this.$store?.state?.authentication?.loading) {
+          this.error = true;
+          this.errormessage = this.$store?.state?.authentication?.message;
+        }
       }
+      console.log(JSON.stringify(this.$store?.state?.authentication));
+    },
+  },
+
+  computed: {
+    changingPassword() {
+      return this.$store?.state?.authentication.message;
     },
   },
 };
