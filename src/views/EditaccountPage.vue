@@ -73,7 +73,7 @@ export default {
       this.submitted = true;
       const { oldpassword, newpassword, confirmpassword } = this;
       if (oldpassword == "" && newpassword == "" && confirmpassword == "") {
-        this.errormessage = "Please enter your info";
+        this.errormessage = "Please enter your password";
         return (this.error = true);
       }
       if (oldpassword == "") {
