@@ -1,32 +1,33 @@
-// import config from "../config/config";
-import { authHeader } from "../_helpers";
-import httpClient from "../_helpers/httpClient";
+// import { authHeader } from '../_helpers'
+import httpClient from '../_helpers/httpClient'
 
 export const userService = {
-  login,
-  logout,
-  // getAll,
-  changepassword,
-};
+    login,
+    logout,
+    // getAll,
+    // changepassword,
+}
 
 async function login(username, password) {
-  const { data } = await httpClient
-    .post(`/login`, {
-      username,
-      password,
-    })
-    .catch((err) => {
-      alert(err?.response?.data?.error);
-    });
-  if (data.status) {
-    localStorage.setItem("token", data.data.token);
-    localStorage.setItem("user", JSON.stringify(data.data));
-  }
+    let res = null
+    const { data } = await httpClient
+        .post(`user/login`, {
+            username,
+            password,
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data.status) {
+        localStorage.setItem('token', data?.data?.token)
+        localStorage.setItem('user', JSON.stringify(data?.data?.user))
+    }
 }
 
 function logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
 }
 
 // function getAll() {
@@ -40,28 +41,26 @@ function logout() {
 //   );
 // }
 
-async function changepassword(oldpassword, newpassword) {
-  let response = {};
-  const { data } = await httpClient
-    .put(
-      `/user/changepassword`,
-      {
-        oldpassword,
-        newpassword,
-      },
-      { headers: authHeader() }
-    )
-    .catch((err) => {
-      response = err?.response?.data;
-      return response;
-    });
-  if (data?.status) {
-    response = data;
-    alert("Password changed");
-    location.reload(true);
-  }
-  return response;
-}
+// async function changepassword(oldpassword, newpassword) {
+//     let response = {}
+//     const { data } = await httpClient
+//         .put(
+//             `/user/changepassword`,
+//             {
+//                 oldpassword,
+//                 newpassword,
+//             },
+//             { headers: authHeader() }
+//         )
+//         .catch((err) => {
+//             response = err?.response?.data
+//             return response
+//         })
+//     if (data?.status) {
+//         response = data
+//     }
+//     return response
+// }
 
 // function handleResponse(response) {
 //   return response.text().then((text) => {
