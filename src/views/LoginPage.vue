@@ -36,13 +36,13 @@
                             text
                             type="info"
                             v-show="this.$store.state.authentication.isLoading"
-                            >Loading</v-alert
+                            >กำลังเข้าสู่ระบบ</v-alert
                         >
                         <v-alert
                             text
                             type="error"
                             v-show="this.$store.state.authentication.isFailed"
-                            >Username or password is incorrect</v-alert
+                            >Username หรือ password ไม่ถูกต้อง</v-alert
                         >
                         <v-btn
                             @click="handleSubmit"

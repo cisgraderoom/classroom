@@ -4,17 +4,17 @@
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     elevation="2"
-                    color="secondary"
+                    color="primary"
                     block
                     v-bind="attrs"
                     v-on="on"
                 >
-                    Add Classroom
+                    เพิ่มชั้นเรียน
                 </v-btn>
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">Add Classroom</span>
+                    <span class="cis-h5">เพิ่มชั้นเรียน</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -23,14 +23,14 @@
                                 <v-col cols="12">
                                     <v-text-field
                                         v-model="classname"
-                                        label="Classroom name"
+                                        label="ชื่อชั้นเรียน"
                                         required
                                     ></v-text-field>
                                     <v-select
                                         :items="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
                                         :value="1"
                                         v-model="section"
-                                        label="Section"
+                                        label="ตอนเรียน"
                                     >
                                     </v-select>
                                 </v-col>
@@ -39,14 +39,14 @@
                                         :items="[2565, 2564, 2563]"
                                         :value="2564"
                                         v-model="year"
-                                        label="Year"
+                                        label="ปีการศึกษา"
                                     ></v-select> </v-col
                                 ><v-col cols="12" sm="6">
                                     <v-select
                                         :items="[1, 2, 3]"
                                         :value="1"
                                         v-model="term"
-                                        label="Term"
+                                        label="เทอม"
                                     ></v-select>
                                 </v-col>
                             </v-row>
@@ -70,10 +70,10 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closedialog">
-                        Close
+                        ยกเลิก
                     </v-btn>
                     <v-btn color="primary" text @click="handleSubmit">
-                        Add Classroom
+                        เพิ่มชั้นเรียน
                     </v-btn>
                 </v-card-actions>
             </v-card>

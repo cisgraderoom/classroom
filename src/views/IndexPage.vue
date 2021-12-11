@@ -20,54 +20,39 @@
                 >
                     <Addclassroom />
                 </v-col>
-            </v-row>
-            <v-alert
-                text
-                class="text-center"
-                type="error"
-                v-show="this.$store.state.listClassroom.isFailed"
-                >ไม่สามารถแสดงชั้นเรียนได้</v-alert
-            >
-            <v-row class="mt-0 mb-10">
                 <v-col
-                    md="3"
-                    elevation="12"
-                    xl="2"
-                    v-for="(classroom, index) in classroom"
-                    :key="index"
+                    v-show="checkAddClassroom == 'superteacher'"
+                    md="2"
+                    class="my-13 mx-2 mt-10"
                 >
-                    <Classcard
-                        :title="classroom.title"
-                        :section="classroom.section"
-                        :teacher="classroom.teacher"
-                        :path="classroom.classcode"
-                    />
+                    <v-btn
+                        elevation="2"
+                        color="secondary"
+                        block
+                        v-bind="attrs"
+                        to="/manage"
+                    >
+                        จัดการผู้ใช้งาน
+                    </v-btn>
                 </v-col>
             </v-row>
+            <Listclassroom />
         </v-container>
     </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar'
-import Classcard from '../components/Classcard'
+import Listclassroom from '../components/Listclassroom'
 import Joinclassroom from '../components/Joinclassroom'
 import Addclassroom from '../components/Addclassroom'
 export default {
     name: 'Index',
     components: {
         Navbar,
-        Classcard,
+        Listclassroom,
         Addclassroom,
         Joinclassroom,
-    },
-    mounted() {
-        let data = this.$store
-            .dispatch('listClassroom/listClassroom')
-            .then((res) => {
-                console.log(res)
-            })
-        console.log(data)
     },
     computed: {
         user() {
@@ -92,14 +77,6 @@ export default {
 
     data: () => ({
         checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
-        classroom: [
-            {
-                title: 'Classroom name',
-                section: 'section',
-                teacher: 'teacher',
-                classcode: '/classroom/1',
-            },
-        ],
     }),
 }
 </script>

@@ -50,8 +50,25 @@ const listClassroom = async () => {
     return res
 }
 
+const listAllPost = async () => {
+    let res = null
+    const { data } = await httpClient
+        .get('/classroom/post', {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 export const classroomService = {
     createClassroom,
     joinClassroom,
     listClassroom,
+    listAllPost,
 }

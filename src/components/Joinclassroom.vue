@@ -9,12 +9,12 @@
                     v-bind="attrs"
                     v-on="on"
                 >
-                    Join Classroom
+                    เข้าร่วมชั้นเรียน
                 </v-btn>
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="text-h5">Join Classroom</span>
+                    <span class="cis-h5">เข้าร่วมชั้นเรียน</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -22,7 +22,7 @@
                             <v-col cols="12">
                                 <v-text-field
                                     v-model="classcode"
-                                    label="Code Classroom"
+                                    label="รหัสชั้นเรียน"
                                     required
                                 ></v-text-field>
                             </v-col>
@@ -46,10 +46,10 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closedialog">
-                        Close
+                        ยกเลิก
                     </v-btn>
                     <v-btn color="primary" text @click="handleSubmit">
-                        Join Classroom
+                        เข้าร่วมชั้นเรียน
                     </v-btn>
                 </v-card-actions>
             </v-card>

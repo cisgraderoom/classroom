@@ -12,26 +12,26 @@
                         xl="4"
                         offset-xl="4"
                     >
-                        <h1>Edit Account</h1>
+                        <h1>เปลี่ยนรหัสผ่าน</h1>
                         <v-text-field
                             v-model="oldpassword"
                             :rules="oldpasswordRules"
                             type="password"
-                            label="Old password"
+                            label="รหัสผ่านเก่า"
                             required
                         ></v-text-field>
                         <v-text-field
                             v-model="newpassword"
                             :rules="newpasswordRules"
                             type="password"
-                            label="New password"
+                            label="รหัสผ่านใหม่"
                             required
                         ></v-text-field>
                         <v-text-field
                             v-model="confirmpassword"
                             :rules="confirmpasswordRules"
                             type="password"
-                            label="Confirm password"
+                            label="ยืนยันรหัสผ่านใหม่"
                             required
                         ></v-text-field>
                         <v-alert
@@ -102,21 +102,21 @@ export default {
                 newpassword == '' &&
                 confirmpassword == ''
             ) {
-                this.errormessage = 'Please enter your password'
+                this.errormessage = 'โปรดใส่ รหัสผ่าน ของคุณ'
                 return (this.error = true)
             }
             if (oldpassword == '') {
-                this.errormessage = 'Please enter your Old password'
+                this.errormessage = 'โปรดใส่ รหัสผ่านเก่า ของคุณ'
                 return (this.error = true)
             }
             if (newpassword == '' || confirmpassword == '') {
                 this.errormessage =
-                    'Please enter your New password and Confirm password'
+                    'โปรดใส่ รหัสผ่านใหม่ และ ยืนยันรหัสผ่านใหม่ ของคุณ'
                 return (this.error = true)
             }
             if (newpassword !== confirmpassword) {
                 this.errormessage =
-                    'New password and Confirm password not match'
+                    'รหัสผ่านใหม่ และ ยืนยันรหัสผ่านใหม่ ไม่ตรงกัน'
                 return (this.error = true)
             }
             const { dispatch, state } = this.$store

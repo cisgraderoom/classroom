@@ -2,19 +2,25 @@
     <v-hover v-slot="{ hover }">
         <v-card
             router-link
-            :to="{ path }"
+            :to="`/classroom/${path}`"
             :class="{ 'on-hover': hover }"
             :elevation="hover ? 5 : 2"
         >
-            <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                height="120px"
+            <v-img src="/cis.webp" height="120px" class="white--text align-end"
+                ><v-card-title
+                    class="d-inline-block text-truncate"
+                    v-text="title"
+                    style="max-width: 100%"
+                ></v-card-title
             ></v-img>
-            <v-card-title> {{ title }} </v-card-title>
-            <v-card-subtitle> {{ section }} </v-card-subtitle>
+            <!-- <v-card-title> {{ title }} </v-card-title> -->
+            <v-card-subtitle>
+                ตอนเรียน : {{ section }} <br />
+                {{ teacher }}</v-card-subtitle
+            >
+            <!-- <v-card-subtitle> {{ teacher }} </v-card-subtitle> -->
             <!-- <v-card-actions> -->
-            <v-card-subtitle> {{ teacher }} </v-card-subtitle>
-            <v-spacer></v-spacer>
+            <!-- <v-spacer></v-spacer> -->
             <!-- <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on">

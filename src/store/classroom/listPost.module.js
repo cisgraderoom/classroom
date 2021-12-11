@@ -4,24 +4,23 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    listClass: [],
-    pageInfo: {},
+    listPost: [],
 }
 
-export const listClassroom = {
+export const listPost = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listClassroom({ commit }) {
-            commit('listClassLoading', {
+        async listPost({ commit }) {
+            commit('listPostLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listClassroom()
+            const res = await classroomService.listAllPost()
             if (!res?.status) {
-                commit('listClassFailure', {
+                commit('listPostFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -29,24 +28,23 @@ export const listClassroom = {
                 })
                 return res
             }
-            commit('listClassSuccess', {
+            commit('listPostSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                listClass: res.data,
-                pageInfo: res.pageInfo,
+                listPost: res.data,
             })
         },
     },
     mutations: {
-        listClassLoading(state, data) {
+        listPostLoading(state, data) {
             Object.assign(state, data)
         },
-        listClassSuccess(state, data) {
+        listPostSuccess(state, data) {
             Object.assign(state, data)
         },
-        listClassFailure(state, data) {
+        listPostFailure(state, data) {
             Object.assign(state, data)
         },
     },
