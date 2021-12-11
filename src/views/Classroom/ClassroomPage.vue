@@ -2,11 +2,7 @@
     <div>
         <Navbar />
         <v-container>
-            <HeadClassroom
-                :classname="classroom.classname"
-                :section="classroom.section"
-                :nametecher="classroom.nametecher"
-            />
+            <HeadClassroom />
             <v-row>
                 <v-col
                     md="10"
@@ -16,7 +12,7 @@
                     offset-xl="3"
                 >
                     <v-btn elevation="2" color="primary" class="mr-1" disabled
-                        >โพสทั้งหมด</v-btn
+                        >โพสต์ทั้งหมด</v-btn
                     >
                     <v-btn
                         :to="`/classroom/${$route.params.code}/allproblem`"
@@ -27,10 +23,11 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-col md="6" offset-md="3" elevation="12" xl="4" offset-xl="4">
-                    <h1>โพสทั้งหมด</h1>
+                <v-col md="9" class="mx-auto" xl="5" elevation="12">
+                    <h2>โพสต์ทั้งหมด</h2>
                 </v-col>
             </v-row>
+            <AddPost />
             <ListPost />
         </v-container>
     </div>
@@ -39,12 +36,14 @@
 <script>
 import Navbar from '../../components/Navbar'
 import HeadClassroom from '../../components/HeadClassroom'
+import AddPost from '../../components/AddPost'
 import ListPost from '../../components/ListPost'
 export default {
     name: 'Classroom',
     components: {
         Navbar,
         HeadClassroom,
+        AddPost,
         ListPost,
     },
     data: () => ({

@@ -2,21 +2,49 @@
     <div>
         <v-row>
             <v-col md="10" offset-md="1" xl="6" offset-xl="3">
-                <v-sheet class="px-12 py-10 rounded white mt-10" elevation="4">
-                    <h1>{{ classname }}</h1>
-                    <caption>
-                        {{
-                            section
-                        }}
-                    </caption>
-                    <br />
-                    <caption>
-                        {{
-                            nametecher
-                        }}
-                    </caption>
-                </v-sheet>
+                <v-card>
+                    <v-img
+                        src="/banner.webp"
+                        class="white--text align-end"
+                        height="200px"
+                    >
+                        <v-card-title
+                            class="cis-h4"
+                            v-text="
+                                $store.state.getInfoClassroom.data.classname
+                            "
+                            v-show="!$store.state.getInfoClassroom.isLoading"
+                        ></v-card-title>
+                        <h4
+                            class="mx-5 mb-4"
+                            v-show="
+                                checkAddClassroom != 'student' &&
+                                !$store.state.getInfoClassroom.isLoading
+                            "
+                        >
+                            รหัสชั้นเรียน :
+                            {{ $store.state.getInfoClassroom.data.classcode }}
+                            <v-icon dark left @click="copy">
+                                mdi-clipboard-multiple-outline
+                            </v-icon>
+                        </h4>
+                    </v-img>
+                </v-card>
             </v-col>
+            <v-snackbar v-model="snackbar" :timeout="timeout">
+                {{ text }}
+
+                <template v-slot:action="{ attrs }">
+                    <v-btn
+                        color="primary"
+                        text
+                        v-bind="attrs"
+                        @click="snackbar = false"
+                    >
+                        ปิด
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </v-row>
     </div>
 </template>
@@ -24,7 +52,29 @@
 <script>
 export default {
     name: 'HeadClassroom',
-    props: ['classname', 'section', 'nametecher'],
+    data: () => ({
+        checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
+        snackbar: false,
+        text: 'คัดลอกรหัสชั้นเรียนสำเร็จ',
+        timeout: 2000,
+    }),
+    mounted() {
+        const classcode = this.$route.params.code
+        let data = this.$store
+            .dispatch('getInfoClassroom/getInfoClassroom', { classcode })
+            .then(() => {
+                this.classroom = this.$store.state.getInfoClassroom.data
+            })
+        return data
+    },
+    methods: {
+        copy() {
+            navigator.clipboard.writeText(
+                this.$store.state.getInfoClassroom.data.classcode
+            )
+            this.snackbar = true
+        },
+    },
 }
 </script>
 

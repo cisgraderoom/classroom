@@ -28,6 +28,9 @@ export default {
     font-family: 'K2D' !important;
     font-size: 1.1rem !important;
 }
+.cis-h4 {
+    font-size: 2.125rem !important;
+}
 .cis-h5 {
     font-size: 1.5rem !important;
     font-family: 'K2D' !important;

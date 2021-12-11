@@ -18,7 +18,7 @@ const routes = [
         component: LoginPage,
     },
     {
-        path: '/index',
+        path: '/list',
         name: 'Index',
         component: IndexPage,
     },
