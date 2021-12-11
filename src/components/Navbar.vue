@@ -1,29 +1,15 @@
 <template>
     <v-app-bar app color="#FFFFFF">
-        <!-- <div class="d-flex align-center" to="/Index">
-      <v-img
-        alt="CISClassroom Logo"
-        class="shrink mr-2 ml-2"
-        contain
-        src="../assets/ciskmutnb.png"
-        transition="scale-transition"
-        width="45"
-      />
-    </div> -->
-        <v-btn icon plain to="/index" class="ml-15">
+        <div>
             <v-img
                 alt="CISClassroom Logo"
-                class="shrink"
-                contain
                 src="../assets/ciskmutnb.png"
-                transition="scale-transition"
-                width="45"
+                width="50"
+                class="ml-15 cislogo"
+                @click="toHome"
             />
-        </v-btn>
+        </div>
         <v-spacer></v-spacer>
-        <!-- <v-btn hidden icon v-bind="attrs" v-on="on" plain to="/notifiacation">
-      <v-icon>mdi-bell</v-icon>
-    </v-btn> -->
         <v-toolbar-title class="mr-2 subtitle">{{ userName }}</v-toolbar-title>
         <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
@@ -50,6 +36,9 @@ export default {
         userName: JSON.parse(localStorage.getItem('user'))?.name,
     }),
     methods: {
+        toHome() {
+            this.$router.push('/list')
+        },
         logout() {
             this.$store.dispatch('authentication/logout')
             this.$router.push('/')
@@ -58,4 +47,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.cislogo {
+    cursor: pointer;
+}
+</style>

@@ -31,7 +31,7 @@
                 <Classcard
                     :title="classroom.classname"
                     :section="classroom.section"
-                    :teacher="classroom.teacher"
+                    :teacher="classroom.name"
                     :path="classroom.classcode"
                 />
             </v-col>
@@ -53,7 +53,6 @@ export default {
             .dispatch('listClassroom/listClassroom')
             .then(() => {
                 this.classroom = this.$store.state.listClassroom.listClass
-                console.log(this.classroom)
             })
         return data
     },
