@@ -11,24 +11,25 @@
                     xl="6"
                     offset-xl="3"
                 >
-                    <v-btn elevation="2" color="primary" class="mr-1" disabled
+                    <v-btn
+                        elevation="2"
+                        color="primary"
+                        class="mr-1"
+                        @click="changePage(1)"
+                        :disabled="this.thisPage == 1"
                         >โพสต์ทั้งหมด</v-btn
                     >
                     <v-btn
-                        :to="`/classroom/${$route.params.code}/allproblem`"
                         elevation="2"
                         color="primary"
+                        @click="changePage(2)"
+                        :disabled="this.thisPage == 2"
                         >โจทย์ทั้งหมด</v-btn
                     >
                 </v-col>
             </v-row>
-            <v-row>
-                <v-col md="9" class="mx-auto" xl="5" elevation="12">
-                    <h2>โพสต์ทั้งหมด</h2>
-                </v-col>
-            </v-row>
-            <AddPost />
-            <ListPost />
+            <AllPost v-show="thisPage == 1" />
+            <AllProblem v-show="thisPage == 2" />
         </v-container>
     </div>
 </template>
@@ -36,22 +37,23 @@
 <script>
 import Navbar from '../../components/Navbar'
 import HeadClassroom from '../../components/HeadClassroom'
-import AddPost from '../../components/AddPost'
-import ListPost from '../../components/ListPost'
+import AllPost from '../../components/AllPost'
+import AllProblem from '../../components/AllProblem'
 export default {
     name: 'Classroom',
     components: {
         Navbar,
         HeadClassroom,
-        AddPost,
-        ListPost,
+        AllPost,
+        AllProblem,
     },
     data: () => ({
-        classroom: {
-            classname: 'Classroom',
-            section: 'Section',
-            nametecher: 'Nametecher',
-        },
+        thisPage: 1,
     }),
+    methods: {
+        changePage(page) {
+            this.thisPage = page
+        },
+    },
 }
 </script>

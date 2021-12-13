@@ -28,7 +28,6 @@ export const getInfoClassroom = {
                 })
                 return res
             }
-            console.log(res.data)
             commit('getInfoClassroomSuccess', {
                 ...initialState,
                 isLoading: false,

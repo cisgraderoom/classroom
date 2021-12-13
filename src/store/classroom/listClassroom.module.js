@@ -4,7 +4,7 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    listClass: [],
+    list: [],
     pageInfo: {},
 }
 
@@ -34,7 +34,7 @@ export const listClassroom = {
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                listClass: res.data,
+                list: res.data,
                 pageInfo: res.pageInfo,
             })
         },

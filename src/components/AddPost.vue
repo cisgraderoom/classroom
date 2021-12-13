@@ -41,9 +41,9 @@ export default {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
-            const { text } = this
+
             const classcode = state.getInfoClassroom.data.classcode
-            if (text == '') {
+            if (this.text == '') {
                 this.errormessage = 'โปรดเขียนข้อความที่ต้องการโพสต์'
                 commit('addPost/addPostFailure', {
                     isFailed: true,
@@ -53,9 +53,13 @@ export default {
                 return
             }
             await dispatch('addPost/addPost', {
-                text,
+                text: this.text,
                 classcode,
             })
+            if (state.addPost.isSuccess) {
+                this.$emit('getPost')
+            }
+            this.text = ''
             if (state.addPost.isFailed) {
                 this.errormessage = state.addPost.message ?? 'ไม่สามารถโพสต์ได้'
             }

@@ -82,10 +82,10 @@ const addPost = async (req) => {
     return res
 }
 
-const listAllPost = async () => {
+const listAllPost = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get('/classroom/post', {
+        .get(`/post/${req.classcode}`, {
             headers: authHeader(),
         })
         .catch((err) => {

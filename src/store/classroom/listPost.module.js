@@ -4,21 +4,21 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    listPost: [],
+    list: [],
 }
 
 export const listPost = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listPost({ commit }) {
+        async listPost({ commit }, { classcode }) {
             commit('listPostLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listAllPost()
+            const res = await classroomService.listAllPost({ classcode })
             if (!res?.status) {
                 commit('listPostFailure', {
                     ...initialState,
@@ -33,7 +33,7 @@ export const listPost = {
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                listPost: res.data,
+                list: res.data,
             })
         },
     },

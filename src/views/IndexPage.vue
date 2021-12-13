@@ -25,13 +25,7 @@
                     md="2"
                     class="my-13 mx-2 mt-10"
                 >
-                    <v-btn
-                        elevation="2"
-                        color="secondary"
-                        block
-                        v-bind="attrs"
-                        to="/manage"
-                    >
+                    <v-btn elevation="2" color="secondary" block to="/manage">
                         จัดการผู้ใช้งาน
                     </v-btn>
                 </v-col>
@@ -62,17 +56,6 @@ export default {
         users() {
             return this.$store.state.users.all
         },
-        // listClassroom() {
-        //     // let data = this.$store
-        //     //     .dispatch('listClassroom/listClassroom')
-        //     //     .then((data) => {
-        //     //         // console.log(this.$store.state.listClassroom)
-        //     //         // console.log(this.$store.state.listClassroom.isFailed)
-        //     //         return data
-        //     //     })
-        //     // console.log(data)
-        //     return data
-        // },
     },
 
     data: () => ({

@@ -1,12 +1,30 @@
 <template>
     <div>
-        <v-row v-for="(post, index) in post" :key="index"
+        <AddPost
+            v-show="
+                checkAddClassroom == 'superteacher' ||
+                checkAddClassroom == 'teacher'
+            "
+            @getPost="getListPost"
+        />
+        <SkeletonPost v-show="this.$store.state.listPost.isLoading" />
+        <v-alert
+            text
+            class="text-center"
+            type="info"
+            v-show="
+                this.$store.state.listPost.isSuccess &&
+                this.$store.state.listPost.list.length == 0
+            "
+            >ไม่มีโพสในชั้นเรียน</v-alert
+        >
+        <v-row v-for="(post, index) in textPost" :key="index"
             ><v-col md="9" class="mx-auto" xl="5">
                 <Post
-                    :postid="post.postid"
-                    :posttext="post.posttext"
-                    :who="post.who"
-                    :date="post.date"
+                    :postid="post.post_id"
+                    :posttext="post.text"
+                    :who="post.name"
+                    :date="post.updated_at"
                 />
             </v-col>
         </v-row>
@@ -15,36 +33,33 @@
 
 <script>
 import Post from './Post'
+import AddPost from './AddPost'
+import SkeletonPost from './SkeletonPost'
 export default {
     name: 'ListPost',
     components: {
         Post,
+        AddPost,
+        SkeletonPost,
+    },
+    mounted() {
+        this.getListPost()
     },
     data: () => ({
-        post: [
-            {
-                postid: '1',
-                posttext:
-                    'สวัสดีนักศึกษาที่ลงทำเบียนวิชาการสื่อสารไร้สายวันนี้เรามีเรียนเพื่อแนะนำรายวิชานะครับออยากให้นักศึกษาแอดเข้ากลุ่มไลน์ตามQRcodesนี้ครับ',
-                who: 'ธนภัทร์ อนุศาสน์อมรกุล',
-                date: '01/01/2021',
-            },
-            {
-                postid: '2',
-                posttext:
-                    'ครับ สำหรับท่านที่เดินผ่านไปผ่านมานะครับ วันนี้ เฉาก๊วยชากังราวของเรานะครับ ก็ได้มาบริการท่านพ่อแม่พี่น้องกันอีกแล้วครับ อากาศร้อนๆ อย่างนี้นะครับ สำหรับท่านที่เดินผ่านไปผ่านมา ลองมาแวะชิมเฉาก๊วยแท้ๆ กันก่อนนะครับ เฉาก๊วยชากังราวของเราเป็นที่รู้จักไปทั่ว',
-                who: 'เฉาก๊วยชากังราว',
-                date: '01/01/2021',
-            },
-            {
-                postid: '3',
-                posttext: 'ยัยธารใส พรุ่งนี้ไอจะขยี้ยูให้แหลกคึ',
-                who: 'ฟิลลิปส์',
-                date: '01/01/2021',
-            },
-            { postid: '4', posttext: 'posttext', who: 'who', date: 'DATE' },
-        ],
+        textPost: [],
+        checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
+    methods: {
+        getListPost() {
+            const classcode = this.$route.params.code
+            let data = this.$store
+                .dispatch('listPost/listPost', { classcode })
+                .then(() => {
+                    this.textPost = this.$store.state.listPost.list
+                })
+            return data
+        },
+    },
 }
 </script>
 
