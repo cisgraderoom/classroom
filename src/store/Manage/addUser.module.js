@@ -1,27 +1,26 @@
-import { classroomService } from '../../_services'
+import { manageService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    list: [],
     error: '',
 }
 
-export const listPost = {
+export const addUser = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listPost({ commit }, { classcode }) {
-            commit('listPostLoading', {
+        async addUser({ commit }, file) {
+            commit('addUserLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listAllPost({ classcode })
+            const res = await manageService.addUser(file)
             if (!res?.status) {
-                commit('listPostFailure', {
+                commit('addUserFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -30,23 +29,22 @@ export const listPost = {
                 })
                 return res
             }
-            commit('listPostSuccess', {
+            commit('addUserSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                list: res.data,
             })
         },
     },
     mutations: {
-        listPostLoading(state, data) {
+        addUserLoading(state, data) {
             Object.assign(state, data)
         },
-        listPostSuccess(state, data) {
+        addUserSuccess(state, data) {
             Object.assign(state, data)
         },
-        listPostFailure(state, data) {
+        addUserFailure(state, data) {
             Object.assign(state, data)
         },
     },

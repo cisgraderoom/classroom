@@ -23,9 +23,10 @@
                         >โพสต์ทั้งหมด</v-btn
                     >
                     <v-btn
-                        :to="`/classroom/${$route.params.code}/allproblem`"
+                        :to="`/classroom/${$route.params.code}/`"
                         elevation="2"
                         color="primary"
+                        disabled
                         >โจทย์ทั้งหมด</v-btn
                     >
                 </v-col>

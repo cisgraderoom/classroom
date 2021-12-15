@@ -11,6 +11,7 @@ import { listClassroom } from './classroom/listClassroom.module'
 import { getInfoClassroom } from './classroom/getInfoClassroom.module'
 import { listPost } from './classroom/listPost.module'
 import { users } from './users.module'
+import { addUser } from './Manage/addUser.module'
 
 Vue.use(Vuex)
 
@@ -26,5 +27,6 @@ export default new Vuex.Store({
         getInfoClassroom,
         addPost,
         listPost,
+        addUser,
     },
 })
