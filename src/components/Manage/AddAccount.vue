@@ -3,9 +3,22 @@
         <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
             <v-col>
                 <h3>เพิ่มผู้ใช้งาน</h3>
+                <p class="mt-2">แนบไฟล์นามสกุล .csv</p>
+                <p>
+                    ตัวอย่างไฟล์
+                    <a
+                        href="https://drive.google.com/file/d/1jh-IG-t_qOS_zTDMHDKeSwIK07j3bezB/view?usp=sharing"
+                        target="_blank"
+                        >student.csv</a
+                    >
+                </p>
             </v-col>
             <v-col>
-                <input type="file" @change="onFileChange($event)" />
+                <input
+                    type="file"
+                    @change="onFileChange($event)"
+                    accept=".csv"
+                />
             </v-col>
             <v-alert
                 text
@@ -71,4 +84,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.text-xs-right {
+    white-space: nowrap;
+}
+</style>

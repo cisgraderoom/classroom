@@ -22,14 +22,28 @@
                     <v-btn
                         elevation="2"
                         color="primary"
+                        class="mr-1"
                         @click="changePage(2)"
                         :disabled="this.thisPage == 2"
                         >โจทย์ทั้งหมด</v-btn
+                    >
+                    <v-btn
+                        elevation="2"
+                        color="secondary"
+                        class="mr-1"
+                        @click="changePage(3)"
+                        v-show="
+                            checkAddClassroom == 'superteacher' ||
+                            checkAddClassroom == 'teacher'
+                        "
+                        :disabled="this.thisPage == 3"
+                        >คะแนนทั้งหมด</v-btn
                     >
                 </v-col>
             </v-row>
             <AllPost v-show="thisPage == 1" />
             <AllProblem v-show="thisPage == 2" />
+            <AllScore v-show="thisPage == 3" />
         </v-container>
     </div>
 </template>
@@ -39,6 +53,7 @@ import Navbar from '../../components/Navbar'
 import HeadClassroom from '../../components/HeadClassroom'
 import AllPost from '../../components/AllPost'
 import AllProblem from '../../components/AllProblem'
+import AllScore from '../../components/AllScore'
 export default {
     name: 'Classroom',
     components: {
@@ -46,9 +61,11 @@ export default {
         HeadClassroom,
         AllPost,
         AllProblem,
+        AllScore,
     },
     data: () => ({
         thisPage: 1,
+        checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
     methods: {
         changePage(page) {

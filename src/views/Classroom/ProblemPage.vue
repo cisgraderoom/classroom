@@ -31,26 +31,31 @@
                     >
                 </v-col>
             </v-row>
+            <div>
+                <v-row>
+                    <v-col md="9" class="mx-auto" xl="5">
+                        <h2 class="my-2">โจทย์</h2>
+                    </v-col>
+                </v-row>
+            </div>
+            <div>
+                <v-row
+                    ><v-col md="9" class="mx-auto" xl="5"
+                        ><Problemauto
+                            :problemid="problem.problemid"
+                            :problemtext="problem.problemtext"
+                            :who="problem.who"
+                            :date="problem.date"
+                        />
+                    </v-col>
+                </v-row>
+            </div>
+
             <v-row>
-                <v-col md="6" offset-md="3" elevation="12" xl="4" offset-xl="4">
-                    <h1>โจทย์</h1>
-                </v-col>
-            </v-row>
-            <v-row v-for="(problem, index) in problem" :key="index"
-                ><v-col md="6" offset-md="3" xl="4" offset-xl="4"
-                    ><Problemauto
-                        :problemid="problem.problemid"
-                        :problemtext="problem.problemtext"
-                        :who="problem.who"
-                        :date="problem.date"
-                    />
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col md="8" offset-md="2" xl="4" offset-xl="4">
+                <v-col md="9" class="mx-auto" xl="5">
                     <v-data-table
                         :headers="headers"
-                        :items="desserts"
+                        :items="score"
                         :items-per-page="5"
                         class="elevation-1"
                     ></v-data-table>
@@ -77,15 +82,13 @@ export default {
             section: 'Section',
             nametecher: 'Nametecher',
         },
-        problem: [
-            {
-                problemid: '1',
-                problemtext:
-                    'กล่องปริศนาใบนี้บรรจุสิ่งต่าง ๆ ไว้มากมาย กล่องใบนี้จะมีอะไรบ้าง',
-                who: 'ธนภัทร์ อนุศาสน์อมรกุล',
-                date: '01/01/2021',
-            },
-        ],
+        problem: {
+            problemid: '1',
+            problemtext:
+                'กล่องปริศนาใบนี้บรรจุสิ่งต่าง ๆ ไว้มากมาย กล่องใบนี้จะมีอะไรบ้าง',
+            who: 'ธนภัทร์ อนุศาสน์อมรกุล',
+            date: '01/01/2021',
+        },
         headers: [
             {
                 text: 'Date',
@@ -100,7 +103,7 @@ export default {
             { text: 'case5', value: 'case5' },
             { text: 'sum', value: 'sum' },
         ],
-        desserts: [
+        score: [
             {
                 date: '01/01/2021',
                 case1: 0,

@@ -46,6 +46,7 @@ const routes = [
         name: 'Problem',
         component: ProblemPage,
     },
+    { path: '/:catchAll(.*)', name: 'NotFound', redirect: '/list' },
 ]
 
 const router = new VueRouter({
