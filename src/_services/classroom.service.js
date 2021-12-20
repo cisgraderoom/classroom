@@ -98,6 +98,22 @@ const listAllPost = async (req) => {
     return res
 }
 
+const addProblem = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post('/post', req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 export const classroomService = {
     createClassroom,
     joinClassroom,
@@ -105,4 +121,5 @@ export const classroomService = {
     listAllPost,
     getInfoClassroom,
     addPost,
+    addProblem,
 }
