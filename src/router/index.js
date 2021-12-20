@@ -5,7 +5,6 @@ import IndexPage from '../views/IndexPage.vue'
 import EditaccountPage from '../views/EditaccountPage.vue'
 import NotificationPage from '../views/NotificationPage.vue'
 import ClassroomPage from '../views/Classroom/ClassroomPage.vue'
-import AllproblemPage from '../views/Classroom/AllproblemPage.vue'
 import ProblemPage from '../views/Classroom/ProblemPage.vue'
 import ManagePage from '../views/ManagePage.vue'
 
@@ -43,15 +42,11 @@ const routes = [
         component: ClassroomPage,
     },
     {
-        path: '/classroom/:code/allproblem',
-        name: 'Allproblem',
-        component: AllproblemPage,
-    },
-    {
         path: '/classroom/:code/problem/:problemid',
         name: 'Problem',
         component: ProblemPage,
     },
+    { path: '/:catchAll(.*)', name: 'NotFound', redirect: '/list' },
 ]
 
 const router = new VueRouter({

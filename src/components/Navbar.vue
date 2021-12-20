@@ -11,7 +11,7 @@
         </div>
         <v-spacer></v-spacer>
         <v-toolbar-title class="mr-2 subtitle">{{ userName }}</v-toolbar-title>
-        <v-menu offset-y>
+        <v-menu offset-y transition="scroll-y-transition">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn icon v-bind="attrs" v-on="on" class="mr-15">
                     <v-icon large>mdi-account-circle</v-icon>

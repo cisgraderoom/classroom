@@ -4,24 +4,35 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    list: [],
-    pageInfo: {},
 }
 
-export const listClassroom = {
+export const addProblem = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listClassroom({ commit }) {
-            commit('listClassLoading', {
+        async addProblem(
+            { commit },
+            { problemsname, problemstext, maxscore, type, classcode },
+            asset,
+            testcase
+        ) {
+            commit('addProblemLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listClassroom()
+            let formData1 = new FormData()
+            formData1.append('asset', asset)
+            let formData2 = new FormData()
+            formData2.append('testcase', testcase)
+            const res = await classroomService.addProblem(
+                { problemsname, problemstext, maxscore, type, classcode },
+                formData1,
+                formData2
+            )
             if (!res?.status) {
-                commit('listClassFailure', {
+                commit('addProblemFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -29,24 +40,22 @@ export const listClassroom = {
                 })
                 return res
             }
-            commit('listClassSuccess', {
+            commit('addProblemSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                list: res.data,
-                pageInfo: res.pageInfo,
             })
         },
     },
     mutations: {
-        listClassLoading(state, data) {
+        addProblemLoading(state, data) {
             Object.assign(state, data)
         },
-        listClassSuccess(state, data) {
+        addProblemSuccess(state, data) {
             Object.assign(state, data)
         },
-        listClassFailure(state, data) {
+        addProblemFailure(state, data) {
             Object.assign(state, data)
         },
     },

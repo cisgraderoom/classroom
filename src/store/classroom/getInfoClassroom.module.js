@@ -5,6 +5,7 @@ const initialState = {
     isFailed: false,
     isSuccess: false,
     data: {},
+    error: '',
 }
 
 export const getInfoClassroom = {
@@ -25,10 +26,10 @@ export const getInfoClassroom = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
+                    error: res.message,
                 })
                 return res
             }
-            console.log(res.data)
             commit('getInfoClassroomSuccess', {
                 ...initialState,
                 isLoading: false,

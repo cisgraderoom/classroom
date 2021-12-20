@@ -9,7 +9,7 @@
             type="info"
             v-show="
                 this.$store.state.listClassroom.isSuccess &&
-                this.$store.state.listClassroom.listClass.length == 0
+                this.$store.state.listClassroom.list.length == 0
             "
             >ไม่พบชั้นเรียน</v-alert
         >
@@ -52,7 +52,7 @@ export default {
         let data = this.$store
             .dispatch('listClassroom/listClassroom')
             .then(() => {
-                this.classroom = this.$store.state.listClassroom.listClass
+                this.classroom = this.$store.state.listClassroom.list
             })
         return data
     },

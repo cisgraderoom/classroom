@@ -1,13 +1,7 @@
 <template>
     <div>
         <v-row v-for="(problem, index) in problem" :key="index"
-            ><v-col
-                md="6"
-                offset-md="3"
-                xl="4"
-                offset-xl="4"
-                link
-                to="/classroom"
+            ><v-col md="9" class="mx-auto" xl="5"
                 ><PostProblem
                     :problemid="problem.problemid"
                     :problemtext="problem.problemtext"
