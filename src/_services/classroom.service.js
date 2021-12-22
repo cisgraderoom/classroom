@@ -101,7 +101,7 @@ const listAllPost = async (req) => {
 const addProblem = async (req) => {
     let res = null
     const { data } = await httpClient
-        .post('/post', req, {
+        .post('/task/new', req, {
             headers: authHeader(),
         })
         .catch((err) => {

@@ -28,12 +28,14 @@
                 v-for="(classroom, index) in classroom"
                 :key="index"
             >
-                <Classcard
-                    :title="classroom.classname"
-                    :section="classroom.section"
-                    :teacher="classroom.name"
-                    :path="classroom.classcode"
-                />
+                <v-lazy transition="fade-transition">
+                    <Classcard
+                        :title="classroom.classname"
+                        :section="classroom.section"
+                        :teacher="classroom.name"
+                        :path="classroom.classcode"
+                    />
+                </v-lazy>
             </v-col>
         </v-row>
     </div>

@@ -18,14 +18,17 @@
             "
             >ไม่มีโพสในชั้นเรียน</v-alert
         >
-        <v-row v-for="(post, index) in textPost" :key="index"
-            ><v-col md="9" class="mx-auto" xl="5">
-                <Post
-                    :postid="post.post_id"
-                    :posttext="post.text"
-                    :who="post.name"
-                    :date="post.updated_at"
-                />
+
+        <v-row v-for="(post, index) in textPost" :key="index">
+            <v-col md="9" class="mx-auto" xl="5">
+                <v-lazy transition="fade-transition">
+                    <Post
+                        :postid="post.post_id"
+                        :posttext="post.text"
+                        :who="post.name"
+                        :date="post.updated_at"
+                    />
+                </v-lazy>
             </v-col>
         </v-row>
     </div>
@@ -47,6 +50,7 @@ export default {
     },
     data: () => ({
         textPost: [],
+        isActive: false,
         checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
     methods: {

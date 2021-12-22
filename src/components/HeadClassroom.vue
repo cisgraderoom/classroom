@@ -4,6 +4,7 @@
             <v-col md="10" offset-md="1" xl="6" offset-xl="3">
                 <v-card>
                     <v-img
+                        lazy-src="/banner.webp"
                         src="/banner.webp"
                         class="white--text align-end"
                         height="200px"
