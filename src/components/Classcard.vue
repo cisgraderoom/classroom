@@ -6,7 +6,11 @@
             :class="{ 'on-hover': hover }"
             :elevation="hover ? 5 : 2"
         >
-            <v-img src="/cis.webp" height="120px" class="white--text align-end"
+            <v-img
+                lazy-src="/cis.webp"
+                src="/cis.webp"
+                height="120px"
+                class="white--text align-end"
                 ><v-card-title
                     class="d-inline-block text-truncate"
                     v-text="title"

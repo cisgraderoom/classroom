@@ -1,14 +1,15 @@
 <template>
     <div>
         <v-row v-for="(problem, index) in problem" :key="index"
-            ><v-col md="9" class="mx-auto" xl="5"
-                ><PostProblem
-                    :problemid="problem.problemid"
-                    :problemtext="problem.problemtext"
-                    :who="problem.who"
-                    :date="problem.date"
-                    :path="`/classroom/${$route.params.code}/problem/${problem.problemid}`"
-                />
+            ><v-col md="9" class="mx-auto" xl="5">
+                <v-lazy transition="fade-transition">
+                    <PostProblem
+                        :problemid="problem.problemid"
+                        :problemtext="problem.problemtext"
+                        :who="problem.who"
+                        :date="problem.date"
+                        :path="`/classroom/${$route.params.code}/problem/${problem.problemid}`"
+                /></v-lazy>
             </v-col>
         </v-row>
     </div>

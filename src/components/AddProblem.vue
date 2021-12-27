@@ -32,6 +32,7 @@
                             @click="changeType()"
                         ></v-switch>
                         <v-file-input
+                            accept="image/*,application/*,.pdf,.html,.css,.json,.txt"
                             label="แนบไฟล์"
                             v-model="asset"
                             counter
@@ -134,7 +135,7 @@ export default {
         problemstext: '',
         maxscore: null,
         type: false,
-        typetext: 'Manual',
+        typetext: 'manual',
         asset: null,
         testcase: null,
         menu: false,
@@ -149,9 +150,9 @@ export default {
     methods: {
         changeType() {
             if (this.type == true) {
-                this.typetext = 'Auto'
+                this.typetext = 'auto'
             } else {
-                this.typetext = 'Manual'
+                this.typetext = 'manual'
                 this.testcase = null
             }
         },
@@ -192,11 +193,13 @@ export default {
             await dispatch(
                 'addProblem/addProblem',
                 {
-                    problemsname: this.problemsname,
-                    problemstext: this.problemstext,
-                    maxscore: this.maxscore,
+                    problemName: this.problemsname,
+                    problemDesc: this.problemstext,
+                    score: this.maxscore,
                     type: this.type,
                     classcode,
+                    open: this.opendate,
+                    close: this.closedate,
                 },
                 this.asset,
                 this.testcase
