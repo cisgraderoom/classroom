@@ -100,6 +100,16 @@ const listAllPost = async (req) => {
 
 const addProblem = async (req) => {
     let res = null
+    let formData = new FormData()
+    formData.append('asset', req.asset)
+    formData.append('testcase', req.testcase)
+    req.asset = formData
+    if (req.type == 'manual') {
+        delete req.testcase
+    }
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
+    }
     const { data } = await httpClient
         .post('/task/new', req, {
             headers: authHeader(),

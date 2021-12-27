@@ -12,9 +12,17 @@ export const addProblem = {
     actions: {
         async addProblem(
             { commit },
-            { problemsname, problemstext, maxscore, type, classcode },
-            asset,
-            testcase
+            {
+                problemName,
+                problemDesc,
+                score,
+                type,
+                classcode,
+                open,
+                close,
+                asset,
+                testcase,
+            }
         ) {
             commit('addProblemLoading', {
                 ...initialState,
@@ -22,15 +30,17 @@ export const addProblem = {
                 isFailed: false,
                 isSuccess: false,
             })
-            let formData1 = new FormData()
-            formData1.append('asset', asset)
-            let formData2 = new FormData()
-            formData2.append('testcase', testcase)
-            const res = await classroomService.addProblem(
-                { problemsname, problemstext, maxscore, type, classcode },
-                formData1,
-                formData2
-            )
+            const res = await classroomService.addProblem({
+                problemName,
+                problemDesc,
+                score,
+                type,
+                classcode,
+                open,
+                close,
+                asset,
+                testcase,
+            })
             if (!res?.status) {
                 commit('addProblemFailure', {
                     ...initialState,
