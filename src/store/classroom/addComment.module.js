@@ -6,43 +6,24 @@ const initialState = {
     isSuccess: false,
 }
 
-export const addProblem = {
+export const addComment = {
     namespaced: true,
     state: initialState,
     actions: {
-        async addProblem(
-            { commit },
-            {
-                problemName,
-                problemDesc,
-                score,
-                type,
-                classcode,
-                open,
-                close,
-                asset,
-                testcase,
-            }
-        ) {
-            commit('addProblemLoading', {
+        async addComment({ commit }, { text, postid, classcode }) {
+            commit('addCommentLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.addProblem({
-                problemName,
-                problemDesc,
-                score,
-                type,
+            const res = await classroomService.addComment({
+                text,
+                postid,
                 classcode,
-                open,
-                close,
-                asset,
-                testcase,
             })
             if (!res?.status) {
-                commit('addProblemFailure', {
+                commit('addCommentFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -50,7 +31,7 @@ export const addProblem = {
                 })
                 return res
             }
-            commit('addProblemSuccess', {
+            commit('addCommentSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
@@ -59,13 +40,13 @@ export const addProblem = {
         },
     },
     mutations: {
-        addProblemLoading(state, data) {
+        addCommentLoading(state, data) {
             Object.assign(state, data)
         },
-        addProblemSuccess(state, data) {
+        addCommentSuccess(state, data) {
             Object.assign(state, data)
         },
-        addProblemFailure(state, data) {
+        addCommentFailure(state, data) {
             Object.assign(state, data)
         },
     },

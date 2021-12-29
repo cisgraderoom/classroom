@@ -10,9 +10,12 @@ import { addPost } from './classroom/addPost.module'
 import { listClassroom } from './classroom/listClassroom.module'
 import { getInfoClassroom } from './classroom/getInfoClassroom.module'
 import { listPost } from './classroom/listPost.module'
+import { listComment } from './classroom/listComment.module'
 import { users } from './users.module'
 import { addUser } from './Manage/addUser.module'
 import { addProblem } from './classroom/addProblem.module'
+import { addComment } from './classroom/addComment.module'
+import { deleteComment } from './classroom/deleteComment.module'
 
 Vue.use(Vuex)
 
@@ -28,7 +31,10 @@ export default new Vuex.Store({
         getInfoClassroom,
         addPost,
         listPost,
+        listComment,
         addUser,
         addProblem,
+        addComment,
+        deleteComment,
     },
 })

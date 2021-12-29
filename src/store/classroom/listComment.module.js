@@ -4,68 +4,52 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
+    list: [],
+    error: '',
 }
 
-export const addProblem = {
+export const listComment = {
     namespaced: true,
     state: initialState,
     actions: {
-        async addProblem(
-            { commit },
-            {
-                problemName,
-                problemDesc,
-                score,
-                type,
-                classcode,
-                open,
-                close,
-                asset,
-                testcase,
-            }
-        ) {
-            commit('addProblemLoading', {
+        async listComment({ commit }, { classcode, postid }) {
+            commit('listCommentLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.addProblem({
-                problemName,
-                problemDesc,
-                score,
-                type,
+            const res = await classroomService.listAllComment({
                 classcode,
-                open,
-                close,
-                asset,
-                testcase,
+                postid,
             })
             if (!res?.status) {
-                commit('addProblemFailure', {
+                commit('listCommentFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
+                    error: res.message,
                 })
                 return res
             }
-            commit('addProblemSuccess', {
+            commit('listCommentSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
+                list: res.data,
             })
         },
     },
     mutations: {
-        addProblemLoading(state, data) {
+        listCommentLoading(state, data) {
             Object.assign(state, data)
         },
-        addProblemSuccess(state, data) {
+        listCommentSuccess(state, data) {
             Object.assign(state, data)
         },
-        addProblemFailure(state, data) {
+        listCommentFailure(state, data) {
             Object.assign(state, data)
         },
     },

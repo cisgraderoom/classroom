@@ -66,22 +66,6 @@ const getInfoClassroom = async (req) => {
     return res
 }
 
-const addPost = async (req) => {
-    let res = null
-    const { data } = await httpClient
-        .post('/post', req, {
-            headers: authHeader(),
-        })
-        .catch((err) => {
-            res = err?.response?.data
-            return res
-        })
-    if (data?.status) {
-        res = data
-    }
-    return res
-}
-
 const listAllPost = async (req) => {
     let res = null
     const { data } = await httpClient
@@ -98,10 +82,84 @@ const listAllPost = async (req) => {
     return res
 }
 
-const addProblem = async (req) => {
+const listAllComment = async (req) => {
     let res = null
     const { data } = await httpClient
+        .get(`/comment/${req.classcode}/${req.postid}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const addPost = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post('/post', req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const addComment = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post(`/comment/${req.classcode}/${req.postid}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const addProblem = async (req) => {
+    let res = null
+    let formData = new FormData()
+    formData.append('asset', req.asset)
+    formData.append('testcase', req.testcase)
+    req.asset = formData
+    if (req.type == 'manual') {
+        delete req.testcase
+    }
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1])
+    }
+    const { data } = await httpClient
         .post('/task/new', req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const deleteComment = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .delete(`/comment/${req.classcode}/${req.post_id}/${req.comment_id}`, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -119,7 +177,10 @@ export const classroomService = {
     joinClassroom,
     listClassroom,
     listAllPost,
+    listAllComment,
     getInfoClassroom,
     addPost,
     addProblem,
+    addComment,
+    deleteComment,
 }

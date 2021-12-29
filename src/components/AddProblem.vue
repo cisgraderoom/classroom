@@ -65,7 +65,7 @@
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="opendate"
+                                    v-model="opendatetime"
                                     label="วันที่เปิดโจทย์"
                                     prepend-icon="mdi-calendar"
                                     readonly
@@ -73,10 +73,46 @@
                                     v-on="on"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker
+                            <div class="white">
+                                <v-date-picker
+                                    v-model="opendate"
+                                ></v-date-picker>
+                                <v-time-picker
+                                    v-model="opentime"
+                                    format="24hr"
+                                    small
+                                    ><v-spacer></v-spacer>
+                                    <b>{{
+                                        'วันเวลาเปิดโจทย์ ' +
+                                        opendate +
+                                        ' ' +
+                                        opentime
+                                    }}</b>
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="setOpen"
+                                    >
+                                        OK
+                                    </v-btn></v-time-picker
+                                >
+                            </div>
+                            <!-- <v-date-picker
                                 v-model="opendate"
-                                @input="menu = false"
-                            ></v-date-picker>
+                                width="290"
+                            ></v-date-picker> -->
+                            <!-- <v-time-picker
+                                v-model="opentime"
+                                format="24hr"
+                                width="290"
+                                ><v-spacer></v-spacer>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="menu = false"
+                                >
+                                    close
+                                </v-btn></v-time-picker -->
                         </v-menu>
                         <v-menu
                             v-model="menu2"
@@ -88,7 +124,7 @@
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="closedate"
+                                    v-model="closedatetime"
                                     label="วันที่ปิดโจทย์"
                                     prepend-icon="mdi-calendar"
                                     readonly
@@ -96,10 +132,34 @@
                                     v-on="on"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker
+                            <div class="white">
+                                <v-date-picker
+                                    v-model="closedate"
+                                ></v-date-picker>
+                                <v-time-picker
+                                    v-model="closetime"
+                                    format="24hr"
+                                    small
+                                    ><v-spacer></v-spacer>
+                                    <b>{{
+                                        'วันเวลาเปิดโจทย์ ' +
+                                        closedate +
+                                        ' ' +
+                                        closetime
+                                    }}</b>
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="setClose"
+                                    >
+                                        close
+                                    </v-btn></v-time-picker
+                                >
+                            </div>
+                            <!-- <v-date-picker
                                 v-model="closedate"
                                 @input="menu2 = false"
-                            ></v-date-picker>
+                            ></v-date-picker> -->
                         </v-menu>
                         <v-alert
                             text
@@ -107,6 +167,13 @@
                             v-show="this.$store.state.addProblem.isLoading"
                         >
                             กำลังเพิ่มโจทย์
+                        </v-alert>
+                        <v-alert
+                            text
+                            type="success"
+                            v-show="this.$store.state.addProblem.isSuccess"
+                        >
+                            เพิ่มโจทย์แล้ว
                         </v-alert>
                         <v-alert
                             text
@@ -143,7 +210,16 @@ export default {
         opendate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
             .toISOString()
             .substr(0, 10),
+        opentime: '00:00',
+        opendatetime:
+            new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                .toISOString()
+                .substr(0, 10) +
+            ' ' +
+            '00:00',
         closedate: null,
+        closetime: '00:00',
+        closedatetime: null,
         submitted: false,
         errormessage: '',
     }),
@@ -155,6 +231,14 @@ export default {
                 this.typetext = 'manual'
                 this.testcase = null
             }
+        },
+        setOpen() {
+            this.opendatetime = this.opendate + ' ' + this.opentime
+            this.menu = false
+        },
+        setClose() {
+            this.closedatetime = this.closedate + ' ' + this.closetime
+            this.menu2 = false
         },
 
         async handleSubmit() {
@@ -190,20 +274,17 @@ export default {
                 })
                 return
             }
-            await dispatch(
-                'addProblem/addProblem',
-                {
-                    problemName: this.problemsname,
-                    problemDesc: this.problemstext,
-                    score: this.maxscore,
-                    type: this.type,
-                    classcode,
-                    open: this.opendate,
-                    close: this.closedate,
-                },
-                this.asset,
-                this.testcase
-            )
+            await dispatch('addProblem/addProblem', {
+                problemName: this.problemsname,
+                problemDesc: this.problemstext,
+                score: this.maxscore,
+                type: this.typetext,
+                classcode,
+                open: this.opendate,
+                close: this.closedate,
+                asset: this.asset,
+                testcase: this.testcase,
+            })
             if (state.addProblem.isFailed) {
                 this.errormessage =
                     state.addProblem.message ?? 'ไม่สามารถโพสต์ได้'
