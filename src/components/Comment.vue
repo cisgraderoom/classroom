@@ -1,29 +1,59 @@
 <template>
     <div>
         <v-row align="top">
-            <v-col sm="1" md="1" lg="1" xl="1">
-                <v-icon large>mdi-account-circle</v-icon>
+            <v-col cols="2" sm="1" md="1" lg="1" xl="1">
+                <v-icon
+                    large
+                    v-show="role != 'superteacher' && role != 'teacher'"
+                    >mdi-account-circle</v-icon
+                >
+                <v-icon
+                    color="deep-orange darken-1"
+                    large
+                    v-show="role == 'superteacher' || role == 'teacher'"
+                    >mdi-account-circle</v-icon
+                >
             </v-col>
-            <v-col md="11">
-                <h5>เด็กตาดำๆ</h5>
+            <v-col cols="8" xs="10" sm="10" md="10">
+                <h5>{{ who }}</h5>
                 <p>
-                    ทำไมไก่ไข่เกิดมาแล้วว้าวซ่า
-                    <!-- {{ posttext }} -->
+                    {{ commenttext }}
                 </p>
+            </v-col>
+            <v-col cols="1" sm="1" md="1">
+                <DeleteComment
+                    :comment_id="getcomment_id"
+                    :post_id="getpost_id"
+                    :classcode="getclasscode"
+                    v-show="user == who"
+                    @getComment="getListComment"
+                />
+                <!-- <v-btn icon><v-icon>mdi-delete</v-icon></v-btn> -->
             </v-col>
         </v-row>
     </div>
 </template>
 
 <script>
+import DeleteComment from './DeleteComment'
 export default {
     name: 'Comment',
-    props: ['getpostid', 'posttext', 'who', 'date'],
-
+    props: ['comment_id', 'post_id', 'classcode', 'commenttext', 'who', 'role'],
+    components: {
+        DeleteComment,
+    },
     data() {
         return {
-            comment: '',
+            getcomment_id: this.comment_id,
+            getpost_id: this.post_id,
+            getclasscode: this.classcode,
+            user: JSON.parse(localStorage.getItem('user'))?.name,
         }
+    },
+    methods: {
+        getListComment() {
+            this.$emit('getComment')
+        },
     },
 }
 </script>
