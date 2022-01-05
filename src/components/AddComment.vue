@@ -1,12 +1,5 @@
 <template>
     <div>
-        <!-- <v-alert
-            text
-            type="info"
-            v-show="this.$store.state.addComment.isLoading"
-        >
-            กำลังคอมเมนต์
-        </v-alert> -->
         <v-alert
             text
             type="error"
@@ -21,7 +14,7 @@
                     label="เพิ่มคอมเมนต์"
                     maxlength="500"
                     counter
-                    required
+                    v-on:keyup.enter="handleSubmit"
                     :disabled="this.$store.state.addComment.isLoading"
                 ></v-text-field>
             </v-col>
@@ -53,7 +46,6 @@ export default {
             text: '',
             submitted: false,
             errormessage: '',
-            getpostid: this.postid,
         }
     },
     methods: {
@@ -61,7 +53,7 @@ export default {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
             const classcode = this.$route.params.code
-            const { getpostid } = this
+            const { postid } = this
             if (this.text == '') {
                 this.errormessage = 'โปรดเขียนข้อความที่ต้องการคอมเม้น'
                 commit('addComment/addCommentFailure', {
@@ -82,7 +74,7 @@ export default {
             }
             await dispatch('addComment/addComment', {
                 text: this.text,
-                postid: getpostid,
+                postid,
                 classcode,
             })
             if (state.addComment.isSuccess) {

@@ -27,6 +27,8 @@
                         :posttext="post.text"
                         :who="post.name"
                         :date="post.updated_at"
+                        :classcode="post.classcode"
+                        @getPost="getListPost"
                     />
                 </v-lazy>
             </v-col>

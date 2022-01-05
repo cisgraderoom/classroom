@@ -7,6 +7,8 @@ import { changePassword } from './changePassword.module'
 import { createClassroom } from './classroom/createClassroom.module'
 import { joinClassroom } from './classroom/joinClassroom.module'
 import { addPost } from './classroom/addPost.module'
+import { editPost } from './classroom/editPost.module'
+import { deletePost } from './classroom/deletePost.module'
 import { listClassroom } from './classroom/listClassroom.module'
 import { getInfoClassroom } from './classroom/getInfoClassroom.module'
 import { listPost } from './classroom/listPost.module'
@@ -30,6 +32,8 @@ export default new Vuex.Store({
         listClassroom,
         getInfoClassroom,
         addPost,
+        editPost,
+        deletePost,
         listPost,
         listComment,
         addUser,

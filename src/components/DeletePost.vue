@@ -2,22 +2,22 @@
     <div>
         <v-dialog v-model="dialog" max-width="290">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on"
-                    ><v-icon>mdi-delete</v-icon></v-btn
+                <v-list-item-title v-bind="attrs" v-on="on"
+                    >ลบโพสต์</v-list-item-title
                 >
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="cis-h5">ลบคอมเม้น</span>
+                    <span class="cis-h5">ลบโพสต์</span>
                 </v-card-title>
-                <v-card-text>ต้องการที่จะลบคอมเม้นนี้ใช่หรือไม่</v-card-text>
+                <v-card-text>ต้องการที่จะลบโพสต์นี้ใช่หรือไม่</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
                         color="secondary"
                         text
                         @click="dialog = false"
-                        :disabled="this.$store.state.deleteComment.isLoading"
+                        :disabled="this.$store.state.deletePost.isLoading"
                     >
                         ยกเลิก
                     </v-btn>
@@ -25,7 +25,7 @@
                         color="primary"
                         text
                         @click="handleSubmit"
-                        :disabled="this.$store.state.deleteComment.isLoading"
+                        :disabled="this.$store.state.deletePost.isLoading"
                     >
                         ใช่
                     </v-btn>
@@ -33,7 +33,7 @@
                 <v-progress-linear
                     indeterminate
                     color="red"
-                    v-show="this.$store.state.deleteComment.isLoading"
+                    v-show="this.$store.state.deletePost.isLoading"
                 ></v-progress-linear>
             </v-card>
         </v-dialog>
@@ -42,8 +42,8 @@
 
 <script>
 export default {
-    name: 'DeleteComment',
-    props: ['comment_id', 'post_id', 'classcode'],
+    name: 'DeletePost',
+    props: ['post_id', 'class_code'],
 
     data() {
         return {
@@ -56,20 +56,18 @@ export default {
         async handleSubmit() {
             const { dispatch, state } = this.$store
             this.submitted = true
-            const { comment_id, post_id, classcode } = this
-            await dispatch('deleteComment/deleteComment', {
+            const { post_id, class_code } = this
+            await dispatch('deletePost/deletePost', {
                 post_id,
-                comment_id,
-                classcode,
+                classcode: class_code,
             })
-            if (state.deleteComment.isSuccess) {
+            if (state.deletePost.isSuccess) {
                 this.dialog = false
-                this.$emit('getComment')
+                this.$emit('getPost')
             }
-
-            if (state.deleteComment.isFailed) {
+            if (state.deletePost.isFailed) {
                 this.errormessage =
-                    state.deleteComment.message ?? 'ไม่สามารถลบคอมเม้นได้'
+                    state.deletePost.message ?? 'ไม่สามารถลบโพสต์'
             }
         },
     },

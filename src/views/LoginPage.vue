@@ -30,6 +30,7 @@
                             :rules="passwordRules"
                             type="password"
                             label="Password"
+                            v-on:keyup.enter="handleSubmit"
                             required
                         ></v-text-field>
                         <v-alert

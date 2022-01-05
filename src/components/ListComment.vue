@@ -16,6 +16,7 @@
         >
             โหลดคอมเม้นก่อนหน้าเพิ่มเติม......
         </v-btn>
+        <!-- <p>postID : {{ post_id }}</p> -->
         <v-row v-for="(comment, index) in showComment" :key="index">
             <v-col class="py-0">
                 <v-lazy transition="fade-transition">
@@ -25,13 +26,14 @@
                         :classcode="comment.classcode"
                         :commenttext="comment.text"
                         :who="comment.name"
+                        :created_at="comment.created_at"
                         :role="comment.role"
                         @getComment="getListComment"
                     />
                 </v-lazy>
             </v-col>
         </v-row>
-        <AddComment :postid="getpostid" @getComment="getListComment" />
+        <AddComment :postid="post_id" @getComment="getListComment" />
     </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
         Comment,
         AddComment,
     },
-    props: ['postid'],
+    props: ['post_id'],
     mounted() {
         this.getListComment()
     },
@@ -52,7 +54,6 @@ export default {
         return {
             textComment: [],
             isActive: false,
-            getpostid: this.postid,
             showComment: [],
             isGetMore: false,
         }
@@ -61,11 +62,11 @@ export default {
     methods: {
         getListComment() {
             const classcode = this.$route.params.code
-            const { getpostid } = this
+            const { post_id } = this
             let data = this.$store
                 .dispatch('listComment/listComment', {
                     classcode,
-                    postid: getpostid,
+                    postid: post_id,
                 })
                 .then(() => {
                     if (this.isGetMore) {
