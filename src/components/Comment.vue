@@ -20,7 +20,7 @@
                 <p>
                     {{ commenttext }}
                 </p>
-                <!-- <p>postID : {{ post_id }}</p> -->
+                <p>postID : {{ post_id }}</p>
             </v-col>
             <v-col cols="1" sm="1" md="1">
                 <DeleteComment

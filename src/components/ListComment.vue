@@ -16,7 +16,7 @@
         >
             โหลดคอมเม้นก่อนหน้าเพิ่มเติม......
         </v-btn>
-        <!-- <p>postID : {{ post_id }}</p> -->
+        <p>postID : {{ post_id }}</p>
         <v-row v-for="(comment, index) in showComment" :key="index">
             <v-col class="py-0">
                 <v-lazy transition="fade-transition">
@@ -50,6 +50,7 @@ export default {
     mounted() {
         this.getListComment()
     },
+
     data() {
         return {
             textComment: [],

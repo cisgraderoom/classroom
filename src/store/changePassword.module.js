@@ -10,17 +10,14 @@ export const changePassword = {
     namespaced: true,
     state: initialState,
     actions: {
-        async changepassword({ commit }, { oldpassword, newpassword }) {
+        async changepassword({ commit }, { newpassword }) {
             commit('changePasswordLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const response = await userService.changepassword(
-                oldpassword,
-                newpassword
-            )
+            const response = await userService.changepassword(newpassword)
             response?.status
                 ? commit('changePasswordSuccess', {
                       ...initialState,

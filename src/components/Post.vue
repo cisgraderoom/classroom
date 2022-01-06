@@ -43,7 +43,7 @@
         </v-row>
         <br />
         <p>{{ posttext }}</p>
-        <!-- <p>postID : {{ postid }}</p> -->
+        <p>postID : {{ postid }}</p>
         <v-divider></v-divider>
         <br />
         <ListComment :post_id="postid" />

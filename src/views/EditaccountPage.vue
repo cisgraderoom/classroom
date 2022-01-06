@@ -14,24 +14,17 @@
                     >
                         <h1>เปลี่ยนรหัสผ่าน</h1>
                         <v-text-field
-                            v-model="oldpassword"
-                            :rules="oldpasswordRules"
-                            type="password"
-                            label="รหัสผ่านเก่า"
-                            required
-                        ></v-text-field>
-                        <v-text-field
                             v-model="newpassword"
                             :rules="newpasswordRules"
                             type="password"
-                            label="รหัสผ่านใหม่"
+                            label="รหัสผ่านใหม่ (อย่างน้อย 8 ตัวอักษร)"
                             required
                         ></v-text-field>
                         <v-text-field
                             v-model="confirmpassword"
                             :rules="confirmpasswordRules"
                             type="password"
-                            label="ยืนยันรหัสผ่านใหม่"
+                            label="ยืนยันรหัสผ่านใหม่ (อย่างน้อย 8 ตัวอักษร)"
                             required
                         ></v-text-field>
                         <v-alert
@@ -46,9 +39,6 @@
                             type="error"
                             v-show="this.$store.state.changePassword.isFailed"
                         >
-                            {{ this.$store.state.changePassword.message }}
-                        </v-alert>
-                        <v-alert text type="error" v-show="error">
                             {{ errormessage }}
                         </v-alert>
                         <v-alert
@@ -81,52 +71,51 @@ export default {
     },
     data() {
         return {
-            oldpassword: '',
-            oldpasswordRules: [(v) => !!v || 'Oldpassword is required'],
             newpassword: '',
             newpasswordRules: [(v) => !!v || 'Newpassword is required'],
             confirmpassword: '',
             confirmpasswordRules: [(v) => !!v || 'Confirmpassword is required'],
             submitted: false,
-            error: false,
             errormessage: '',
         }
     },
 
     methods: {
         async handleSubmit() {
+            const { dispatch, state, commit } = this.$store
             this.submitted = true
-            const { oldpassword, newpassword, confirmpassword } = this
-            if (
-                oldpassword == '' &&
-                newpassword == '' &&
-                confirmpassword == ''
-            ) {
-                this.errormessage = 'โปรดใส่ รหัสผ่าน ของคุณ'
-                return (this.error = true)
-            }
-            if (oldpassword == '') {
-                this.errormessage = 'โปรดใส่ รหัสผ่านเก่า ของคุณ'
-                return (this.error = true)
-            }
+            const { newpassword, confirmpassword } = this
             if (newpassword == '' || confirmpassword == '') {
                 this.errormessage =
                     'โปรดใส่ รหัสผ่านใหม่ และ ยืนยันรหัสผ่านใหม่ ของคุณ'
-                return (this.error = true)
+                commit('changePassword/changePasswordFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
             }
             if (newpassword !== confirmpassword) {
                 this.errormessage =
                     'รหัสผ่านใหม่ และ ยืนยันรหัสผ่านใหม่ ไม่ตรงกัน'
-                return (this.error = true)
+                commit('changePassword/changePasswordFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
             }
-            const { dispatch, state } = this.$store
-            if (
-                oldpassword &&
-                newpassword == confirmpassword &&
-                newpassword != ''
-            ) {
+            if (newpassword.length < 8) {
+                this.errormessage = 'โปรดใส่รหัสผ่านใหม่อย่างน้อย 8 ตัวอักษร'
+                commit('changePassword/changePasswordFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
+            }
+            if (newpassword == confirmpassword && newpassword != '') {
                 await dispatch('changePassword/changepassword', {
-                    oldpassword,
                     newpassword,
                 })
 
