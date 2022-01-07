@@ -3,14 +3,11 @@
         <v-row
             ><v-col md="9" class="mx-auto" xl="5">
                 <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
-                    <v-textarea label="เพิ่มโพสต์" v-model="text"></v-textarea>
-                    <v-alert
-                        text
-                        type="info"
-                        v-show="this.$store.state.addPost.isLoading"
-                    >
-                        กำลังเพิ่มโพสต์
-                    </v-alert>
+                    <v-textarea
+                        label="เพิ่มโพสต์"
+                        v-model="text"
+                        :disabled="this.$store.state.addPost.isLoading"
+                    ></v-textarea>
                     <v-alert
                         text
                         type="error"
@@ -19,10 +16,19 @@
                         {{ errormessage }}
                     </v-alert>
                     <div class="d-flex justify-end">
-                        <v-btn color="primary" @click="handleSubmit"
+                        <v-btn
+                            color="primary"
+                            @click="handleSubmit"
+                            :disabled="this.$store.state.addPost.isLoading"
                             >เพิ่มโพสต์</v-btn
                         >
                     </div>
+                    <v-progress-linear
+                        class="mt-2"
+                        indeterminate
+                        color="primary"
+                        v-show="this.$store.state.addPost.isLoading"
+                    ></v-progress-linear>
                 </v-sheet>
             </v-col>
         </v-row>
@@ -41,7 +47,6 @@ export default {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
-
             const classcode = state.getInfoClassroom.data.classcode
             if (this.text == '') {
                 this.errormessage = 'โปรดเขียนข้อความที่ต้องการโพสต์'

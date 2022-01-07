@@ -114,6 +114,39 @@ const addPost = async (req) => {
     return res
 }
 
+const editPost = async (req) => {
+    let res = null
+    console.log(req)
+    const { data } = await httpClient
+        .put(`/post/${req.classcode}/${req.postid}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const deletePost = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .delete(`/post/${req.classcode}/${req.post_id}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 const addComment = async (req) => {
     let res = null
     const { data } = await httpClient
@@ -180,6 +213,8 @@ export const classroomService = {
     listAllComment,
     getInfoClassroom,
     addPost,
+    editPost,
+    deletePost,
     addProblem,
     addComment,
     deleteComment,

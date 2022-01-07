@@ -27,6 +27,9 @@
                         :posttext="post.text"
                         :who="post.name"
                         :date="post.updated_at"
+                        :classcode="post.classcode"
+                        @getPost="getListPost"
+                        :key="upDateKey"
                     />
                 </v-lazy>
             </v-col>
@@ -51,6 +54,7 @@ export default {
     data: () => ({
         textPost: [],
         isActive: false,
+        upDateKey: 0,
         checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
     methods: {
@@ -60,6 +64,7 @@ export default {
                 .dispatch('listPost/listPost', { classcode })
                 .then(() => {
                     this.textPost = this.$store.state.listPost.list
+                    this.upDateKey += 1
                 })
             return data
         },

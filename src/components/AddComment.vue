@@ -1,17 +1,6 @@
 <template>
     <div>
-        <!-- <v-alert
-            text
-            type="info"
-            v-show="this.$store.state.addComment.isLoading"
-        >
-            กำลังคอมเมนต์
-        </v-alert> -->
-        <v-alert
-            text
-            type="error"
-            v-show="this.$store.state.addComment.isFailed"
-        >
+        <v-alert text type="error" v-show="error">
             {{ errormessage }}
         </v-alert>
         <v-row align="center">
@@ -21,8 +10,8 @@
                     label="เพิ่มคอมเมนต์"
                     maxlength="500"
                     counter
-                    required
-                    :disabled="this.$store.state.addComment.isLoading"
+                    v-on:keyup.enter="handleSubmit"
+                    :disabled="isLoading || loading"
                 ></v-text-field>
             </v-col>
             <v-col cols="2" md="2">
@@ -31,7 +20,7 @@
                     color="primary"
                     class="mr-1"
                     @click="handleSubmit"
-                    :disabled="this.$store.state.addComment.isLoading"
+                    :disabled="isLoading || loading"
                     >comment</v-btn
                 >
             </v-col>
@@ -39,7 +28,7 @@
         <v-progress-linear
             indeterminate
             color="primary"
-            v-show="this.$store.state.addComment.isLoading"
+            v-show="isLoading"
         ></v-progress-linear>
     </div>
 </template>
@@ -47,21 +36,23 @@
 <script>
 export default {
     name: 'AddComment',
-    props: ['postid'],
+    props: ['postid', 'loading'],
     data() {
         return {
             text: '',
             submitted: false,
+            error: false,
             errormessage: '',
-            getpostid: this.postid,
+            isLoading: false,
         }
     },
     methods: {
         async handleSubmit() {
+            this.isLoading = true
             const { dispatch, state, commit } = this.$store
             this.submitted = true
             const classcode = this.$route.params.code
-            const { getpostid } = this
+            const { postid } = this
             if (this.text == '') {
                 this.errormessage = 'โปรดเขียนข้อความที่ต้องการคอมเม้น'
                 commit('addComment/addCommentFailure', {
@@ -73,25 +64,31 @@ export default {
             }
             if (this.text.length < 5) {
                 this.errormessage = 'คอมเม้นอย่างน้อย 5 ตัวอักษร'
+                this.error = true
                 commit('addComment/addCommentFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
                 })
+                this.isLoading = false
                 return
             }
             await dispatch('addComment/addComment', {
                 text: this.text,
-                postid: getpostid,
+                postid,
                 classcode,
             })
             if (state.addComment.isSuccess) {
                 this.$emit('getComment')
+                this.isLoading = false
+                this.error = false
             }
             this.text = ''
             if (state.addComment.isFailed) {
                 this.errormessage =
                     state.addComment.message ?? 'ไม่สามารถโพสต์ได้'
+                this.isLoading = false
+                this.error = true
             }
         },
     },

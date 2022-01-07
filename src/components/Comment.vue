@@ -16,19 +16,19 @@
             </v-col>
             <v-col cols="8" xs="10" sm="10" md="10">
                 <h5>{{ who }}</h5>
+                <h6>{{ created_at }}</h6>
                 <p>
                     {{ commenttext }}
                 </p>
             </v-col>
             <v-col cols="1" sm="1" md="1">
                 <DeleteComment
-                    :comment_id="getcomment_id"
-                    :post_id="getpost_id"
-                    :classcode="getclasscode"
+                    :comment_id="comment_id"
+                    :post_id="post_id"
+                    :classcode="classcode"
                     v-show="user == who"
                     @getComment="getListComment"
                 />
-                <!-- <v-btn icon><v-icon>mdi-delete</v-icon></v-btn> -->
             </v-col>
         </v-row>
     </div>
@@ -38,15 +38,20 @@
 import DeleteComment from './DeleteComment'
 export default {
     name: 'Comment',
-    props: ['comment_id', 'post_id', 'classcode', 'commenttext', 'who', 'role'],
+    props: [
+        'comment_id',
+        'post_id',
+        'classcode',
+        'commenttext',
+        'who',
+        'created_at',
+        'role',
+    ],
     components: {
         DeleteComment,
     },
     data() {
         return {
-            getcomment_id: this.comment_id,
-            getpost_id: this.post_id,
-            getclasscode: this.classcode,
             user: JSON.parse(localStorage.getItem('user'))?.name,
         }
     },

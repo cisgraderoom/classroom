@@ -7,24 +7,23 @@ const initialState = {
     message: null,
 }
 
-export const deleteComment = {
+export const deletePost = {
     namespaced: true,
     state: initialState,
     actions: {
-        async deleteComment({ commit }, { post_id, comment_id, classcode }) {
-            commit('deleteCommentLoading', {
+        async deletePost({ commit }, { post_id, classcode }) {
+            commit('deletePostLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.deleteComment({
+            const res = await classroomService.deletePost({
                 post_id,
-                comment_id,
                 classcode,
             })
             if (!res?.status) {
-                commit('deleteCommentFailure', {
+                commit('deletePostFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -33,7 +32,7 @@ export const deleteComment = {
                 })
                 return res
             }
-            commit('deleteCommentSuccess', {
+            commit('deletePostSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
@@ -42,13 +41,13 @@ export const deleteComment = {
         },
     },
     mutations: {
-        deleteCommentLoading(state, data) {
+        deletePostLoading(state, data) {
             Object.assign(state, data)
         },
-        deleteCommentSuccess(state, data) {
+        deletePostSuccess(state, data) {
             Object.assign(state, data)
         },
-        deleteCommentFailure(state, data) {
+        deletePostFailure(state, data) {
             Object.assign(state, data)
         },
     },

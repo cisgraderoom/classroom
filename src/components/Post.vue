@@ -12,32 +12,64 @@
                     {{ date }}
                 </h5>
             </v-col>
-            <v-col cols="1" sm="1" md="1">
-                <v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn>
-            </v-col>
+            <v-menu offset-y transition="scroll-y-transition">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-col cols="1" sm="1" md="1">
+                        <v-btn icon v-bind="attrs" v-on="on"
+                            ><v-icon>mdi-dots-vertical</v-icon></v-btn
+                        >
+                    </v-col>
+                </template>
+                <v-list v-show="user == who">
+                    <v-list-item link>
+                        <v-list-item-title
+                            ><EditPost
+                                :post_id="postid"
+                                :post_text="posttext"
+                                :class_code="classcode"
+                                @getPost="getListPost"
+                        /></v-list-item-title>
+                    </v-list-item>
+                    <v-list-item link>
+                        <v-list-item-title
+                            ><DeletePost
+                                :post_id="postid"
+                                :class_code="classcode"
+                                @getPost="getListPost"
+                        /></v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-row>
         <br />
         <p>{{ posttext }}</p>
         <v-divider></v-divider>
         <br />
-        <ListComment :postid="getpostid" />
-        <!-- <Comment :postid="getpostid" /> -->
-        <!-- <AddComment :postid="getpostid" /> -->
+        <ListComment :post_id="postid" />
     </v-sheet>
 </template>
 
 <script>
 import ListComment from './ListComment'
+import EditPost from './EditPost.vue'
+import DeletePost from './DeletePost.vue'
 export default {
     name: 'Post',
-    props: ['postid', 'posttext', 'who', 'date'],
-    components: {
-        ListComment,
-    },
+    props: ['postid', 'posttext', 'who', 'date', 'classcode'],
     data() {
         return {
-            getpostid: this.postid,
+            user: JSON.parse(localStorage.getItem('user'))?.name,
         }
+    },
+    components: {
+        ListComment,
+        EditPost,
+        DeletePost,
+    },
+    methods: {
+        getListPost() {
+            this.$emit('getPost')
+        },
     },
 }
 </script>

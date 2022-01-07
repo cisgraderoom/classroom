@@ -16,7 +16,7 @@
                     <v-btn
                         color="secondary"
                         text
-                        @click="dialog = false"
+                        @click="closeDialog"
                         :disabled="this.$store.state.deleteComment.isLoading"
                     >
                         ยกเลิก
@@ -30,6 +30,13 @@
                         ใช่
                     </v-btn>
                 </v-card-actions>
+                <v-alert
+                    text
+                    type="error"
+                    v-show="this.$store.state.deleteComment.isFailed"
+                >
+                    {{ errormessage }}
+                </v-alert>
                 <v-progress-linear
                     indeterminate
                     color="red"
@@ -47,12 +54,8 @@ export default {
 
     data() {
         return {
-            text: '',
             submitted: false,
             errormessage: '',
-            getcomment_id: this.comment_id,
-            getpost_id: this.post_id,
-            getclasscode: this.classcode,
             dialog: false,
         }
     },
@@ -60,21 +63,30 @@ export default {
         async handleSubmit() {
             const { dispatch, state } = this.$store
             this.submitted = true
-            const { getcomment_id, getpost_id, getclasscode } = this
+            const { comment_id, post_id, classcode } = this
             await dispatch('deleteComment/deleteComment', {
-                post_id: getpost_id,
-                comment_id: getcomment_id,
-                classcode: getclasscode,
+                post_id,
+                comment_id,
+                classcode,
             })
             if (state.deleteComment.isSuccess) {
                 this.dialog = false
                 this.$emit('getComment')
             }
-            this.text = ''
+
             if (state.deleteComment.isFailed) {
                 this.errormessage =
                     state.deleteComment.message ?? 'ไม่สามารถลบคอมเม้นได้'
             }
+        },
+        closeDialog() {
+            const { commit } = this.$store
+            commit('deleteComment/deleteCommentFailure', {
+                isFailed: false,
+                isLoading: false,
+                isSuccess: false,
+            })
+            this.dialog = false
         },
     },
 }

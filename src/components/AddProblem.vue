@@ -15,26 +15,31 @@
                         <v-text-field
                             v-model="problemsname"
                             label="ชื่อโจทย์"
+                            :disabled="this.$store.state.addProblem.isLoading"
                         ></v-text-field>
                         <v-textarea
                             v-model="problemstext"
                             label="รายละเอียดโจทย์"
+                            :disabled="this.$store.state.addProblem.isLoading"
                         ></v-textarea>
                         <v-text-field
                             label="คะแนนเต็ม"
                             v-model="maxscore"
                             type="number"
+                            :disabled="this.$store.state.addProblem.isLoading"
                         ></v-text-field>
                         <v-switch
                             color="primary"
                             v-model="type"
                             :label="`ประเภทโจทย์ : ${typetext}`"
+                            :disabled="this.$store.state.addProblem.isLoading"
                             @click="changeType()"
                         ></v-switch>
                         <v-file-input
                             accept="image/*,application/*,.pdf,.html,.css,.json,.txt"
                             label="แนบไฟล์"
                             v-model="asset"
+                            :disabled="this.$store.state.addProblem.isLoading"
                             counter
                             multiple
                             show-size
@@ -45,6 +50,9 @@
                                 label="แนบไฟล์ TestCase .zip"
                                 show-size
                                 v-model="testcase"
+                                :disabled="
+                                    this.$store.state.addProblem.isLoading
+                                "
                             ></v-file-input>
                             <p>
                                 ตัวอย่างไฟล์
@@ -62,6 +70,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
+                            :disabled="this.$store.state.addProblem.isLoading"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -121,6 +130,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="auto"
+                            :disabled="this.$store.state.addProblem.isLoading"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
@@ -163,13 +173,6 @@
                         </v-menu>
                         <v-alert
                             text
-                            type="info"
-                            v-show="this.$store.state.addProblem.isLoading"
-                        >
-                            กำลังเพิ่มโจทย์
-                        </v-alert>
-                        <v-alert
-                            text
                             type="success"
                             v-show="this.$store.state.addProblem.isSuccess"
                         >
@@ -182,8 +185,18 @@
                         >
                             {{ errormessage }}
                         </v-alert>
-                        <div class="d-flex justify-end">
-                            <v-btn color="primary" @click="handleSubmit"
+                        <v-progress-linear
+                            indeterminate
+                            color="primary"
+                            v-show="this.$store.state.addProblem.isLoading"
+                        ></v-progress-linear>
+                        <div class="d-flex justify-end mt-2">
+                            <v-btn
+                                color="primary"
+                                @click="handleSubmit"
+                                :disabled="
+                                    this.$store.state.addProblem.isLoading
+                                "
                                 >เพิ่มโจทย์</v-btn
                             >
                         </div>

@@ -1,11 +1,11 @@
-// import { authHeader } from '../_helpers'
+import { authHeader } from '../_helpers'
 import httpClient from '../_helpers/httpClient'
 
 export const userService = {
     login,
     logout,
     // getAll,
-    // changepassword,
+    changepassword,
 }
 
 async function login(username, password) {
@@ -41,26 +41,25 @@ function logout() {
 //   );
 // }
 
-// async function changepassword(oldpassword, newpassword) {
-//     let response = {}
-//     const { data } = await httpClient
-//         .put(
-//             `/user/changepassword`,
-//             {
-//                 oldpassword,
-//                 newpassword,
-//             },
-//             { headers: authHeader() }
-//         )
-//         .catch((err) => {
-//             response = err?.response?.data
-//             return response
-//         })
-//     if (data?.status) {
-//         response = data
-//     }
-//     return response
-// }
+async function changepassword(newpassword) {
+    let response = {}
+    const { data } = await httpClient
+        .put(
+            `/user/changepassword`,
+            {
+                newpassword,
+            },
+            { headers: authHeader() }
+        )
+        .catch((err) => {
+            response = err?.response?.data
+            return response
+        })
+    if (data?.status) {
+        response = data
+    }
+    return response
+}
 
 // function handleResponse(response) {
 //   return response.text().then((text) => {
