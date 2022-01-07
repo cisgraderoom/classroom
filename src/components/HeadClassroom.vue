@@ -29,6 +29,13 @@
                                 mdi-clipboard-multiple-outline
                             </v-icon>
                         </h4>
+                        <v-progress-linear
+                            indeterminate
+                            color="secondary"
+                            v-show="
+                                this.$store.state.getInfoClassroom.isLoading
+                            "
+                        ></v-progress-linear>
                     </v-img>
                 </v-card>
             </v-col>

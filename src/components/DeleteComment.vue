@@ -16,7 +16,7 @@
                     <v-btn
                         color="secondary"
                         text
-                        @click="dialog = false"
+                        @click="closeDialog"
                         :disabled="this.$store.state.deleteComment.isLoading"
                     >
                         ยกเลิก
@@ -30,6 +30,13 @@
                         ใช่
                     </v-btn>
                 </v-card-actions>
+                <v-alert
+                    text
+                    type="error"
+                    v-show="this.$store.state.deleteComment.isFailed"
+                >
+                    {{ errormessage }}
+                </v-alert>
                 <v-progress-linear
                     indeterminate
                     color="red"
@@ -71,6 +78,15 @@ export default {
                 this.errormessage =
                     state.deleteComment.message ?? 'ไม่สามารถลบคอมเม้นได้'
             }
+        },
+        closeDialog() {
+            const { commit } = this.$store
+            commit('deleteComment/deleteCommentFailure', {
+                isFailed: false,
+                isLoading: false,
+                isSuccess: false,
+            })
+            this.dialog = false
         },
     },
 }

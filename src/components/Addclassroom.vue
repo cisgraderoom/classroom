@@ -24,6 +24,10 @@
                                     <v-text-field
                                         v-model="classname"
                                         label="ชื่อชั้นเรียน"
+                                        :disabled="
+                                            this.$store.state.createClassroom
+                                                .isLoading
+                                        "
                                         required
                                     ></v-text-field>
                                     <v-select
@@ -31,6 +35,10 @@
                                         :value="1"
                                         v-model="section"
                                         label="ตอนเรียน"
+                                        :disabled="
+                                            this.$store.state.createClassroom
+                                                .isLoading
+                                        "
                                     >
                                     </v-select>
                                 </v-col>
@@ -40,6 +48,10 @@
                                         :value="2564"
                                         v-model="year"
                                         label="ปีการศึกษา"
+                                        :disabled="
+                                            this.$store.state.createClassroom
+                                                .isLoading
+                                        "
                                     ></v-select> </v-col
                                 ><v-col cols="12" sm="6">
                                     <v-select
@@ -47,17 +59,14 @@
                                         :value="1"
                                         v-model="term"
                                         label="เทอม"
+                                        :disabled="
+                                            this.$store.state.createClassroom
+                                                .isLoading
+                                        "
                                     ></v-select>
                                 </v-col>
                             </v-row>
                         </v-form>
-                        <v-alert
-                            text
-                            type="info"
-                            v-show="this.$store.state.createClassroom.isLoading"
-                        >
-                            กำลังสร้างชั้นเรียน
-                        </v-alert>
                         <v-alert
                             text
                             type="error"
@@ -66,13 +75,29 @@
                             {{ errormessage }}
                         </v-alert>
                     </v-container>
+                    <v-progress-linear
+                        class="mt-2"
+                        indeterminate
+                        color="primary"
+                        v-show="this.$store.state.createClassroom.isLoading"
+                    ></v-progress-linear>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closedialog">
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="closedialog"
+                        :disabled="this.$store.state.createClassroom.isLoading"
+                    >
                         ยกเลิก
                     </v-btn>
-                    <v-btn color="primary" text @click="handleSubmit">
+                    <v-btn
+                        color="primary"
+                        text
+                        @click="handleSubmit"
+                        :disabled="this.$store.state.createClassroom.isLoading"
+                    >
                         เพิ่มชั้นเรียน
                     </v-btn>
                 </v-card-actions>

@@ -18,15 +18,9 @@
                     type="file"
                     @change="onFileChange($event)"
                     accept=".csv"
+                    :disabled="this.$store.state.addUser.isLoading"
                 />
             </v-col>
-            <v-alert
-                text
-                type="info"
-                v-show="this.$store.state.addUser.isLoading"
-            >
-                กำลังเพิ่มผู้ใช้งาน
-            </v-alert>
             <v-alert
                 text
                 type="error"
@@ -41,7 +35,12 @@
             >
                 เพิ่มผู้ใช้งานแล้ว
             </v-alert>
-            <div class="d-flex justify-end">
+            <v-progress-linear
+                indeterminate
+                color="primary"
+                v-show="this.$store.state.addUser.isLoading"
+            ></v-progress-linear>
+            <div class="d-flex justify-end mt-2">
                 <v-btn color="primary" @click="handleSubmit"
                     >เพิ่มผู้ใช้งาน</v-btn
                 >

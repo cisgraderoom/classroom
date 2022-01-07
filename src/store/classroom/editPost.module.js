@@ -4,7 +4,7 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    error: null,
+    message: null,
 }
 
 export const editPost = {
@@ -29,7 +29,7 @@ export const editPost = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    error: res.message,
+                    message: res.message,
                 })
                 return res
             }

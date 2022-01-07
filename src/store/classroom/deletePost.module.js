@@ -4,6 +4,7 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
+    message: null,
 }
 
 export const deletePost = {
@@ -27,6 +28,7 @@ export const deletePost = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
+                    message: res.message,
                 })
                 return res
             }

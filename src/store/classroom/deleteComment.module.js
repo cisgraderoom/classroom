@@ -4,6 +4,7 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
+    message: null,
 }
 
 export const deleteComment = {
@@ -28,6 +29,7 @@ export const deleteComment = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
+                    message: res.message,
                 })
                 return res
             }

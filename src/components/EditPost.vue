@@ -102,11 +102,17 @@ export default {
                 }
                 if (state?.editPost?.isFailed) {
                     this.errormessage =
-                        state.editPost.message ?? 'ไม่สามารถลบโพสต์'
+                        state.editPost.message ?? 'ไม่สามารถแก้ไขโพสต์ได้'
                 }
             }
         },
         closedialog() {
+            const { commit } = this.$store
+            commit('editPost/editPostFailure', {
+                isFailed: false,
+                isLoading: false,
+                isSuccess: false,
+            })
             this.textpost = this.post_text
             this.dialog = false
         },

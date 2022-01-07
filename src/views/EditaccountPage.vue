@@ -18,6 +18,9 @@
                             :rules="newpasswordRules"
                             type="password"
                             label="รหัสผ่านใหม่ (อย่างน้อย 8 ตัวอักษร)"
+                            :disabled="
+                                this.$store.state.changePassword.isLoading
+                            "
                             required
                         ></v-text-field>
                         <v-text-field
@@ -25,15 +28,11 @@
                             :rules="confirmpasswordRules"
                             type="password"
                             label="ยืนยันรหัสผ่านใหม่ (อย่างน้อย 8 ตัวอักษร)"
+                            :disabled="
+                                this.$store.state.changePassword.isLoading
+                            "
                             required
                         ></v-text-field>
-                        <v-alert
-                            text
-                            type="info"
-                            v-show="this.$store.state.changePassword.isLoading"
-                        >
-                            กำลังเปลี่ยนรหัสผ่าน
-                        </v-alert>
                         <v-alert
                             text
                             type="error"
@@ -48,11 +47,19 @@
                         >
                             เปลี่ยนรหัสผ่านสำเร็จ
                         </v-alert>
+                        <v-progress-linear
+                            indeterminate
+                            color="primary"
+                            v-show="this.$store.state.changePassword.isLoading"
+                        ></v-progress-linear>
                         <v-btn
                             @click="handleSubmit"
                             elevation="2"
                             color="primary"
                             block
+                            :disabled="
+                                this.$store.state.changePassword.isLoading
+                            "
                             >Change Password</v-btn
                         >
                     </v-col>

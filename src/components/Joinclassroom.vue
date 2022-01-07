@@ -23,17 +23,14 @@
                                 <v-text-field
                                     v-model="classcode"
                                     label="รหัสชั้นเรียน"
+                                    :disabled="
+                                        this.$store.state.joinClassroom
+                                            .isLoading
+                                    "
                                     required
                                 ></v-text-field>
                             </v-col>
                         </v-row>
-                        <v-alert
-                            text
-                            type="info"
-                            v-show="this.$store.state.joinClassroom.isLoading"
-                        >
-                            กำลังเข้าร่วมชั้นเรียน
-                        </v-alert>
                         <v-alert
                             text
                             type="error"
@@ -41,14 +38,29 @@
                         >
                             {{ errormessage }}
                         </v-alert>
+                        <v-progress-linear
+                            indeterminate
+                            color="primary"
+                            v-show="this.$store.state.joinClassroom.isLoading"
+                        ></v-progress-linear>
                     </v-container>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closedialog">
+                    <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="closedialog"
+                        :disabled="this.$store.state.joinClassroom.isLoading"
+                    >
                         ยกเลิก
                     </v-btn>
-                    <v-btn color="primary" text @click="handleSubmit">
+                    <v-btn
+                        color="primary"
+                        text
+                        @click="handleSubmit"
+                        :disabled="this.$store.state.joinClassroom.isLoading"
+                    >
                         เข้าร่วมชั้นเรียน
                     </v-btn>
                 </v-card-actions>

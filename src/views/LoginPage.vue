@@ -23,6 +23,9 @@
                             v-model="username"
                             :rules="usernameRules"
                             label="Username"
+                            :disabled="
+                                this.$store.state.authentication.isLoading
+                            "
                             required
                         ></v-text-field>
                         <v-text-field
@@ -30,15 +33,12 @@
                             :rules="passwordRules"
                             type="password"
                             label="Password"
+                            :disabled="
+                                this.$store.state.authentication.isLoading
+                            "
                             v-on:keyup.enter="handleSubmit"
                             required
                         ></v-text-field>
-                        <v-alert
-                            text
-                            type="info"
-                            v-show="this.$store.state.authentication.isLoading"
-                            >กำลังเข้าสู่ระบบ</v-alert
-                        >
                         <v-alert
                             text
                             type="error"
@@ -50,8 +50,17 @@
                             elevation="2"
                             color="primary"
                             block
+                            :disabled="
+                                this.$store.state.authentication.isLoading
+                            "
                             >login</v-btn
                         >
+                        <v-progress-linear
+                            class="mt-2"
+                            indeterminate
+                            color="primary"
+                            v-show="this.$store.state.authentication.isLoading"
+                        ></v-progress-linear>
                     </v-col>
                 </v-row>
                 <v-row>
