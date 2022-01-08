@@ -92,7 +92,6 @@ export default {
                         if (entry.intersectionRatio > 0 && this.hasNext) {
                             const classcode = this.$route.params.code
                             this.currentPage += 1
-                            console.log('getnext ', this.currentPage)
                             let data = this.$store
                                 .dispatch('nextPost/nextPost', {
                                     classcode,
