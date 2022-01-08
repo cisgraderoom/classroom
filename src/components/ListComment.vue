@@ -34,6 +34,7 @@
                         :classcode="comment.classcode"
                         :commenttext="comment.text"
                         :who="comment.name"
+                        :username="comment.username"
                         :created_at="comment.created_at"
                         :role="comment.role"
                         @getComment="getListComment"

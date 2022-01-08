@@ -30,6 +30,7 @@
                         :postid="post.post_id"
                         :posttext="post.text"
                         :who="post.name"
+                        :username="post.username"
                         :date="post.updated_at"
                         :classcode="post.classcode"
                         @getPost="getListPost"

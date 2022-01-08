@@ -7,8 +7,8 @@
                 >
             </v-col>
             <v-col cols="8" sm="10" md="10">
-                <h3>{{ who }}</h3>
-                <h5>
+                <h3 class="deep-orange--text text--darken-1">{{ who }}</h3>
+                <h5 class="grey--text text--darken-1">
                     {{ date }}
                 </h5>
             </v-col>
@@ -20,7 +20,7 @@
                         >
                     </v-col>
                 </template>
-                <v-list v-show="user == who">
+                <v-list v-show="user == username">
                     <v-list-item link>
                         <v-list-item-title
                             ><EditPost
@@ -53,14 +53,22 @@
 import ListComment from './ListComment'
 import EditPost from './EditPost.vue'
 import DeletePost from './DeletePost.vue'
+// import TimeAgo from 'javascript-time-ago'
+// import en from 'javascript-time-ago/locale/en.json'
+// TimeAgo.addDefaultLocale(en)
+
 export default {
     name: 'Post',
-    props: ['postid', 'posttext', 'who', 'date', 'classcode'],
+    props: ['postid', 'posttext', 'who', 'username', 'date', 'classcode'],
     data() {
         return {
-            user: JSON.parse(localStorage.getItem('user'))?.name,
+            dateFormat: null,
+            user: JSON.parse(localStorage.getItem('user'))?.username,
         }
     },
+    // mounted() {
+    //     this.formatDate()
+    // },
     components: {
         ListComment,
         EditPost,
@@ -70,6 +78,12 @@ export default {
         getListPost() {
             this.$emit('getPost')
         },
+        // formatDate() {
+        //     console.log(this.date)
+        //     const timeAgo = new TimeAgo('en-US')
+        //     this.dateFormat = timeAgo.format(this.date)
+        //     console.log(this.dateFormat)
+        // },
     },
 }
 </script>

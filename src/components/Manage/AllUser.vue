@@ -9,10 +9,19 @@
                 <br />
                 <v-data-table
                     :headers="headers"
-                    :items="desserts"
-                    :items-per-page="5"
+                    :items="listuser"
+                    :page.sync="page"
+                    :items-per-page="itemsPerPage"
+                    hide-default-footer
                     class="elevation-1"
+                    @page-count="pageCount = $event"
                 ></v-data-table>
+                <div class="text-center pt-2">
+                    <v-pagination
+                        v-model="page"
+                        :length="pageCount"
+                    ></v-pagination>
+                </div>
             </v-sheet>
         </v-col>
     </v-row>
@@ -21,104 +30,40 @@
 <script>
 export default {
     name: 'AllUser',
+    mounted() {
+        this.getListUser()
+    },
     data() {
         return {
+            page: 1,
+            pageCount: 0,
+            itemsPerPage: 5,
             headers: [
                 {
-                    text: 'Name',
+                    text: 'ชื่อ',
                     align: 'start',
-                    sortable: false,
                     value: 'name',
                 },
-                { text: 'Username', value: 'calories' },
-                { text: 'Password', value: 'fat' },
-                { text: 'Role', value: 'carbs' },
-                { text: 'Status', value: 'protein' },
-                { text: 'Manage', value: 'iron' },
+                { text: 'Username', value: 'username' },
+                { text: 'role', value: 'role' },
+                { text: 'status', value: 'status' },
+                { text: 'created_at', value: 'created_at' },
+                { text: 'update_at', value: 'update_at' },
             ],
-            desserts: [
-                {
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                    fat: 6.0,
-                    carbs: 24,
-                    protein: 4.0,
-                    iron: '1%',
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    calories: 237,
-                    fat: 9.0,
-                    carbs: 37,
-                    protein: 4.3,
-                    iron: '1%',
-                },
-                {
-                    name: 'Eclair',
-                    calories: 262,
-                    fat: 16.0,
-                    carbs: 23,
-                    protein: 6.0,
-                    iron: '7%',
-                },
-                {
-                    name: 'Cupcake',
-                    calories: 305,
-                    fat: 3.7,
-                    carbs: 67,
-                    protein: 4.3,
-                    iron: '8%',
-                },
-                {
-                    name: 'Gingerbread',
-                    calories: 356,
-                    fat: 16.0,
-                    carbs: 49,
-                    protein: 3.9,
-                    iron: '16%',
-                },
-                {
-                    name: 'Jelly bean',
-                    calories: 375,
-                    fat: 0.0,
-                    carbs: 94,
-                    protein: 0.0,
-                    iron: '0%',
-                },
-                {
-                    name: 'Lollipop',
-                    calories: 392,
-                    fat: 0.2,
-                    carbs: 98,
-                    protein: 0,
-                    iron: '2%',
-                },
-                {
-                    name: 'Honeycomb',
-                    calories: 408,
-                    fat: 3.2,
-                    carbs: 87,
-                    protein: 6.5,
-                    iron: '45%',
-                },
-                {
-                    name: 'Donut',
-                    calories: 452,
-                    fat: 25.0,
-                    carbs: 51,
-                    protein: 4.9,
-                    iron: '22%',
-                },
-                {
-                    name: 'KitKat',
-                    calories: 518,
-                    fat: 26.0,
-                    carbs: 65,
-                    protein: 7,
-                    iron: '6%',
-                },
-            ],
+            listuser: [],
         }
+    },
+    methods: {
+        getListUser() {
+            let data = this.$store
+                .dispatch('listAllUser/listAllUser')
+                .then(() => {
+                    this.listuser = this.$store.state.listAllUser.listUser
+                    this.hasNext = this.$store.state.listPost.hasNext
+                    this.upDateKey += 1
+                })
+            return data
+        },
     },
 }
 </script>
