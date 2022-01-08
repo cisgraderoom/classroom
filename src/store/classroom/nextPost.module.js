@@ -5,25 +5,27 @@ const initialState = {
     isFailed: false,
     isSuccess: false,
     list: [],
-    currentPage: null,
     hasNext: false,
     error: '',
 }
 
-export const listPost = {
+export const nextPost = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listPost({ commit }, { classcode }) {
-            commit('listPostLoading', {
+        async nextPost({ commit }, { classcode, currentPage }) {
+            commit('nextPostLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listAllPost({ classcode })
+            const res = await classroomService.listNextPost({
+                classcode,
+                currentPage,
+            })
             if (!res?.status) {
-                commit('listPostFailure', {
+                commit('nextPostFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -32,25 +34,24 @@ export const listPost = {
                 })
                 return res
             }
-            commit('listPostSuccess', {
+            commit('nextPostSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
                 list: res.data,
                 hasNext: res.pageInfo.hasNext,
-                currentPage: res.pageInfo.currentPage,
             })
         },
     },
     mutations: {
-        listPostLoading(state, data) {
+        nextPostLoading(state, data) {
             Object.assign(state, data)
         },
-        listPostSuccess(state, data) {
+        nextPostSuccess(state, data) {
             Object.assign(state, data)
         },
-        listPostFailure(state, data) {
+        nextPostFailure(state, data) {
             Object.assign(state, data)
         },
     },

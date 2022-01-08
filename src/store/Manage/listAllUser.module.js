@@ -1,29 +1,28 @@
-import { classroomService } from '../../_services'
+import { manageService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    list: [],
-    currentPage: null,
+    listUser: null,
     hasNext: false,
     error: '',
 }
 
-export const listPost = {
+export const listAllUser = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listPost({ commit }, { classcode }) {
-            commit('listPostLoading', {
+        async listAllUser({ commit }) {
+            commit('listAllUserLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listAllPost({ classcode })
+            const res = await manageService.listAllUser()
             if (!res?.status) {
-                commit('listPostFailure', {
+                commit('listAllUserFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -32,25 +31,22 @@ export const listPost = {
                 })
                 return res
             }
-            commit('listPostSuccess', {
+            commit('listAllUserSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                list: res.data,
-                hasNext: res.pageInfo.hasNext,
-                currentPage: res.pageInfo.currentPage,
             })
         },
     },
     mutations: {
-        listPostLoading(state, data) {
+        listAllUserLoading(state, data) {
             Object.assign(state, data)
         },
-        listPostSuccess(state, data) {
+        listAllUserSuccess(state, data) {
             Object.assign(state, data)
         },
-        listPostFailure(state, data) {
+        listAllUserFailure(state, data) {
             Object.assign(state, data)
         },
     },

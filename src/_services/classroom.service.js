@@ -82,6 +82,22 @@ const listAllPost = async (req) => {
     return res
 }
 
+const listNextPost = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/post/${req.classcode}?page=${req.currentPage}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 const listAllComment = async (req) => {
     let res = null
     const { data } = await httpClient
@@ -210,6 +226,7 @@ export const classroomService = {
     joinClassroom,
     listClassroom,
     listAllPost,
+    listNextPost,
     listAllComment,
     getInfoClassroom,
     addPost,

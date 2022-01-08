@@ -257,8 +257,6 @@ export default {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
-            console.log(this.asset)
-            console.log(this.testcase)
             const classcode = state.getInfoClassroom.data.classcode
             if (this.problemsname == '') {
                 this.errormessage = 'โปรดเขียนชื่อโจทย์ที่ต้องการ'

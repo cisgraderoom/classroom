@@ -15,8 +15,16 @@
                 >
             </v-col>
             <v-col cols="8" xs="10" sm="10" md="10">
-                <h5>{{ who }}</h5>
-                <h6>{{ created_at }}</h6>
+                <h5 v-show="role != 'superteacher' && role != 'teacher'">
+                    {{ who }}
+                </h5>
+                <h5
+                    class="deep-orange--text text--darken-1"
+                    v-show="role == 'superteacher' || role == 'teacher'"
+                >
+                    {{ who }}
+                </h5>
+                <h6 class="grey--text text--darken-1">{{ created_at }}</h6>
                 <p>
                     {{ commenttext }}
                 </p>
@@ -26,7 +34,7 @@
                     :comment_id="comment_id"
                     :post_id="post_id"
                     :classcode="classcode"
-                    v-show="user == who"
+                    v-show="user == username"
                     @getComment="getListComment"
                 />
             </v-col>
@@ -44,6 +52,7 @@ export default {
         'classcode',
         'commenttext',
         'who',
+        'username',
         'created_at',
         'role',
     ],
@@ -52,7 +61,7 @@ export default {
     },
     data() {
         return {
-            user: JSON.parse(localStorage.getItem('user'))?.name,
+            user: JSON.parse(localStorage.getItem('user'))?.username,
         }
     },
     methods: {
