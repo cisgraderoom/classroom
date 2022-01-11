@@ -19,10 +19,10 @@ const addUser = async (req) => {
     return res
 }
 
-const listAllUser = async () => {
+const addUserManual = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get('/user/all', {
+        .post('/user/new', req, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -35,7 +35,63 @@ const listAllUser = async () => {
     return res
 }
 
+const listAllUser = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/user/all?page=${req.currentPage}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const editUser = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .put(`/user/${req.username}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const resetPassword = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post(
+            `/user/${req.username}/reset`,
+            {},
+            {
+                headers: authHeader(),
+            }
+        )
+        .catch((err) => {
+            console.log(err)
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 export const manageService = {
     addUser,
+    addUserManual,
     listAllUser,
+    editUser,
+    resetPassword,
 }

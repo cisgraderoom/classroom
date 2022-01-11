@@ -1,8 +1,8 @@
 <template>
-    <v-col md="4" xl="2" class="mx-auto">
+    <v-col md="5" xl="4" class="mx-auto">
         <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
             <v-col>
-                <h3>เพิ่มผู้ใช้งาน</h3>
+                <h3>เพิ่มผู้ใช้งาน(แนบไฟล์)</h3>
                 <p class="mt-2">แนบไฟล์นามสกุล .csv</p>
                 <p>
                     ตัวอย่างไฟล์

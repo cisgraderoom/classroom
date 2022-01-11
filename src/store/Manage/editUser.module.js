@@ -4,26 +4,28 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    listUser: null,
-    totalUser: null,
-    hasNext: false,
     error: '',
 }
 
-export const listAllUser = {
+export const editUser = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listAllUser({ commit }, { currentPage }) {
-            commit('listAllUserLoading', {
+        async editUser({ commit }, { username, name, role, status }) {
+            commit('editUserLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await manageService.listAllUser({ currentPage })
+            const res = await manageService.editUser({
+                username,
+                name,
+                role,
+                status,
+            })
             if (!res?.status) {
-                commit('listAllUserFailure', {
+                commit('editUserFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -32,25 +34,22 @@ export const listAllUser = {
                 })
                 return res
             }
-            commit('listAllUserSuccess', {
+            commit('editUserSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                listUser: res.data,
-                totalUser: res.pageInfo.totalItems,
-                hasNext: res.pageInfo.hasNext,
             })
         },
     },
     mutations: {
-        listAllUserLoading(state, data) {
+        editUserLoading(state, data) {
             Object.assign(state, data)
         },
-        listAllUserSuccess(state, data) {
+        editUserSuccess(state, data) {
             Object.assign(state, data)
         },
-        listAllUserFailure(state, data) {
+        editUserFailure(state, data) {
             Object.assign(state, data)
         },
     },
