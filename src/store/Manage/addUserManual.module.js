@@ -4,26 +4,32 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    listUser: null,
-    totalUser: null,
-    hasNext: false,
     error: '',
 }
 
-export const listAllUser = {
+export const addUserManual = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listAllUser({ commit }, { currentPage }) {
-            commit('listAllUserLoading', {
+        async addUserManual(
+            { commit },
+            { name, role, username, password, status }
+        ) {
+            commit('addUserManualLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await manageService.listAllUser({ currentPage })
+            const res = await manageService.addUserManual({
+                name,
+                role,
+                username,
+                password,
+                status,
+            })
             if (!res?.status) {
-                commit('listAllUserFailure', {
+                commit('addUserManualFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -32,25 +38,22 @@ export const listAllUser = {
                 })
                 return res
             }
-            commit('listAllUserSuccess', {
+            commit('addUserManualSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                listUser: res.data,
-                totalUser: res.pageInfo.totalItems,
-                hasNext: res.pageInfo.hasNext,
             })
         },
     },
     mutations: {
-        listAllUserLoading(state, data) {
+        addUserManualLoading(state, data) {
             Object.assign(state, data)
         },
-        listAllUserSuccess(state, data) {
+        addUserManualSuccess(state, data) {
             Object.assign(state, data)
         },
-        listAllUserFailure(state, data) {
+        addUserManualFailure(state, data) {
             Object.assign(state, data)
         },
     },

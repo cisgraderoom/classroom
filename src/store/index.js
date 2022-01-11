@@ -15,7 +15,11 @@ import { listPost } from './classroom/listPost.module'
 import { nextPost } from './classroom/nextPost.module'
 import { listComment } from './classroom/listComment.module'
 import { users } from './users.module'
+import { listAllUser } from './Manage/listAllUser.module'
 import { addUser } from './Manage/addUser.module'
+import { addUserManual } from './Manage/addUserManual.module'
+import { editUser } from './Manage/editUser.module'
+import { resetPassword } from './Manage/resetPassword.module'
 import { addProblem } from './classroom/addProblem.module'
 import { addComment } from './classroom/addComment.module'
 import { deleteComment } from './classroom/deleteComment.module'
@@ -38,7 +42,11 @@ export default new Vuex.Store({
         listPost,
         nextPost,
         listComment,
+        listAllUser,
         addUser,
+        addUserManual,
+        editUser,
+        resetPassword,
         addProblem,
         addComment,
         deleteComment,

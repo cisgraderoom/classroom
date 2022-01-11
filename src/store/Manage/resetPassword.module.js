@@ -4,26 +4,24 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    listUser: null,
-    totalUser: null,
-    hasNext: false,
     error: '',
 }
 
-export const listAllUser = {
+export const resetPassword = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listAllUser({ commit }, { currentPage }) {
-            commit('listAllUserLoading', {
+        async resetPassword({ commit }, { username }) {
+            console.log(username)
+            commit('resetPasswordLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await manageService.listAllUser({ currentPage })
+            const res = await manageService.resetPassword({ username })
             if (!res?.status) {
-                commit('listAllUserFailure', {
+                commit('resetPasswordFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -32,25 +30,22 @@ export const listAllUser = {
                 })
                 return res
             }
-            commit('listAllUserSuccess', {
+            commit('resetPasswordSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                listUser: res.data,
-                totalUser: res.pageInfo.totalItems,
-                hasNext: res.pageInfo.hasNext,
             })
         },
     },
     mutations: {
-        listAllUserLoading(state, data) {
+        resetPasswordLoading(state, data) {
             Object.assign(state, data)
         },
-        listAllUserSuccess(state, data) {
+        resetPasswordSuccess(state, data) {
             Object.assign(state, data)
         },
-        listAllUserFailure(state, data) {
+        resetPasswordFailure(state, data) {
             Object.assign(state, data)
         },
     },

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-row align="top">
+        <v-row>
             <v-col cols="2" sm="1" md="1" lg="1" xl="1">
                 <v-icon
                     large
@@ -24,7 +24,7 @@
                 >
                     {{ who }}
                 </h5>
-                <h6 class="grey--text text--darken-1">{{ created_at }}</h6>
+                <h6 class="grey--text text--darken-1">{{ dateFormat }}</h6>
                 <p>
                     {{ commenttext }}
                 </p>
@@ -44,6 +44,10 @@
 
 <script>
 import DeleteComment from './DeleteComment'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
+TimeAgo.addDefaultLocale(en)
+
 export default {
     name: 'Comment',
     props: [
@@ -59,14 +63,22 @@ export default {
     components: {
         DeleteComment,
     },
+    mounted() {
+        this.formatDate()
+    },
     data() {
         return {
             user: JSON.parse(localStorage.getItem('user'))?.username,
+            dateFormat: null,
         }
     },
     methods: {
         getListComment() {
             this.$emit('getComment')
+        },
+        formatDate() {
+            const timeAgo = new TimeAgo('en-US')
+            this.dateFormat = timeAgo.format(new Date(this.created_at))
         },
     },
 }

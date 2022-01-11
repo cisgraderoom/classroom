@@ -8,7 +8,6 @@ const createClassroom = async (req) => {
             headers: authHeader(),
         })
         .catch((err) => {
-            console.log(data)
             res = err?.response?.data
             return res
         })
@@ -132,7 +131,6 @@ const addPost = async (req) => {
 
 const editPost = async (req) => {
     let res = null
-    console.log(req)
     const { data } = await httpClient
         .put(`/post/${req.classcode}/${req.postid}`, req, {
             headers: authHeader(),
