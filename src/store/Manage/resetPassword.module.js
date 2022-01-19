@@ -12,7 +12,6 @@ export const resetPassword = {
     state: initialState,
     actions: {
         async resetPassword({ commit }, { username }) {
-            console.log(username)
             commit('resetPasswordLoading', {
                 ...initialState,
                 isLoading: true,
