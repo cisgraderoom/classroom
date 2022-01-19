@@ -25,6 +25,7 @@
                 <v-text-field
                     class="mt-0"
                     v-model="password"
+                    type="password"
                     label="Password"
                     :disabled="this.$store.state.addUserManual.isLoading"
                 ></v-text-field>

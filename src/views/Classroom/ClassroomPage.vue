@@ -51,12 +51,25 @@
                         :disabled="this.thisPage == 4"
                         >คะแนนทั้งหมด</v-btn
                     >
+                    <v-btn
+                        elevation="2"
+                        color="secondary"
+                        class="mr-1"
+                        @click="changePage(5)"
+                        v-show="
+                            checkAddClassroom == 'superteacher' ||
+                            checkAddClassroom == 'teacher'
+                        "
+                        :disabled="this.thisPage == 5"
+                        >ตรวจใหม่ & ตรวจคล้ายคลึง</v-btn
+                    >
                 </v-col>
             </v-row>
             <AllPost v-show="thisPage == 1" />
             <AllProblem v-show="thisPage == 2" />
             <AddProblem v-show="thisPage == 3" />
             <AllScore v-show="thisPage == 4" />
+            <RecheckPlagiarism v-show="thisPage == 5" />
         </v-container>
     </div>
 </template>
@@ -68,6 +81,7 @@ import AllPost from '../../components/AllPost'
 import AllProblem from '../../components/AllProblem'
 import AddProblem from '../../components/AddProblem'
 import AllScore from '../../components/AllScore'
+import RecheckPlagiarism from '../../components/RecheckPlagiarism'
 export default {
     name: 'Classroom',
     components: {
@@ -77,6 +91,7 @@ export default {
         AllProblem,
         AddProblem,
         AllScore,
+        RecheckPlagiarism,
     },
     data: () => ({
         thisPage: 1,

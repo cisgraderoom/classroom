@@ -64,7 +64,6 @@ export default {
         async handleSubmit() {
             const { dispatch, state } = this.$store
             const { username } = this
-            console.log(username)
             await dispatch('resetPassword/resetPassword', {
                 username,
             })

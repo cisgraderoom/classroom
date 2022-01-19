@@ -8,16 +8,18 @@
             @getPost="getListPost"
         />
         <SkeletonPost v-show="this.$store.state.listPost.isLoading" />
-        <v-alert
-            text
-            class="text-center"
-            type="info"
+        <v-row
             v-show="
                 this.$store.state.listPost.isSuccess &&
                 this.$store.state.listPost.list.length == 0
             "
-            >ไม่มีโพสในชั้นเรียน</v-alert
         >
+            <v-col md="9" class="mx-auto" xl="5">
+                <v-alert text class="text-center" type="info"
+                    >ไม่มีโพสในชั้นเรียน</v-alert
+                >
+            </v-col>
+        </v-row>
 
         <v-row
             v-for="(post, index) in textPost"
