@@ -3,8 +3,8 @@
         <v-alert text type="error" v-show="error">
             {{ errormessage }}
         </v-alert>
-        <v-row align="center">
-            <v-col cols="9" sm="9" md="9" lg="10" xl="9">
+        <v-row class="mx-auto" align="center">
+            <v-col cols="9" sm="8" md="9" lg="9" xl="9">
                 <v-text-field
                     v-model="text"
                     label="เพิ่มคอมเมนต์"

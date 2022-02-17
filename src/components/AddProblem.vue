@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-row>
-            <v-col md="9" class="mx-auto" xl="5">
+            <v-col md="9" xl="5">
                 <h2 class="my-2">เพิ่มโจทย์</h2>
             </v-col>
         </v-row>
         <div>
             <v-row>
-                <v-col md="9" class="mx-auto" xl="5"
+                <v-col md="10" xl="7"
                     ><v-sheet
                         class="px-7 py-7 rounded white mb-5"
                         elevation="3"
@@ -32,7 +32,7 @@
                             color="primary"
                             v-model="type"
                             :label="`ประเภทโจทย์ : ${typetext}`"
-                            :disabled="this.$store.state.addProblem.isLoading"
+                            disabled
                             @click="changeType()"
                         ></v-switch>
                         <v-file-input
@@ -162,7 +162,7 @@
                                         color="primary"
                                         @click="setClose"
                                     >
-                                        close
+                                        OK
                                     </v-btn></v-time-picker
                                 >
                             </div>
@@ -214,8 +214,8 @@ export default {
         problemsname: '',
         problemstext: '',
         maxscore: null,
-        type: false,
-        typetext: 'manual',
+        type: true,
+        typetext: 'auto',
         asset: null,
         testcase: null,
         menu: false,

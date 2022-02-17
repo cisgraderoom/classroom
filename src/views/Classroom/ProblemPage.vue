@@ -7,30 +7,7 @@
                 :section="classroom.section"
                 :nametecher="classroom.nametecher"
             />
-            <v-row>
-                <v-col
-                    md="10"
-                    offset-md="1"
-                    elevation="12"
-                    xl="6"
-                    offset-xl="3"
-                >
-                    <v-btn
-                        :to="`/classroom/${$route.params.code}/`"
-                        elevation="2"
-                        color="primary"
-                        class="mr-1"
-                        >โพสต์ทั้งหมด</v-btn
-                    >
-                    <v-btn
-                        :to="`/classroom/${$route.params.code}/`"
-                        elevation="2"
-                        color="primary"
-                        disabled
-                        >โจทย์ทั้งหมด</v-btn
-                    >
-                </v-col>
-            </v-row>
+
             <div>
                 <v-row>
                     <v-col md="9" class="mx-auto" xl="5">

@@ -21,7 +21,7 @@
             />
         </v-row>
         <br />
-        <p>{{ posttext }}</p>
+        <p style="word-break: break-word">{{ posttext }}</p>
         <v-divider></v-divider>
         <br />
         <ListComment :post_id="postid" />

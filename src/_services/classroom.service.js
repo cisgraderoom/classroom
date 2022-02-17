@@ -219,6 +219,22 @@ const deleteComment = async (req) => {
     return res
 }
 
+const kickStudent = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .delete(`/acc/${req.classcode}/${req.user}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 export const classroomService = {
     createClassroom,
     joinClassroom,
@@ -233,4 +249,5 @@ export const classroomService = {
     addProblem,
     addComment,
     deleteComment,
+    kickStudent,
 }

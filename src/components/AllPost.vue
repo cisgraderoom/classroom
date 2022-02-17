@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row>
-            <v-col md="9" class="mx-auto" xl="5" elevation="12">
+            <v-col md="10" xl="9" elevation="12">
                 <h2 class="my-2">โพสต์ทั้งหมด</h2>
             </v-col>
         </v-row>
