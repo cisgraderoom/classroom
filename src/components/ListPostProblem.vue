@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row v-for="(problem, index) in problem" :key="index"
-            ><v-col md="9" class="mx-auto" xl="5">
+            ><v-col md="10" xl="7">
                 <v-lazy transition="fade-transition">
                     <PostProblem
                         :problemid="problem.problemid"
@@ -9,6 +9,7 @@
                         :who="problem.who"
                         :date="problem.date"
                         :path="`/classroom/${$route.params.code}/problem/${problem.problemid}`"
+                        target="_blank"
                 /></v-lazy>
             </v-col>
         </v-row>

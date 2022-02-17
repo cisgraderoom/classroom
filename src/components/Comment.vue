@@ -15,17 +15,26 @@
                 >
             </v-col>
             <v-col cols="8" xs="10" sm="10" md="10">
-                <h5 v-show="role != 'superteacher' && role != 'teacher'">
+                <h5
+                    style="word-break: break-word"
+                    v-show="role != 'superteacher' && role != 'teacher'"
+                >
                     {{ who }}
                 </h5>
                 <h5
                     class="deep-orange--text text--darken-1"
+                    style="word-break: break-word"
                     v-show="role == 'superteacher' || role == 'teacher'"
                 >
                     {{ who }}
                 </h5>
-                <h6 class="grey--text text--darken-1">{{ dateFormat }}</h6>
-                <p>
+                <h6
+                    class="grey--text text--darken-1"
+                    style="word-break: break-word"
+                >
+                    {{ dateFormat }}
+                </h6>
+                <p style="word-break: break-word">
                     {{ commenttext }}
                 </p>
             </v-col>

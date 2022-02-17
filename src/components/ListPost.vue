@@ -14,7 +14,7 @@
                 this.$store.state.listPost.list.length == 0
             "
         >
-            <v-col md="9" class="mx-auto" xl="5">
+            <v-col md="9" xl="5">
                 <v-alert text class="text-center" type="info"
                     >ไม่มีโพสในชั้นเรียน</v-alert
                 >
@@ -26,7 +26,7 @@
             :key="index"
             ref="infinite-list"
         >
-            <v-col md="9" class="mx-auto" xl="5">
+            <v-col md="10" xl="7">
                 <v-lazy transition="fade-transition">
                     <Post
                         :postid="post.post_id"

@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row
-            ><v-col md="9" class="mx-auto" xl="5">
+            ><v-col md="10" xl="7">
                 <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
                     <v-textarea
                         label="เพิ่มโพสต์"

@@ -1,13 +1,13 @@
 <template>
     <div>
         <v-row>
-            <v-col md="9" class="mx-auto" xl="5">
+            <v-col md="9" xl="5">
                 <h2 class="my-2">คะแนนทั้งหมด</h2>
             </v-col>
         </v-row>
         <div>
             <v-row>
-                <v-col md="9" class="mx-auto mb-10" xl="5"
+                <v-col md="10" class="mb-10" xl="7"
                     ><v-data-table
                         :headers="headers"
                         :items="desserts"

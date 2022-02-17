@@ -1,14 +1,14 @@
 <template>
     <div>
         <v-row>
-            <v-col md="9" class="mx-auto" xl="5">
+            <v-col md="10" xl="7">
                 <h2 class="my-2">ตรวจใหม่ & ตรวจความคล้ายคลึง</h2>
                 <AddRecheckPlagiarism class="my-2 mx-1" />
             </v-col>
         </v-row>
         <div>
             <v-row>
-                <v-col md="9" class="mx-auto mb-10" xl="5">
+                <v-col md="10" class="mb-10" xl="7">
                     <v-select
                         md="4"
                         xl="5"
