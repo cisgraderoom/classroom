@@ -65,9 +65,9 @@ import kickStudent from './kickStudent.vue'
 export default {
     name: 'EditClassroom',
     components: { kickStudent },
-    mounted() {
-        this.getListUser()
-    },
+    // mounted() {
+    //     this.getListUser()
+    // },
     data() {
         return {
             currentPage: 1,
@@ -93,30 +93,30 @@ export default {
             errormessage: null,
         }
     },
-    methods: {
-        async getListUser() {
-            const { dispatch, state } = this.$store
-            const { currentPage } = this
-            await dispatch('listAllUser/listAllUser', {
-                currentPage,
-            }).then(() => {
-                this.listuser = state.listAllUser.listUser
-                this.totalPage = Math.ceil(state.listAllUser.totalUser / 20)
-                this.hasNext = state.listAllUser.hasNext
-                this.upDateKey += 1
-            })
-            if (state.listAllUser.isFailed) {
-                this.errormessage =
-                    state.listAllUser.message ?? 'ไม่สามารถโหลดข้อมูลได้'
-            }
-        },
-        handlePageChange(value) {
-            if (this.currentPage != value) {
-                this.currentPage = value
-                this.getListUser()
-            }
-        },
-    },
+    // methods: {
+    // async getListUser() {
+    //     const { dispatch, state } = this.$store
+    //     const { currentPage } = this
+    //     await dispatch('listAllUser/listAllUser', {
+    //         currentPage,
+    //     }).then(() => {
+    //         this.listuser = state.listAllUser.listUser
+    //         this.totalPage = Math.ceil(state.listAllUser.totalUser / 20)
+    //         this.hasNext = state.listAllUser.hasNext
+    //         this.upDateKey += 1
+    //     })
+    //     if (state.listAllUser.isFailed) {
+    //         this.errormessage =
+    //             state.listAllUser.message ?? 'ไม่สามารถโหลดข้อมูลได้'
+    //     }
+    // },
+    // handlePageChange(value) {
+    //     if (this.currentPage != value) {
+    //         this.currentPage = value
+    //         this.getListUser()
+    //     }
+    // },
+    // },
 }
 </script>
 

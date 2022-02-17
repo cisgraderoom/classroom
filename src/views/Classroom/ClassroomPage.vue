@@ -102,6 +102,10 @@
                                 <v-list-item
                                     value="2"
                                     :disabled="this.thisPage == 2"
+                                    v-show="
+                                        checkAddClassroom == 'superteacher' ||
+                                        checkAddClassroom == 'teacher'
+                                    "
                                 >
                                     <v-list-item-icon>
                                         <v-icon> mdi-plus-box </v-icon>
@@ -115,6 +119,10 @@
                                 <v-list-item
                                     value="3"
                                     :disabled="this.thisPage == 3"
+                                    v-show="
+                                        checkAddClassroom == 'superteacher' ||
+                                        checkAddClassroom == 'teacher'
+                                    "
                                 >
                                     <v-list-item-icon>
                                         <v-icon>
@@ -130,6 +138,10 @@
                                 <v-list-item
                                     value="4"
                                     :disabled="this.thisPage == 4"
+                                    v-show="
+                                        checkAddClassroom == 'superteacher' ||
+                                        checkAddClassroom == 'teacher'
+                                    "
                                 >
                                     <v-list-item-icon>
                                         <v-icon>
@@ -145,6 +157,10 @@
                                 <v-list-item
                                     value="5"
                                     :disabled="this.thisPage == 5"
+                                    v-show="
+                                        checkAddClassroom == 'superteacher' ||
+                                        checkAddClassroom == 'teacher'
+                                    "
                                 >
                                     <v-list-item-icon>
                                         <v-icon> mdi-cog </v-icon>
@@ -208,10 +224,34 @@
                 <v-col md="9" xl="8">
                     <AllPost v-show="thisPage == 0" />
                     <AllProblem v-show="thisPage == 1" />
-                    <AddProblem v-show="thisPage == 2" />
-                    <AllScore v-show="thisPage == 3" />
-                    <RecheckPlagiarism v-show="thisPage == 4" />
-                    <EditClassroom v-show="thisPage == 5" />
+                    <AddProblem
+                        v-show="
+                            thisPage == 2 &&
+                            (checkAddClassroom == 'superteacher' ||
+                                checkAddClassroom == 'teacher')
+                        "
+                    />
+                    <AllScore
+                        v-show="
+                            thisPage == 3 &&
+                            (checkAddClassroom == 'superteacher' ||
+                                checkAddClassroom == 'teacher')
+                        "
+                    />
+                    <RecheckPlagiarism
+                        v-show="
+                            thisPage == 4 &&
+                            (checkAddClassroom == 'superteacher' ||
+                                checkAddClassroom == 'teacher')
+                        "
+                    />
+                    <EditClassroom
+                        v-show="
+                            thisPage == 5 &&
+                            (checkAddClassroom == 'superteacher' ||
+                                checkAddClassroom == 'teacher')
+                        "
+                    />
                 </v-col>
             </v-row>
             <!-- <AllPost v-show="thisPage == 1" /> -->
