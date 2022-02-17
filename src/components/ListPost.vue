@@ -26,7 +26,7 @@
             :key="index"
             ref="infinite-list"
         >
-            <v-col md="10" xl="7">
+            <v-col md="10" xl="9">
                 <v-lazy transition="fade-transition">
                     <Post
                         :postid="post.post_id"

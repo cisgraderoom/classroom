@@ -8,7 +8,7 @@
         </v-row>
         <div>
             <v-row>
-                <v-col md="10" class="mb-10" xl="7">
+                <v-col md="10" class="mb-10" xl="9">
                     <v-select
                         md="4"
                         xl="5"

@@ -4,7 +4,7 @@
         <v-container>
             <HeadClassroom />
             <v-row>
-                <v-col md="2" offset-md="1" xl="1" offset-xl="3">
+                <v-col md="2" offset-md="1" xl="2" offset-xl="2">
                     <!-- <v-btn
                         elevation="2"
                         color="primary"
