@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row>
-            <v-col md="10" offset-md="1" xl="6" offset-xl="3">
+            <v-col md="10" offset-md="1" xl="8" offset-xl="2">
                 <v-card>
                     <v-img
                         lazy-src="/banner.webp"

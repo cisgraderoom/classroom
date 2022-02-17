@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row v-for="(problem, index) in problem" :key="index"
-            ><v-col md="10" xl="7">
+            ><v-col md="10" xl="9">
                 <v-lazy transition="fade-transition">
                     <PostProblem
                         :problemid="problem.problemid"
