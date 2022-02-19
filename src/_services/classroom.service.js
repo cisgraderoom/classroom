@@ -97,6 +97,38 @@ const listNextPost = async (req) => {
     return res
 }
 
+const listAllPostProblem = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/post/${req.classcode}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const listNextPostProblem = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/post/${req.classcode}?page=${req.currentPage}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 const listAllComment = async (req) => {
     let res = null
     const { data } = await httpClient
@@ -241,6 +273,8 @@ export const classroomService = {
     listClassroom,
     listAllPost,
     listNextPost,
+    listAllPostProblem,
+    listNextPostProblem,
     listAllComment,
     getInfoClassroom,
     addPost,

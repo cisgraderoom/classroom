@@ -7,7 +7,7 @@
                         lazy-src="/banner.webp"
                         src="/banner.webp"
                         class="white--text align-end"
-                        height="200px"
+                        :height="imageHeight"
                     >
                         <v-card-title
                             class="cis-h4"
@@ -65,7 +65,26 @@ export default {
         snackbar: false,
         text: 'คัดลอกรหัสชั้นเรียนสำเร็จ',
         timeout: 2000,
+        hight: '200px',
+        // imageHeight: '200px',
     }),
+    computed: {
+        imageHeight() {
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs':
+                    return '200px'
+                case 'sm':
+                    return '200px'
+                case 'md':
+                    return '200px'
+                case 'lg':
+                    return '200px'
+                case 'xl':
+                    return '250px'
+            }
+            return '200px'
+        },
+    },
     mounted() {
         const classcode = this.$route.params.code
         let data = this.$store
