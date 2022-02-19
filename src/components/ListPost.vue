@@ -47,8 +47,8 @@
                 id="scoll-trigger"
                 :disabled="this.$store.state.nextPost.isLoading"
             ></div>
-            <SkeletonPost v-show="this.$store.state.nextPost.isLoading" />
         </v-col>
+        <SkeletonPost v-show="this.$store.state.nextPost.isLoading" />
     </div>
 </template>
 

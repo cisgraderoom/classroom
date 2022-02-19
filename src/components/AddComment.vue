@@ -4,7 +4,7 @@
             {{ errormessage }}
         </v-alert>
         <v-row class="mx-auto" align="center">
-            <v-col cols="9" sm="8" md="9" lg="9" xl="9">
+            <v-col cols="9" sm="8" md="9" lg="9" xl="10">
                 <v-text-field
                     v-model="text"
                     label="เพิ่มคอมเมนต์"

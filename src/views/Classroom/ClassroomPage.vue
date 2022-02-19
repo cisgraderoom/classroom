@@ -68,6 +68,7 @@
                             <v-list-item-group
                                 v-model="thisPage"
                                 color="primary"
+                                mandatory
                             >
                                 <v-list-item
                                     value="0"
@@ -285,15 +286,15 @@ export default {
         EditClassroom,
     },
     data: () => ({
-        thisPage: 0,
+        thisPage: 1,
         checkAddClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
-    methods: {
-        changePage(page) {
-            console.log(page)
-            this.thisPage = page
-        },
-    },
+    // methods: {
+    //     changePage(page) {
+    //         console.log(page)
+    //         this.thisPage = page
+    //     },
+    // },
 }
 </script>
 

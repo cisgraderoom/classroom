@@ -10,14 +10,14 @@
 
             <div>
                 <v-row>
-                    <v-col md="9" class="mx-auto" xl="5">
+                    <v-col md="9" class="mx-auto" xl="7">
                         <h2 class="my-2">โจทย์</h2>
                     </v-col>
                 </v-row>
             </div>
             <div>
                 <v-row
-                    ><v-col md="9" class="mx-auto" xl="5"
+                    ><v-col md="9" class="mx-auto" xl="7"
                         ><Problemauto
                             :problemid="problem.problemid"
                             :problemtext="problem.problemtext"
@@ -29,7 +29,7 @@
             </div>
 
             <v-row>
-                <v-col md="9" class="mx-auto" xl="5">
+                <v-col md="9" class="mx-auto" xl="7">
                     <v-data-table
                         :headers="headers"
                         :items="score"

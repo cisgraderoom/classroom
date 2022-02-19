@@ -40,8 +40,6 @@
                             label="แนบไฟล์"
                             v-model="asset"
                             :disabled="this.$store.state.addProblem.isLoading"
-                            counter
-                            multiple
                             show-size
                         ></v-file-input>
                         <div v-show="type == true">

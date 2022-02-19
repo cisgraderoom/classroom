@@ -35,7 +35,7 @@
                             color="primary"
                             v-show="this.$store.state.listAllUser.isLoading"
                         ></v-progress-linear>
-                        <div class="text-center pt-2">
+                        <!-- <div class="text-center pt-2">
                             <v-pagination
                                 v-model="pageCount"
                                 :disabled="
@@ -45,7 +45,7 @@
                                 :total-visible="7"
                                 @input="handlePageChange"
                             ></v-pagination>
-                        </div>
+                        </div> -->
                         <v-alert
                             text
                             type="error"
