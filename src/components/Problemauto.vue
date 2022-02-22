@@ -7,15 +7,15 @@
         >
             <v-row align="center">
                 <v-col md="1" xl="1">
-                    <v-icon large>mdi-account-circle</v-icon>
+                    <v-icon color="deep-orange darken-1" large
+                        >mdi-account-circle</v-icon
+                    >
                 </v-col>
                 <v-col>
-                    <h3>{{ who }}</h3>
-                    <caption>
-                        {{
-                            date
-                        }}
-                    </caption>
+                    <h3 class="deep-orange--text text--darken-1">{{ who }}</h3>
+                    <h5 class="grey--text text--darken-1">
+                        {{ dateFormat }}
+                    </h5>
                 </v-col>
             </v-row>
             <br />

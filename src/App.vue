@@ -22,12 +22,11 @@
 </template>
 
 <script>
-// import { logger } from "@cisclassroom/logger";
 export default {
     name: 'App',
-    mounted() {
-        // logger.fail("Fail")
-    },
+    // mounted() {
+    //     // logger.fail("Fail")
+    // },
     data: () => ({
         fab: false,
     }),
