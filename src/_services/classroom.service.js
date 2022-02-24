@@ -100,7 +100,7 @@ const listNextPost = async (req) => {
 const listAllPostProblem = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get(`/post/${req.classcode}`, {
+        .get(`/task/list?classcode=${req.classcode}`, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -215,18 +215,14 @@ const addProblem = async (req) => {
     formData.append('asset', req.asset)
     formData.append('testcase', req.testcase)
     req.asset = formData
-    if (req.type == 'manual') {
-        delete req.testcase
-    }
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1])
-    }
+    console.log(req)
     const { data } = await httpClient
         .post('/task/new', req, {
             headers: authHeader(),
         })
         .catch((err) => {
             res = err?.response?.data
+            console.log(res)
             return res
         })
     if (data?.status) {

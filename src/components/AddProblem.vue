@@ -28,13 +28,6 @@
                             type="number"
                             :disabled="this.$store.state.addProblem.isLoading"
                         ></v-text-field>
-                        <v-switch
-                            color="primary"
-                            v-model="type"
-                            :label="`ประเภทโจทย์ : ${typetext}`"
-                            disabled
-                            @click="changeType()"
-                        ></v-switch>
                         <v-file-input
                             accept="image/*,application/*,.pdf,.html,.css,.json,.txt"
                             label="แนบไฟล์"
@@ -42,25 +35,21 @@
                             :disabled="this.$store.state.addProblem.isLoading"
                             show-size
                         ></v-file-input>
-                        <div v-show="type == true">
-                            <v-file-input
-                                accept=".zip"
-                                label="แนบไฟล์ TestCase .zip"
-                                show-size
-                                v-model="testcase"
-                                :disabled="
-                                    this.$store.state.addProblem.isLoading
-                                "
-                            ></v-file-input>
-                            <p>
-                                ตัวอย่างไฟล์
-                                <a
-                                    href="https://drive.google.com/file/d/1hxuJJ_AstQBmwu5zSbeTrEjxxddBwZqp/view?usp=sharing"
-                                    target="_blank"
-                                    >testcase.zip</a
-                                >
-                            </p>
-                        </div>
+                        <v-file-input
+                            accept=".zip"
+                            label="แนบไฟล์ TestCase .zip"
+                            show-size
+                            v-model="testcase"
+                            :disabled="this.$store.state.addProblem.isLoading"
+                        ></v-file-input>
+                        <p>
+                            ตัวอย่างไฟล์
+                            <a
+                                href="https://drive.google.com/file/d/1hxuJJ_AstQBmwu5zSbeTrEjxxddBwZqp/view?usp=sharing"
+                                target="_blank"
+                                >testcase.zip</a
+                            >
+                        </p>
                         <v-menu
                             v-model="menu"
                             :close-on-content-click="false"
@@ -104,22 +93,6 @@
                                     </v-btn></v-time-picker
                                 >
                             </div>
-                            <!-- <v-date-picker
-                                v-model="opendate"
-                                width="290"
-                            ></v-date-picker> -->
-                            <!-- <v-time-picker
-                                v-model="opentime"
-                                format="24hr"
-                                width="290"
-                                ><v-spacer></v-spacer>
-                                <v-btn
-                                    text
-                                    color="primary"
-                                    @click="menu = false"
-                                >
-                                    close
-                                </v-btn></v-time-picker -->
                         </v-menu>
                         <v-menu
                             v-model="menu2"
@@ -164,10 +137,6 @@
                                     </v-btn></v-time-picker
                                 >
                             </div>
-                            <!-- <v-date-picker
-                                v-model="closedate"
-                                @input="menu2 = false"
-                            ></v-date-picker> -->
                         </v-menu>
                         <v-alert
                             text
@@ -212,7 +181,6 @@ export default {
         problemsname: '',
         problemstext: '',
         maxscore: null,
-        type: true,
         typetext: 'auto',
         asset: null,
         testcase: null,
@@ -228,21 +196,20 @@ export default {
                 .substr(0, 10) +
             ' ' +
             '00:00',
-        closedate: null,
+        closedate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+            .toISOString()
+            .substr(0, 10),
         closetime: '00:00',
-        closedatetime: null,
+        closedatetime:
+            new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                .toISOString()
+                .substr(0, 10) +
+            ' ' +
+            '00:00',
         submitted: false,
         errormessage: '',
     }),
     methods: {
-        changeType() {
-            if (this.type == true) {
-                this.typetext = 'auto'
-            } else {
-                this.typetext = 'manual'
-                this.testcase = null
-            }
-        },
         setOpen() {
             this.opendatetime = this.opendate + ' ' + this.opentime
             this.menu = false
@@ -283,14 +250,28 @@ export default {
                 })
                 return
             }
+            const formatopentime = Math.round(
+                new Date(this.opendatetime).getTime() / 1000
+            )
+            const formatclosetime = Math.round(
+                new Date(this.closedatetime).getTime() / 1000
+            )
+            if (formatclosetime <= formatopentime) {
+                this.errormessage = 'เวลาปิดโจทย์ต้องมากกว่าเวลาเปิดโจทย์'
+                commit('addProblem/addProblemFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
+            }
             await dispatch('addProblem/addProblem', {
                 problemName: this.problemsname,
                 problemDesc: this.problemstext,
                 score: this.maxscore,
-                type: this.typetext,
                 classcode,
-                open: this.opendate,
-                close: this.closedate,
+                open: formatopentime,
+                close: formatclosetime,
                 asset: this.asset,
                 testcase: this.testcase,
             })

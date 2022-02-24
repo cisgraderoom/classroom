@@ -223,31 +223,31 @@
                     </v-card> -->
                 </v-col>
                 <v-col md="9" xl="8">
-                    <AllPost v-show="thisPage == 0" />
-                    <AllProblem v-show="thisPage == 1" />
+                    <AllPost v-if="thisPage == 0" />
+                    <AllProblem v-if="thisPage == 1" />
                     <AddProblem
-                        v-show="
+                        v-if="
                             thisPage == 2 &&
                             (checkAddClassroom == 'superteacher' ||
                                 checkAddClassroom == 'teacher')
                         "
                     />
                     <AllScore
-                        v-show="
+                        v-if="
                             thisPage == 3 &&
                             (checkAddClassroom == 'superteacher' ||
                                 checkAddClassroom == 'teacher')
                         "
                     />
                     <RecheckPlagiarism
-                        v-show="
+                        v-if="
                             thisPage == 4 &&
                             (checkAddClassroom == 'superteacher' ||
                                 checkAddClassroom == 'teacher')
                         "
                     />
                     <EditClassroom
-                        v-show="
+                        v-if="
                             thisPage == 5 &&
                             (checkAddClassroom == 'superteacher' ||
                                 checkAddClassroom == 'teacher')

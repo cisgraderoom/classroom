@@ -1,69 +1,55 @@
-import { classroomService } from '../../_services'
+import { problemService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
+    problem: [],
+    error: '',
 }
 
-export const addProblem = {
+export const getByIdProblem = {
     namespaced: true,
     state: initialState,
     actions: {
-        async addProblem(
-            { commit },
-            {
-                problemName,
-                problemDesc,
-                score,
-                classcode,
-                open,
-                close,
-                asset,
-                testcase,
-            }
-        ) {
-            commit('addProblemLoading', {
+        async getByIdProblem({ commit }, { classcode, problemid }) {
+            commit('getByIdProblemLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.addProblem({
-                problemName,
-                problemDesc,
-                score,
+            const res = await problemService.getByIdProblem({
                 classcode,
-                open,
-                close,
-                asset,
-                testcase,
+                problemid,
             })
             if (!res?.status) {
-                commit('addProblemFailure', {
+                commit('getByIdProblemFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
+                    error: res.message,
                 })
                 return res
             }
-            commit('addProblemSuccess', {
+            commit('getByIdProblemSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
+                problem: res.data,
             })
         },
     },
     mutations: {
-        addProblemLoading(state, data) {
+        getByIdProblemLoading(state, data) {
             Object.assign(state, data)
         },
-        addProblemSuccess(state, data) {
+        getByIdProblemSuccess(state, data) {
             Object.assign(state, data)
         },
-        addProblemFailure(state, data) {
+        getByIdProblemFailure(state, data) {
             Object.assign(state, data)
         },
     },

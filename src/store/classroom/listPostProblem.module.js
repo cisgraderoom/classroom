@@ -5,8 +5,8 @@ const initialState = {
     isFailed: false,
     isSuccess: false,
     list: [],
-    currentPage: null,
-    hasNext: false,
+    // currentPage: null,
+    // hasNext: false,
     error: '',
 }
 
@@ -38,8 +38,8 @@ export const listPostProblem = {
                 isFailed: false,
                 isSuccess: true,
                 list: res.data,
-                hasNext: res.pageInfo.hasNext,
-                currentPage: res.pageInfo.currentPage,
+                // hasNext: res.pageInfo.hasNext,
+                // currentPage: res.pageInfo.currentPage,
             })
         },
     },

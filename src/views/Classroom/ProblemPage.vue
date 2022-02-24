@@ -1,13 +1,8 @@
 <template>
     <div>
         <Navbar />
-        <v-container>
-            <HeadClassroom
-                :classname="classroom.classname"
-                :section="classroom.section"
-                :nametecher="classroom.nametecher"
-            />
-
+        <v-container class="mb-10">
+            <HeadClassroom />
             <div>
                 <v-row>
                     <v-col md="9" class="mx-auto" xl="7">
@@ -19,10 +14,12 @@
                 <v-row
                     ><v-col md="9" class="mx-auto" xl="7"
                         ><Problemauto
-                            :problemid="problem.problemid"
-                            :problemtext="problem.problemtext"
-                            :who="problem.who"
-                            :date="problem.date"
+                            :problemname="problem.problem_name"
+                            :problemid="problem.problem_id"
+                            :problemtext="problem.problem_desc"
+                            :opendate="problem.open_at"
+                            :closedate="problem.close_at"
+                            :maxscore="problem.max_score"
                         />
                     </v-col>
                 </v-row>
@@ -53,19 +50,11 @@ export default {
         HeadClassroom,
         Problemauto,
     },
+    mounted() {
+        this.getByIdProblem()
+    },
     data: () => ({
-        classroom: {
-            classname: 'Classroom',
-            section: 'Section',
-            nametecher: 'Nametecher',
-        },
-        problem: {
-            problemid: '1',
-            problemtext:
-                'กล่องปริศนาใบนี้บรรจุสิ่งต่าง ๆ ไว้มากมาย กล่องใบนี้จะมีอะไรบ้าง',
-            who: 'ธนภัทร์ อนุศาสน์อมรกุล',
-            date: '01/01/2021',
-        },
+        problem: [],
         headers: [
             {
                 text: 'Date',
@@ -92,5 +81,22 @@ export default {
             },
         ],
     }),
+    methods: {
+        getByIdProblem() {
+            const classcode = this.$route.params.code
+            const problemid = this.$route.params.problemid
+            this.Loading = true
+            let data = this.$store
+                .dispatch('getByIdProblem/getByIdProblem', {
+                    classcode,
+                    problemid,
+                })
+                .then(() => {
+                    this.problem = this.$store.state.getByIdProblem.problem
+                    console.log(this.problem)
+                })
+            return data
+        },
+    },
 }
 </script>

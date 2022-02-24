@@ -4,7 +4,7 @@
             {{ errormessage }}
         </v-alert>
         <v-row class="mx-auto" align="center">
-            <v-col cols="9" sm="8" md="9" lg="9" xl="10">
+            <v-col>
                 <v-text-field
                     v-model="text"
                     label="เพิ่มคอมเมนต์"
@@ -14,7 +14,7 @@
                     :disabled="isLoading || loading"
                 ></v-text-field>
             </v-col>
-            <v-col cols="2" md="2">
+            <v-col cols="auto">
                 <v-btn
                     elevation="2"
                     color="primary"

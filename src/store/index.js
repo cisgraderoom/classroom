@@ -25,6 +25,7 @@ import { resetPassword } from './Manage/resetPassword.module'
 import { addProblem } from './classroom/addProblem.module'
 import { addComment } from './classroom/addComment.module'
 import { deleteComment } from './classroom/deleteComment.module'
+import { getByIdProblem } from './problem/getByIdProblem.module'
 
 Vue.use(Vuex)
 
@@ -54,5 +55,6 @@ export default new Vuex.Store({
         addProblem,
         addComment,
         deleteComment,
+        getByIdProblem,
     },
 })

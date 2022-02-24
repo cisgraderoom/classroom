@@ -14,7 +14,7 @@
                 this.$store.state.listPost.list.length == 0
             "
         >
-            <v-col md="9" xl="5">
+            <v-col md="10" xl="9">
                 <v-alert text class="text-center" type="info"
                     >ไม่มีโพสในชั้นเรียน</v-alert
                 >
