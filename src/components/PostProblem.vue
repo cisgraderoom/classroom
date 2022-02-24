@@ -7,20 +7,34 @@
             :to="{ path }"
         >
             <v-row align="center">
-                <v-col md="1">
-                    <v-icon color="deep-orange darken-1" large
-                        >mdi-account-circle</v-icon
-                    >
-                </v-col>
                 <v-col>
-                    <h3 class="deep-orange--text text--darken-1">{{ who }}</h3>
-                    <h5 class="grey--text text--darken-1">
-                        {{ dateFormat }}
-                    </h5>
+                    <h3>{{ problemname }}</h3>
+                </v-col>
+                <v-spacer />
+                <v-col cols="auto">
+                    <!-- <v-chip v-show="!status"> ยังไม่ส่ง </v-chip>
+                    <v-chip color="green" text-color="white" v-show="status">
+                        ส่งแล้ว
+                    </v-chip> -->
+                    <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>
             </v-row>
-            <br />
-            <p>{{ problemtext }}</p>
+            <p>
+                {{ problemtext }}
+            </p>
+            <v-row align="center">
+                <v-col>
+                    <h5 class="grey--text text--darken-1">
+                        Open {{ openDateFormat }}
+                    </h5>
+                    <h5 class="grey--text text--darken-1">
+                        Close {{ closeDateFormat }}
+                    </h5>
+                </v-col>
+                <!-- <v-col cols="auto">
+                    <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
+                </v-col> -->
+            </v-row>
         </v-card>
     </v-hover>
 </template>
@@ -29,9 +43,20 @@
 import TimeAgo from 'javascript-time-ago'
 export default {
     name: 'PostProblem',
-    props: ['problemid', 'problemtext', 'who', 'date', 'path'],
+    props: [
+        'problemid',
+        'problemname',
+        'problemtext',
+        'who',
+        'opendate',
+        'closedate',
+        'path',
+        'maxscore',
+    ],
     data: () => ({
-        dateFormat: null,
+        openDateFormat: null,
+        closeDateFormat: null,
+        status: false,
     }),
     mounted() {
         this.formatDate()
@@ -39,7 +64,8 @@ export default {
     methods: {
         formatDate() {
             const timeAgo = new TimeAgo('en-US')
-            this.dateFormat = timeAgo.format(new Date(this.date))
+            this.openDateFormat = timeAgo.format(new Date(this.opendate))
+            this.closeDateFormat = timeAgo.format(new Date(this.closedate))
         },
     },
 }
