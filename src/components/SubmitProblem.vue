@@ -65,7 +65,6 @@ export default {
                 })
                 return
             }
-            console.log(this.file)
             await dispatch('submitProblem/submitProblem', {
                 classcode,
                 problemid,

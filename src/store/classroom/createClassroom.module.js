@@ -40,7 +40,7 @@ export const createClassroom = {
                 isFailed: false,
                 isLoading: false,
             })
-            router.push(`/classroom/${res?.data?.classcode}`)
+            router.push(`/classroom/${res?.data?.classcode}/post`)
         },
     },
     mutations: {

@@ -4,11 +4,7 @@
             <v-list dense>
                 <v-subheader class="mx-2">รายการ</v-subheader>
                 <v-list-item-group v-model="Page" color="primary" mandatory>
-                    <v-list-item
-                        value="1"
-                        :disabled="this.Page == 1"
-                        :to="`/classroom/${path}/post`"
-                    >
+                    <v-list-item value="1" :to="`/classroom/${path}/post`">
                         <v-list-item-icon>
                             <v-icon> mdi-format-align-right </v-icon>
                         </v-list-item-icon>
@@ -16,11 +12,7 @@
                             <v-list-item-title>โพสต์ทั้งหมด</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-                    <v-list-item
-                        value="2"
-                        :disabled="this.Page == 2"
-                        :to="`/classroom/${path}/problem`"
-                    >
+                    <v-list-item value="2" :to="`/classroom/${path}/problem`">
                         <v-list-item-icon>
                             <v-icon> mdi-clipboard-text-outline </v-icon>
                         </v-list-item-icon>
@@ -30,7 +22,6 @@
                     </v-list-item>
                     <v-list-item
                         value="3"
-                        :disabled="this.Page == 3"
                         :to="`/classroom/${path}/addproblem`"
                         v-show="
                             checkRoleClassroom == 'superteacher' ||
@@ -46,7 +37,6 @@
                     </v-list-item>
                     <v-list-item
                         value="4"
-                        :disabled="this.Page == 4"
                         :to="`/classroom/${path}/allscore`"
                         v-show="
                             checkRoleClassroom == 'superteacher' ||
@@ -62,7 +52,6 @@
                     </v-list-item>
                     <v-list-item
                         value="5"
-                        :disabled="this.Page == 5"
                         :to="`/classroom/${path}/recheck`"
                         v-show="
                             checkRoleClassroom == 'superteacher' ||
@@ -78,7 +67,6 @@
                     </v-list-item>
                     <v-list-item
                         value="6"
-                        :disabled="this.Page == 6"
                         :to="`/classroom/${path}/edit`"
                         v-show="
                             checkRoleClassroom == 'superteacher' ||
@@ -105,7 +93,7 @@ export default {
     name: 'MenuClassroom',
     props: ['path'],
     data: () => ({
-        Page: 3,
+        Page: 0,
         checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
 }

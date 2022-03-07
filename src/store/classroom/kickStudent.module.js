@@ -11,7 +11,7 @@ export const kickStudent = {
     namespaced: true,
     state: initialState,
     actions: {
-        async kickStudent({ commit }, { classcode, user }) {
+        async kickStudent({ commit }, { classcode, username }) {
             commit('kickStudentLoading', {
                 ...initialState,
                 isLoading: true,
@@ -20,7 +20,7 @@ export const kickStudent = {
             })
             const res = await classroomService.kickStudent({
                 classcode,
-                user,
+                username,
             })
             if (!res?.status) {
                 commit('kickStudentFailure', {
@@ -30,6 +30,7 @@ export const kickStudent = {
                     isSuccess: false,
                     message: res.message,
                 })
+                console.log(res.message)
                 return res
             }
             commit('kickStudentSuccess', {
