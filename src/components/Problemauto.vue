@@ -14,39 +14,53 @@
                     <v-chip color="green" text-color="white" v-show="status">
                         ส่งแล้ว
                     </v-chip> -->
-                    <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
+                    <v-chip v-if="maxscore"> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>
             </v-row>
             <p>
                 {{ problemtext }}
             </p>
-            <h5 class="grey--text text--darken-1">
-                Open : {{ openDateFormat }}
+            <h5 class="grey--text text--darken-1" v-if="opendate">
+                Open {{ opendate }}
             </h5>
-            <h5 class="grey--text text--darken-1">
-                Close : {{ closeDateFormat }}
+            <h5 class="grey--text text--darken-1" v-if="closedate">
+                Close {{ closedate }}
             </h5>
-            <v-row align="center">
+            <v-progress-linear
+                indeterminate
+                color="primary"
+                v-show="$store.state.getByIdProblem.isLoading"
+            ></v-progress-linear>
+            <SubmitProblem :problemid="problemid" />
+            <!-- <v-row align="center">
                 <v-col>
                     <v-file-input
                         truncate-length="15"
                         label="File input"
+                        v-show="!$store.state.getByIdProblem.isLoading"
                     ></v-file-input>
                 </v-col>
                 <v-col cols="auto">
-                    <v-btn elevation="2" color="primary" class="mr-1"
+                    <v-btn
+                        elevation="2"
+                        color="primary"
+                        class="mr-1"
+                        v-show="!$store.state.getByIdProblem.isLoading"
                         >submit</v-btn
                     >
                 </v-col>
-            </v-row>
+            </v-row> -->
         </v-sheet>
     </v-hover>
 </template>
 
 <script>
-import TimeAgo from 'javascript-time-ago'
+import SubmitProblem from './SubmitProblem'
 export default {
     name: 'Problemauto',
+    components: {
+        SubmitProblem,
+    },
     props: [
         'problemid',
         'problemname',
@@ -57,21 +71,8 @@ export default {
         'maxscore',
     ],
     data: () => ({
-        openDateFormat: null,
-        closeDateFormat: null,
         status: false,
     }),
-    mounted() {
-        this.formatDate()
-    },
-    methods: {
-        formatDate() {
-            const timeAgo = new TimeAgo('en-US')
-            this.openDateFormat = timeAgo.format(new Date(this.opendate))
-            this.closeDateFormat = timeAgo.format(new Date(this.closedate))
-            console.log(this.openDateFormat)
-        },
-    },
 }
 </script>
 

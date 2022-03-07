@@ -2,7 +2,7 @@
     <v-hover v-slot="{ hover }">
         <v-card
             router-link
-            :to="`/classroom/${path}`"
+            :to="`/classroom/${path}/post`"
             :class="{ 'on-hover': hover }"
             :elevation="hover ? 5 : 2"
         >

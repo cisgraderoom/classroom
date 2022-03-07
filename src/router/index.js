@@ -4,6 +4,11 @@ import LoginPage from '../views/LoginPage.vue'
 import IndexPage from '../views/IndexPage.vue'
 import EditaccountPage from '../views/EditaccountPage.vue'
 import ClassroomPage from '../views/Classroom/ClassroomPage.vue'
+import ClassroomProblem from '../views/Classroom/ClassroomProblem.vue'
+import ClassroomAddProblem from '../views/Classroom/ClassroomAddProblem.vue'
+import ClassroomAllScore from '../views/Classroom/ClassroomAllScore.vue'
+import ClassroomRecheckPlagiarism from '../views/Classroom/ClassroomRecheckPlagiarism.vue'
+import ClassroomEdit from '../views/Classroom/ClassroomEdit.vue'
 import ProblemPage from '../views/Classroom/ProblemPage.vue'
 import ManagePage from '../views/ManagePage.vue'
 
@@ -35,10 +40,40 @@ const routes = [
         meta: { title: 'Edit Account' },
     },
     {
-        path: '/classroom/:code',
-        name: 'Classroomcode',
+        path: '/classroom/:code/post',
+        name: 'Classroompost',
         component: ClassroomPage,
-        meta: { title: '' },
+        meta: { title: 'Post' },
+    },
+    {
+        path: '/classroom/:code/problem',
+        name: 'Classroomproblem',
+        component: ClassroomProblem,
+        meta: { title: 'Problem' },
+    },
+    {
+        path: '/classroom/:code/addproblem',
+        name: 'Classroomaddproblem',
+        component: ClassroomAddProblem,
+        meta: { title: 'Add Problem' },
+    },
+    {
+        path: '/classroom/:code/allscore',
+        name: 'Classroomallscore',
+        component: ClassroomAllScore,
+        meta: { title: 'All Score' },
+    },
+    {
+        path: '/classroom/:code/recheck',
+        name: 'Classroomrecheckplagiarism',
+        component: ClassroomRecheckPlagiarism,
+        meta: { title: 'ReCheck' },
+    },
+    {
+        path: '/classroom/:code/edit',
+        name: 'Classroomedit',
+        component: ClassroomEdit,
+        meta: { title: 'Edit' },
     },
     {
         path: '/classroom/:code/problem/:problemid',
@@ -66,7 +101,7 @@ router.beforeEach((to, from, next) => {
     }
     let documentTitle = `${process.env.VUE_APP_TITLE} - ${to.meta.title}`
     if (to.params.code) {
-        documentTitle += `${to.params.code}`
+        documentTitle += `- ${to.params.code}`
     }
     if (to.params.problemid) {
         documentTitle = `${to.params.code} - ${to.params.problemid}`
