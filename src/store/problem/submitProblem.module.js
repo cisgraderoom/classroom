@@ -1,56 +1,54 @@
-import { classroomService } from '../../_services'
-import router from '../../router/index'
+import { problemService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
+    error: '',
 }
 
-export const createClassroom = {
+export const submitProblem = {
     namespaced: true,
     state: initialState,
     actions: {
-        async createClassroom({ commit }, { classname, section, year, term }) {
-            commit('createClassLoading', {
+        async submitProblem({ commit }, { code, problemid, classcode }) {
+            commit('submitProblemLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-
-            const res = await classroomService.createClassroom({
-                classname,
-                section,
-                year,
-                term,
+            const res = await problemService.submitProblem({
+                code,
+                problemid,
+                classcode,
             })
             if (!res?.status) {
-                commit('createClassFailure', {
+                commit('submitProblemFailure', {
                     ...initialState,
-                    isFailed: true,
                     isLoading: false,
+                    isFailed: true,
                     isSuccess: false,
+                    error: res,
                 })
                 return res
             }
-            commit('createClassSuccess', {
+            commit('submitProblemSuccess', {
                 ...initialState,
-                isSuccess: true,
-                isFailed: false,
                 isLoading: false,
+                isFailed: false,
+                isSuccess: true,
             })
-            router.push(`/classroom/${res?.data?.classcode}/post`)
         },
     },
     mutations: {
-        createClassLoading(state, data) {
+        submitProblemLoading(state, data) {
             Object.assign(state, data)
         },
-        createClassSuccess(state, data) {
+        submitProblemSuccess(state, data) {
             Object.assign(state, data)
         },
-        createClassFailure(state, data) {
+        submitProblemFailure(state, data) {
             Object.assign(state, data)
         },
     },

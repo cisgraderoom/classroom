@@ -49,6 +49,22 @@ const listClassroom = async () => {
     return res
 }
 
+const listUserInClass = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/classroom/list/user/${req.classcode}?page=${req.currentPage}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 const getInfoClassroom = async (req) => {
     let res = null
     const { data } = await httpClient
@@ -212,9 +228,11 @@ const addComment = async (req) => {
 const addProblem = async (req) => {
     let res = null
     let formData = new FormData()
+    let formData2 = new FormData()
     formData.append('asset', req.asset)
-    formData.append('testcase', req.testcase)
-    req.asset = formData
+    formData2.append('testcase', req.testcase)
+    // req.asset = formData
+    // req.testcase = formData2
     console.log(req)
     const { data } = await httpClient
         .post('/task/new', req, {
@@ -250,8 +268,9 @@ const deleteComment = async (req) => {
 const kickStudent = async (req) => {
     let res = null
     const { data } = await httpClient
-        .delete(`/acc/${req.classcode}/${req.user}`, {
+        .delete(`/classroom/user`, {
             headers: authHeader(),
+            data: req,
         })
         .catch((err) => {
             res = err?.response?.data
@@ -267,6 +286,7 @@ export const classroomService = {
     createClassroom,
     joinClassroom,
     listClassroom,
+    listUserInClass,
     listAllPost,
     listNextPost,
     listAllPostProblem,

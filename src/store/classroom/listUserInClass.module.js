@@ -1,55 +1,59 @@
 import { classroomService } from '../../_services'
-import router from '../../router/index'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    message: '',
+    listUser: null,
+    totalUser: null,
+    hasNext: false,
+    error: '',
 }
 
-export const joinClassroom = {
+export const listUserInClass = {
     namespaced: true,
     state: initialState,
     actions: {
-        async joinClassroom({ commit }, { classcode }) {
-            commit('joinClassLoading', {
+        async listUserInClass({ commit }, { classcode, currentPage }) {
+            commit('listUserInClassLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.joinClassroom({
+            const res = await classroomService.listUserInClass({
                 classcode,
+                currentPage,
             })
             if (!res?.status) {
-                commit('joinClassFailure', {
+                commit('listUserInClassFailure', {
                     ...initialState,
-                    isFailed: true,
                     isLoading: false,
+                    isFailed: true,
                     isSuccess: false,
-                    message: res?.message,
+                    error: res.message,
                 })
                 return res
             }
-            commit('joinClassSuccess', {
+            commit('listUserInClassSuccess', {
                 ...initialState,
-                isSuccess: true,
-                isFailed: false,
                 isLoading: false,
-                message: res?.message,
+                isFailed: false,
+                isSuccess: true,
+                listUser: res.data,
+                totalUser: res.pageInfo.totalItems,
+                hasNext: res.pageInfo.hasNext,
             })
-            router.push(`/classroom/${classcode}/post`)
         },
     },
     mutations: {
-        joinClassLoading(state, data) {
+        listUserInClassLoading(state, data) {
             Object.assign(state, data)
         },
-        joinClassSuccess(state, data) {
+        listUserInClassSuccess(state, data) {
             Object.assign(state, data)
         },
-        joinClassFailure(state, data) {
+        listUserInClassFailure(state, data) {
             Object.assign(state, data)
         },
     },

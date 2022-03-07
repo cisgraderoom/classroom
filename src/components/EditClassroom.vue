@@ -12,13 +12,17 @@
                         class="px-7 py-7 rounded white mb-5"
                         elevation="3"
                     >
+                        <AddTeacherClassroom />
+                        <br />
                         <v-data-table
                             :headers="headers"
                             :items="listuser"
                             :page.sync="currentPage"
                             :items-per-page="itemsPerPage"
                             hide-default-footer
-                            :loading="this.$store.state.listAllUser.isLoading"
+                            :loading="
+                                this.$store.state.listUserInClass.isLoading
+                            "
                             loading-text="กำลังโหลด...."
                             class="elevation-1"
                             @page-count="pageCount = $event"
@@ -27,29 +31,30 @@
                                 <kickStudent
                                     :username="item.username"
                                     @getList="getListUser"
+                                    :is_delete="item.is_delete"
                                 />
                             </template>
                         </v-data-table>
                         <v-progress-linear
                             indeterminate
                             color="primary"
-                            v-show="this.$store.state.listAllUser.isLoading"
+                            v-show="this.$store.state.listUserInClass.isLoading"
                         ></v-progress-linear>
-                        <!-- <div class="text-center pt-2">
+                        <div class="text-center pt-2">
                             <v-pagination
                                 v-model="pageCount"
                                 :disabled="
-                                    this.$store.state.listAllUser.isLoading
+                                    this.$store.state.listUserInClass.isLoading
                                 "
                                 :length="totalPage"
                                 :total-visible="7"
                                 @input="handlePageChange"
                             ></v-pagination>
-                        </div> -->
+                        </div>
                         <v-alert
                             text
                             type="error"
-                            v-show="this.$store.state.listAllUser.isFailed"
+                            v-show="this.$store.state.listUserInClass.isFailed"
                         >
                             {{ errormessage }}
                         </v-alert>
@@ -62,12 +67,13 @@
 
 <script>
 import kickStudent from './kickStudent.vue'
+import AddTeacherClassroom from './AddTeacherClassroom.vue'
 export default {
     name: 'EditClassroom',
-    components: { kickStudent },
-    // mounted() {
-    //     this.getListUser()
-    // },
+    components: { kickStudent, AddTeacherClassroom },
+    mounted() {
+        this.getListUser()
+    },
     data() {
         return {
             currentPage: 1,
@@ -81,42 +87,46 @@ export default {
                     sortable: false,
                     value: 'name',
                 },
-                { text: 'Username', value: 'username', sortable: false },
-                { text: 'Role', value: 'role', sortable: false },
+                { text: 'ชื่อผู้ใช้', value: 'username', sortable: false },
+                { text: 'ตำแหน่ง', value: 'role', sortable: false },
                 {
-                    text: 'Kick',
+                    text: 'ลบออกชั้นเรียน',
                     value: 'kick_classroom',
                     sortable: false,
                 },
             ],
             listuser: [],
+
             errormessage: null,
         }
     },
-    // methods: {
-    // async getListUser() {
-    //     const { dispatch, state } = this.$store
-    //     const { currentPage } = this
-    //     await dispatch('listAllUser/listAllUser', {
-    //         currentPage,
-    //     }).then(() => {
-    //         this.listuser = state.listAllUser.listUser
-    //         this.totalPage = Math.ceil(state.listAllUser.totalUser / 20)
-    //         this.hasNext = state.listAllUser.hasNext
-    //         this.upDateKey += 1
-    //     })
-    //     if (state.listAllUser.isFailed) {
-    //         this.errormessage =
-    //             state.listAllUser.message ?? 'ไม่สามารถโหลดข้อมูลได้'
-    //     }
-    // },
-    // handlePageChange(value) {
-    //     if (this.currentPage != value) {
-    //         this.currentPage = value
-    //         this.getListUser()
-    //     }
-    // },
-    // },
+    methods: {
+        async getListUser() {
+            const classcode = this.$route.params.code
+            const { dispatch, state } = this.$store
+            const { currentPage } = this
+            await dispatch('listUserInClass/listUserInClass', {
+                classcode,
+                currentPage,
+            }).then(() => {
+                this.listuser = state.listUserInClass.listUser
+                this.totalPage = Math.ceil(state.listUserInClass.totalUser / 20)
+                this.hasNext = state.listUserInClass.hasNext
+                console.log(this.listuser)
+                this.upDateKey += 1
+            })
+            if (state.listUserInClass.isFailed) {
+                this.errormessage =
+                    state.listUserInClass.message ?? 'ไม่สามารถโหลดข้อมูลได้'
+            }
+        },
+        handlePageChange(value) {
+            if (this.currentPage != value) {
+                this.currentPage = value
+                this.getListUser()
+            }
+        },
+    },
 }
 </script>
 

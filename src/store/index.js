@@ -12,6 +12,8 @@ import { deletePost } from './classroom/deletePost.module'
 import { listClassroom } from './classroom/listClassroom.module'
 import { getInfoClassroom } from './classroom/getInfoClassroom.module'
 import { listPost } from './classroom/listPost.module'
+import { listUserInClass } from './classroom/listUserInClass.module'
+import { kickStudent } from './classroom/kickStudent.module'
 import { listPostProblem } from './classroom/listPostProblem.module'
 import { nextPost } from './classroom/nextPost.module'
 import { nextPostProblem } from './classroom/nextPostProblem.module'
@@ -26,6 +28,8 @@ import { addProblem } from './classroom/addProblem.module'
 import { addComment } from './classroom/addComment.module'
 import { deleteComment } from './classroom/deleteComment.module'
 import { getByIdProblem } from './problem/getByIdProblem.module'
+import { submitProblem } from './problem/submitProblem.module'
+import { submitTable } from './problem/submitTable.module'
 
 Vue.use(Vuex)
 
@@ -43,6 +47,8 @@ export default new Vuex.Store({
         editPost,
         deletePost,
         listPost,
+        listUserInClass,
+        kickStudent,
         nextPost,
         listPostProblem,
         nextPostProblem,
@@ -56,5 +62,7 @@ export default new Vuex.Store({
         addComment,
         deleteComment,
         getByIdProblem,
+        submitProblem,
+        submitTable,
     },
 })
