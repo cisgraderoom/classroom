@@ -13,6 +13,8 @@ import { listClassroom } from './classroom/listClassroom.module'
 import { getInfoClassroom } from './classroom/getInfoClassroom.module'
 import { listPost } from './classroom/listPost.module'
 import { listUserInClass } from './classroom/listUserInClass.module'
+import { addTeacherClassroom } from './classroom/addTeacherClassroom.module'
+import { listAllScoreInClass } from './classroom/listAllScoreInClass.module'
 import { kickStudent } from './classroom/kickStudent.module'
 import { listPostProblem } from './classroom/listPostProblem.module'
 import { nextPost } from './classroom/nextPost.module'
@@ -48,6 +50,8 @@ export default new Vuex.Store({
         deletePost,
         listPost,
         listUserInClass,
+        addTeacherClassroom,
+        listAllScoreInClass,
         kickStudent,
         nextPost,
         listPostProblem,

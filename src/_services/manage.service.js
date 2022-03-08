@@ -5,18 +5,15 @@ const addUser = async (req) => {
     let res = null
     let formData = new FormData()
     formData.append('file', req)
-    console.log(formData)
     const { data } = await httpClient
         .post('/user/upload', formData, {
             headers: authHeader(),
         })
         .catch((err) => {
             res = err?.response?.data
-            console.log(res)
             return res
         })
     if (data?.status) {
-        console.log(res)
         res = data
     }
     return res

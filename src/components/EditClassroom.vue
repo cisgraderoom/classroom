@@ -1,8 +1,11 @@
 <template>
     <div>
         <v-row>
-            <v-col md="9" xl="5">
+            <v-col md="8" xl="7">
                 <h2 class="my-2">จัดการห้องเรียน</h2>
+            </v-col>
+            <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-lg-10 mx-xl-n2">
+                <AddTeacherClassroom @getList="getListUser" />
             </v-col>
         </v-row>
         <div>
@@ -12,7 +15,6 @@
                         class="px-7 py-7 rounded white mb-5"
                         elevation="3"
                     >
-                        <AddTeacherClassroom />
                         <br />
                         <v-data-table
                             :headers="headers"
@@ -112,7 +114,6 @@ export default {
                 this.listuser = state.listUserInClass.listUser
                 this.totalPage = Math.ceil(state.listUserInClass.totalUser / 20)
                 this.hasNext = state.listUserInClass.hasNext
-                console.log(this.listuser)
                 this.upDateKey += 1
             })
             if (state.listUserInClass.isFailed) {

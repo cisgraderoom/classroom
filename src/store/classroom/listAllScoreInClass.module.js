@@ -4,50 +4,51 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    message: null,
+    listScore: null,
+    error: '',
 }
 
-export const kickStudent = {
+export const listAllScoreInClass = {
     namespaced: true,
     state: initialState,
     actions: {
-        async kickStudent({ commit }, { classcode, username }) {
-            commit('kickStudentLoading', {
+        async listAllScoreInClass({ commit }, { classcode }) {
+            commit('listAllScoreInClassLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.kickStudent({
+            const res = await classroomService.listAllScoreInClass({
                 classcode,
-                username,
             })
             if (!res?.status) {
-                commit('kickStudentFailure', {
+                commit('listAllScoreInClassFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    message: res.message,
+                    error: res.msg,
                 })
                 return res
             }
-            commit('kickStudentSuccess', {
+            commit('listAllScoreInClassSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
+                listScore: res.data,
             })
         },
     },
     mutations: {
-        kickStudentLoading(state, data) {
+        listAllScoreInClassLoading(state, data) {
             Object.assign(state, data)
         },
-        kickStudentSuccess(state, data) {
+        listAllScoreInClassSuccess(state, data) {
             Object.assign(state, data)
         },
-        kickStudentFailure(state, data) {
+        listAllScoreInClassFailure(state, data) {
             Object.assign(state, data)
         },
     },

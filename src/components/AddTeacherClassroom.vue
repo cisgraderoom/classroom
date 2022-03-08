@@ -9,7 +9,7 @@
                     v-bind="attrs"
                     v-on="on"
                 >
-                    เชิญอาจารย์เข้าชั้นเรียน
+                    เชิญอาจารย์
                 </v-btn>
             </template>
             <v-card>
@@ -21,10 +21,10 @@
                         <v-row>
                             <v-col cols="12">
                                 <v-text-field
-                                    v-model="classcode"
+                                    v-model="username"
                                     label="ชื่อผู้ใช้อาจารย์"
                                     :disabled="
-                                        this.$store.state.joinClassroom
+                                        this.$store.state.addTeacherClassroom
                                             .isLoading
                                     "
                                     required
@@ -34,14 +34,18 @@
                         <v-alert
                             text
                             type="error"
-                            v-show="this.$store.state.joinClassroom.isFailed"
+                            v-show="
+                                this.$store.state.addTeacherClassroom.isFailed
+                            "
                         >
                             {{ errormessage }}
                         </v-alert>
                         <v-progress-linear
                             indeterminate
                             color="primary"
-                            v-show="this.$store.state.joinClassroom.isLoading"
+                            v-show="
+                                this.$store.state.addTeacherClassroom.isLoading
+                            "
                         ></v-progress-linear>
                     </v-container>
                 </v-card-text>
@@ -51,7 +55,9 @@
                         color="blue darken-1"
                         text
                         @click="closedialog"
-                        :disabled="this.$store.state.joinClassroom.isLoading"
+                        :disabled="
+                            this.$store.state.addTeacherClassroom.isLoading
+                        "
                     >
                         ยกเลิก
                     </v-btn>
@@ -59,7 +65,9 @@
                         color="primary"
                         text
                         @click="handleSubmit"
-                        :disabled="this.$store.state.joinClassroom.isLoading"
+                        :disabled="
+                            this.$store.state.addTeacherClassroom.isLoading
+                        "
                     >
                         เชิญเข้าชั้นเรียน
                     </v-btn>
@@ -71,10 +79,10 @@
 
 <script>
 export default {
-    name: 'Joinclassroom',
+    name: 'AddTeacherClassroom',
     data: () => ({
         dialog: false,
-        classcode: '',
+        username: '',
         submitted: false,
         errormessage: '',
     }),
@@ -82,29 +90,37 @@ export default {
     methods: {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
+            const classcode = this.$route.params.code
             this.submitted = true
-            const { classcode } = this
+            const { username } = this
 
-            if (classcode == '') {
-                this.errormessage = 'Please enter your Code Classroom'
-                commit('joinClassroom/joinClassFailure', {
+            if (username == '') {
+                this.errormessage = 'โปรดใส่ชื่อผู้ใช้'
+                commit('addTeacherClassroom/addTeacherClassroomFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
                 })
                 return
             }
-            await dispatch('joinClassroom/joinClassroom', {
+            await dispatch('addTeacherClassroom/addTeacherClassroom', {
                 classcode,
+                username,
             })
-            if (state.joinClassroom.isFailed) {
+            if (state.addTeacherClassroom.isFailed) {
                 this.errormessage =
-                    state.joinClassroom.message ??
-                    'ไม่สามารถเข้าร่วมชั้นเรียนได้'
+                    state.addTeacherClassroom.message ??
+                    'ไม่สามารถเพิ่มผู้ใช้นี้ได้'
+                return
+            }
+            if (state.addTeacherClassroom.isSuccess) {
+                this.username = ''
+                this.dialog = false
+                this.$emit('getList')
             }
         },
         closedialog() {
-            this.classcode = ''
+            this.username = ''
             this.dialog = false
         },
     },

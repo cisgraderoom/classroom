@@ -65,6 +65,20 @@ const listUserInClass = async (req) => {
     return res
 }
 
+const listAllScoreInClass = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/submission/score/classroom/${req.classcode}/all`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
+    return res
+}
+
 const getInfoClassroom = async (req) => {
     let res = null
     const { data } = await httpClient
@@ -231,8 +245,8 @@ const addProblem = async (req) => {
     let formData2 = new FormData()
     formData.append('asset', req.asset)
     formData2.append('testcase', req.testcase)
-    // req.asset = formData
-    // req.testcase = formData2
+    req.asset = formData
+    req.testcase = formData2
     console.log(req)
     const { data } = await httpClient
         .post('/task/new', req, {
@@ -253,6 +267,22 @@ const deleteComment = async (req) => {
     let res = null
     const { data } = await httpClient
         .delete(`/comment/${req.classcode}/${req.post_id}/${req.comment_id}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const addTeacherClassroom = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post('/classroom/add/teacher', req, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -292,6 +322,7 @@ export const classroomService = {
     listAllPostProblem,
     listNextPostProblem,
     listAllComment,
+    listAllScoreInClass,
     getInfoClassroom,
     addPost,
     editPost,
@@ -300,4 +331,5 @@ export const classroomService = {
     addComment,
     deleteComment,
     kickStudent,
+    addTeacherClassroom,
 }
