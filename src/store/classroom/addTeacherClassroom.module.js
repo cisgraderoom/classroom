@@ -4,50 +4,51 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    message: null,
+    message: '',
 }
 
-export const kickStudent = {
+export const addTeacherClassroom = {
     namespaced: true,
     state: initialState,
     actions: {
-        async kickStudent({ commit }, { classcode, username }) {
-            commit('kickStudentLoading', {
+        async addTeacherClassroom({ commit }, { classcode, username }) {
+            commit('addTeacherClassroomLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.kickStudent({
+            const res = await classroomService.addTeacherClassroom({
                 classcode,
                 username,
             })
             if (!res?.status) {
-                commit('kickStudentFailure', {
+                commit('addTeacherClassroomFailure', {
                     ...initialState,
-                    isLoading: false,
                     isFailed: true,
+                    isLoading: false,
                     isSuccess: false,
-                    message: res.message,
+                    message: res?.message,
                 })
                 return res
             }
-            commit('kickStudentSuccess', {
+            commit('addTeacherClassroomSuccess', {
                 ...initialState,
-                isLoading: false,
-                isFailed: false,
                 isSuccess: true,
+                isFailed: false,
+                isLoading: false,
+                message: res?.message,
             })
         },
     },
     mutations: {
-        kickStudentLoading(state, data) {
+        addTeacherClassroomLoading(state, data) {
             Object.assign(state, data)
         },
-        kickStudentSuccess(state, data) {
+        addTeacherClassroomSuccess(state, data) {
             Object.assign(state, data)
         },
-        kickStudentFailure(state, data) {
+        addTeacherClassroomFailure(state, data) {
             Object.assign(state, data)
         },
     },

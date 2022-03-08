@@ -22,7 +22,7 @@
                         <v-text-field
                             v-model="username"
                             :rules="usernameRules"
-                            label="Username"
+                            label="ชื่อผู้ใช้"
                             :disabled="
                                 this.$store.state.authentication.isLoading
                             "
@@ -32,7 +32,7 @@
                             v-model="password"
                             :rules="passwordRules"
                             type="password"
-                            label="Password"
+                            label="รหัสผ่าน"
                             :disabled="
                                 this.$store.state.authentication.isLoading
                             "
@@ -43,7 +43,7 @@
                             text
                             type="error"
                             v-show="this.$store.state.authentication.isFailed"
-                            >Username หรือ password ไม่ถูกต้อง</v-alert
+                            >ชื่อผู้ใช้ หรือ รหัสผ่าน ไม่ถูกต้อง</v-alert
                         >
                         <v-btn
                             @click="handleSubmit"
@@ -53,7 +53,7 @@
                             :disabled="
                                 this.$store.state.authentication.isLoading
                             "
-                            >login</v-btn
+                            >เข้าสู่ระบบ</v-btn
                         >
                         <v-progress-linear
                             class="mt-2"
@@ -86,9 +86,9 @@ export default {
     data() {
         return {
             username: '',
-            usernameRules: [(v) => !!v || 'Username is required'],
+            usernameRules: [(v) => !!v || 'โปรดใส่ชื่อผู้ใช้'],
             password: '',
-            passwordRules: [(v) => !!v || 'Password is required'],
+            passwordRules: [(v) => !!v || 'โปรดใส่รหัสผ่าน'],
             submitted: false,
             loginfail: false,
         }

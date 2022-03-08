@@ -7,13 +7,40 @@
         </v-row>
         <div>
             <v-row>
-                <v-col md="10" class="mb-10" xl="9"
-                    ><v-data-table
-                        :headers="headers"
-                        :items="desserts"
-                        :items-per-page="5"
-                        class="elevation-1"
-                    ></v-data-table>
+                <v-col md="10" class="mb-10" xl="9">
+                    <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
+                        <v-data-table
+                            :headers="headers"
+                            :items="desserts"
+                            :items-per-page="5"
+                            hide-default-footer
+                            :loading="
+                                this.$store.state.listAllScoreInClass.isLoading
+                            "
+                            v-show="
+                                !this.$store.state.listAllScoreInClass.isFailed
+                            "
+                            loading-text="กำลังโหลด...."
+                            class="elevation-1"
+                        >
+                        </v-data-table>
+                        <v-progress-linear
+                            indeterminate
+                            color="primary"
+                            v-show="
+                                this.$store.state.listAllScoreInClass.isLoading
+                            "
+                        ></v-progress-linear>
+                        <v-alert
+                            text
+                            type="error"
+                            v-show="
+                                this.$store.state.listAllScoreInClass.isFailed
+                            "
+                        >
+                            {{ errormessage }}
+                        </v-alert>
+                    </v-sheet>
                 </v-col>
             </v-row>
         </div>
@@ -23,8 +50,13 @@
 <script>
 export default {
     name: 'AllScore',
+    mounted() {
+        this.listAllScore()
+    },
     data() {
         return {
+            listScore: [],
+            errormessage: null,
             headers: [
                 {
                     text: 'Name',
@@ -121,6 +153,22 @@ export default {
                 },
             ],
         }
+    },
+    methods: {
+        async listAllScore() {
+            const classcode = this.$route.params.code
+            const { dispatch, state } = this.$store
+            await dispatch('listAllScoreInClass/listAllScoreInClass', {
+                classcode,
+            }).then(() => {
+                this.listScore = state.listAllScoreInClass.listScore
+            })
+            if (state.listAllScoreInClass.isFailed) {
+                this.errormessage =
+                    state.listAllScoreInClass.message ??
+                    'ไม่สามารถโหลดข้อมูลได้'
+            }
+        },
     },
 }
 </script>
