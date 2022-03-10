@@ -29,7 +29,7 @@ export const getByIdProblem = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    error: res.message,
+                    error: res.msg,
                 })
                 return res
             }

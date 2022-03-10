@@ -29,7 +29,7 @@
                             :disabled="this.$store.state.addProblem.isLoading"
                         ></v-text-field>
                         <v-file-input
-                            accept="image/*,application/*,.pdf,.html,.css,.json,.txt"
+                            accept="image/*,application/*,.pdf,.html,.css,.json,.txt,.zip"
                             label="แนบไฟล์"
                             v-model="asset"
                             :disabled="this.$store.state.addProblem.isLoading"
@@ -277,7 +277,7 @@ export default {
             })
             if (state.addProblem.isFailed) {
                 this.errormessage =
-                    state.addProblem.message ?? 'ไม่สามารถโพสต์ได้'
+                    state.addProblem.message ?? 'ไม่สามารถสร้างโจทย์ได้'
             }
             this.text = ''
         },
