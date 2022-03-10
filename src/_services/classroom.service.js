@@ -242,19 +242,20 @@ const addComment = async (req) => {
 const addProblem = async (req) => {
     let res = null
     let formData = new FormData()
-    let formData2 = new FormData()
+    formData.append('problemName', req.problemName)
+    formData.append('problemDesc', req.problemDesc)
+    formData.append('score', req.score)
+    formData.append('classcode', req.classcode)
+    formData.append('open', req.open)
+    formData.append('close', req.close)
     formData.append('asset', req.asset)
-    formData2.append('testcase', req.testcase)
-    req.asset = formData
-    req.testcase = formData2
-    console.log(req)
+    formData.append('testcase', req.testcase)
     const { data } = await httpClient
-        .post('/task/new', req, {
+        .post('/task/new', formData, {
             headers: authHeader(),
         })
         .catch((err) => {
             res = err?.response?.data
-            console.log(res)
             return res
         })
     if (data?.status) {

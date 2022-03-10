@@ -30,7 +30,7 @@
                     </v-col>
                 </v-row>
             </div>
-            <SubmitTable />
+            <!-- <SubmitTable /> -->
             <!-- <v-row>
                 <v-col md="9" class="mx-auto" xl="7">
                     <v-data-table
@@ -50,14 +50,14 @@ import TimeAgo from 'javascript-time-ago'
 import Navbar from '../../components/Navbar'
 import HeadClassroom from '../../components/HeadClassroom'
 import Problemauto from '../../components/Problemauto'
-import SubmitTable from '../../components/SubmitTable'
+// import SubmitTable from '../../components/SubmitTable'
 export default {
     name: 'Problem',
     components: {
         Navbar,
         HeadClassroom,
         Problemauto,
-        SubmitTable,
+        // SubmitTable,
     },
     mounted() {
         this.getByIdProblem()

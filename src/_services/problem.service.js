@@ -1,5 +1,6 @@
 import { authHeader } from '../_helpers'
 import httpClient from '../_helpers/httpClient'
+import router from '../router/index'
 
 const getByIdProblem = async (req) => {
     let res = null
@@ -11,9 +12,10 @@ const getByIdProblem = async (req) => {
             res = err?.response?.data
             return res
         })
-    if (data?.status) {
-        res = data
+    if (!data?.status) {
+        router.push(`/classroom/${req.classcode}/problem`)
     }
+    res = data
     return res
 }
 
@@ -21,8 +23,7 @@ const submitProblem = async (req) => {
     let res = null
     let formData = new FormData()
     formData.append('code', req.code)
-    req.code = formData
-    req.code = ''
+    formData.append('classcode', req.classcode)
     const { data } = await httpClient
         .post(`/submission/submit/${req.problemid}`, req, {
             headers: authHeader(),
@@ -33,7 +34,6 @@ const submitProblem = async (req) => {
         })
     if (data?.status) {
         res = data
-        console.log(res)
     }
     return res
 }
@@ -49,7 +49,6 @@ const submitTable = async (req) => {
             return res
         })
     res = data
-    console.log(res)
     // if (data?.status) {
     //     res = data
     // }
