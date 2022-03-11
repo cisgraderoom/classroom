@@ -10,10 +10,6 @@
                     <h3>{{ problemname }}</h3>
                 </v-col>
                 <v-col cols="auto">
-                    <!-- <v-chip v-show="!status"> ยังไม่ส่ง </v-chip>
-                    <v-chip color="green" text-color="white" v-show="status">
-                        ส่งแล้ว
-                    </v-chip> -->
                     <v-chip v-if="maxscore"> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>
             </v-row>
@@ -31,7 +27,12 @@
                 color="primary"
                 v-show="$store.state.getByIdProblem.isLoading"
             ></v-progress-linear>
-            <SubmitProblem :problemid="problemid" />
+            <SubmitProblem
+                :problemid="problemid"
+                v-show="checkRoleClassroom == 'student'"
+                @getsubmitTable="getsubmitTable"
+            />
+
             <!-- <v-row align="center">
                 <v-col>
                     <v-file-input
@@ -72,7 +73,13 @@ export default {
     ],
     data: () => ({
         status: false,
+        checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
+    methods: {
+        getsubmitTable() {
+            this.$emit('getsubmitTable')
+        },
+    },
 }
 </script>
 

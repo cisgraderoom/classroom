@@ -72,7 +72,10 @@ export default {
             })
             if (state.submitProblem.isFailed) {
                 this.errormessage =
-                    state.submitProblem.message ?? 'ไม่สามารถส่งได้'
+                    state.submitProblem.error ?? 'ไม่สามารถส่งได้'
+            }
+            if (state.submitProblem.isSuccess) {
+                this.$emit('getsubmitTable')
             }
         },
     },

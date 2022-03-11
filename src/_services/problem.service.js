@@ -25,7 +25,7 @@ const submitProblem = async (req) => {
     formData.append('code', req.code)
     formData.append('classcode', req.classcode)
     const { data } = await httpClient
-        .post(`/submission/submit/${req.problemid}`, req, {
+        .post(`/submission/submit/${req.problemid}`, formData, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -49,9 +49,44 @@ const submitTable = async (req) => {
             return res
         })
     res = data
-    // if (data?.status) {
-    //     res = data
-    // }
+    console.log(res)
+    return res
+}
+
+const submitList = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(
+            `/submission/list/${req.classcode}/problem/${req.problemid}?page=${req.current}`,
+            {
+                headers: authHeader(),
+            }
+        )
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
+    console.log(res)
+    return res
+}
+
+const editProblem = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post(
+            `/submission/list/${req.classcode}/problem/${req.problemid}?page=${req.current}`,
+            req,
+            {
+                headers: authHeader(),
+            }
+        )
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
+    console.log(res)
     return res
 }
 
@@ -59,4 +94,6 @@ export const problemService = {
     getByIdProblem,
     submitProblem,
     submitTable,
+    submitList,
+    editProblem,
 }

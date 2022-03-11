@@ -29,7 +29,6 @@
                         :maxscore="problem.max_score"
                         :key="upDateKey"
                         :path="`/classroom/${$route.params.code}/problem/${problem.problem_id}`"
-                        target="_blank"
                 /></v-lazy>
             </v-col>
         </v-row>

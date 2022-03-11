@@ -86,8 +86,6 @@ export default {
                 },
                 { text: 'Username', value: 'username', sortable: false },
                 { text: 'Role', value: 'role', sortable: false },
-                // { text: 'Created at', value: 'created_at', sortable: false },
-                // { text: 'Update at', value: 'updated_at', sortable: false },
                 {
                     text: 'Reset Password',
                     value: 'reset_password',
