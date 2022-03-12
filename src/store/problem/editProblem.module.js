@@ -16,7 +16,19 @@ export const editProblem = {
     namespaced: true,
     state: initialState,
     actions: {
-        async editProblem({ commit }, { problemid, classcode, current }) {
+        async editProblem(
+            { commit },
+            {
+                problemName,
+                problemDesc,
+                problemId,
+                openat,
+                closeat,
+                asset,
+                score,
+                classcode,
+            }
+        ) {
             commit('editProblemLoading', {
                 ...initialState,
                 isLoading: true,
@@ -24,9 +36,14 @@ export const editProblem = {
                 isSuccess: false,
             })
             const res = await problemService.editProblem({
-                problemid,
+                problemName,
+                problemDesc,
+                problemId,
+                openat,
+                closeat,
+                asset,
+                score,
                 classcode,
-                current,
             })
             if (!res?.status) {
                 commit('editProblemFailure', {

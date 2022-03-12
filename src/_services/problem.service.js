@@ -49,7 +49,6 @@ const submitTable = async (req) => {
             return res
         })
     res = data
-    console.log(res)
     return res
 }
 
@@ -67,16 +66,24 @@ const submitList = async (req) => {
             return res
         })
     res = data
-    console.log(res)
     return res
 }
 
 const editProblem = async (req) => {
     let res = null
+    let formData = new FormData()
+    formData.append('problemName', req.problemName)
+    formData.append('problemDesc', req.problemDesc)
+    formData.append('problemId', req.problemId)
+    formData.append('openat', req.openat)
+    formData.append('closeat', req.closeat)
+    formData.append('asset', req.asset)
+    formData.append('score', req.score)
+    formData.append('classcode', req.classcode)
     const { data } = await httpClient
         .post(
             `/submission/list/${req.classcode}/problem/${req.problemid}?page=${req.current}`,
-            req,
+            formData,
             {
                 headers: authHeader(),
             }
@@ -86,7 +93,6 @@ const editProblem = async (req) => {
             return res
         })
     res = data
-    console.log(res)
     return res
 }
 

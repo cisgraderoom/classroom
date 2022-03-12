@@ -27,7 +27,7 @@
                                         v-model="problem_name"
                                         label="ชื่อโจทย์"
                                         :disabled="
-                                            this.$store.state.addProblem
+                                            this.$store.state.editProblem
                                                 .isLoading
                                         "
                                     ></v-text-field>
@@ -35,7 +35,7 @@
                                         v-model="problem_text"
                                         label="รายละเอียดโจทย์"
                                         :disabled="
-                                            this.$store.state.addProblem
+                                            this.$store.state.editProblem
                                                 .isLoading
                                         "
                                     ></v-textarea>
@@ -44,7 +44,7 @@
                                         v-model="max_score"
                                         type="number"
                                         :disabled="
-                                            this.$store.state.addProblem
+                                            this.$store.state.editProblem
                                                 .isLoading
                                         "
                                     ></v-text-field>
@@ -53,7 +53,7 @@
                                         label="แนบไฟล์"
                                         v-model="asset"
                                         :disabled="
-                                            this.$store.state.addProblem
+                                            this.$store.state.editProblem
                                                 .isLoading
                                         "
                                         show-size
@@ -66,7 +66,7 @@
                                         offset-y
                                         min-width="auto"
                                         :disabled="
-                                            this.$store.state.addProblem
+                                            this.$store.state.editProblem
                                                 .isLoading
                                         "
                                     >
@@ -115,7 +115,7 @@
                                         offset-y
                                         min-width="auto"
                                         :disabled="
-                                            this.$store.state.addProblem
+                                            this.$store.state.editProblem
                                                 .isLoading
                                         "
                                     >
@@ -162,14 +162,14 @@
                         <v-alert
                             text
                             type="error"
-                            v-show="this.$store.state.editPost.isFailed"
+                            v-show="this.$store.state.editProblem.isFailed"
                         >
                             {{ errormessage }}
                         </v-alert>
                         <v-progress-linear
                             indeterminate
                             color="primary"
-                            v-show="this.$store.state.editPost.isLoading"
+                            v-show="this.$store.state.editProblem.isLoading"
                         ></v-progress-linear>
                     </v-container>
                 </v-card-text>
@@ -179,7 +179,7 @@
                         color="blue darken-1"
                         text
                         @click="closedialog"
-                        :disabled="this.$store.state.editPost.isLoading"
+                        :disabled="this.$store.state.editProblem.isLoading"
                     >
                         ยกเลิก
                     </v-btn>
@@ -187,7 +187,7 @@
                         color="primary"
                         text
                         @click="handleSubmit"
-                        :disabled="this.$store.state.editPost.isLoading"
+                        :disabled="this.$store.state.editProblem.isLoading"
                     >
                         แก้ไขโจทย์
                     </v-btn>
@@ -204,8 +204,8 @@ export default {
         'problemname',
         'problemid',
         'problemtext',
-        'opendate',
-        'closedate',
+        'open_date',
+        'close_date',
         'maxscore',
     ],
 
@@ -215,8 +215,6 @@ export default {
         problem_id: null,
         problem_text: null,
         asset: null,
-        open_date: null,
-        close_date: null,
         max_score: null,
         menu: false,
         menu2: false,
@@ -244,14 +242,22 @@ export default {
         errormessage: '',
     }),
     mounted() {
-        this.problem_name = this.problemname
-        this.problem_id = this.problemid
-        this.problem_text = this.problemtext
-        this.open_date = this.opendate
-        this.close_date = this.closedate
-        this.max_score = this.maxscore
+        this.setdata()
     },
     methods: {
+        setdata() {
+            this.problem_name = this.problemname
+            this.problem_id = this.problemid
+            this.problem_text = this.problemtext
+            this.opendate = this.open_date.split(' ')[0]
+            this.opentime = this.open_date.split(' ')[1]
+            this.opendatetime = this.open_date
+            this.closedate = this.close_date.split(' ')[0]
+            this.closetime = this.close_date.split(' ')[1]
+            this.closedatetime = this.close_date
+            this.max_score = this.maxscore
+        },
+
         setOpen() {
             this.opendatetime = this.opendate + ' ' + this.opentime
             this.menu = false
@@ -265,48 +271,67 @@ export default {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
             const classcode = this.$route.params.code
-            const { problem_name } = this
+            const {
+                problem_name,
+                problem_id,
+                problem_text,
+                opendatetime,
+                closedatetime,
+                asset,
+                max_score,
+            } = this
             if (problem_name == '') {
                 this.errormessage = 'Please enter your Text Post'
-                commit('editPost/editPostFailure', {
+                commit('editProblem/editProblemFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
                 })
             }
-            if (problem_name != '') {
-                await dispatch('editPost/editPost', {
-                    problemName: this.problem_name,
-                    problemDesc: this.problem_text,
-                    score: this.maxscore,
-                    classcode,
-                    // open: formatopentime,
-                    // close: formatclosetime,
-                    // asset: this.asset,
+            const formatopentime = Math.round(
+                new Date(opendatetime).getTime() / 1000
+            )
+            const formatclosetime = Math.round(
+                new Date(closedatetime).getTime() / 1000
+            )
+            if (formatclosetime <= formatopentime) {
+                this.errormessage = 'เวลาปิดโจทย์ต้องมากกว่าเวลาเปิดโจทย์'
+                commit('editProblem/editProblemFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
                 })
-                if (state?.editPost?.isSuccess) {
+                return
+            }
+            if (problem_name != '') {
+                await dispatch('editProblem/editProblem', {
+                    problemName: problem_name,
+                    problemDesc: problem_text,
+                    problemId: problem_id,
+                    score: max_score,
+                    openat: formatopentime,
+                    closeat: formatclosetime,
+                    asset: asset,
+                    classcode,
+                })
+                if (state?.editProblem?.isSuccess) {
                     this.closedialog()
                     this.$emit('getPost')
                 }
-                if (state?.editPost?.isFailed) {
+                if (state?.editProblem?.isFailed) {
                     this.errormessage =
-                        state.editPost.message ?? 'ไม่สามารถแก้ไขโพสต์ได้'
+                        state.editProblem.message ?? 'ไม่สามารถแก้ไขโพสต์ได้'
                 }
             }
         },
         closedialog() {
             const { commit } = this.$store
-            commit('editPost/editPostFailure', {
+            commit('editProblem/editProblemFailure', {
                 isFailed: false,
                 isLoading: false,
                 isSuccess: false,
             })
-            this.problem_name = this.problemname
-            this.problem_id = this.problemid
-            this.problem_text = this.problemtext
-            this.open_date = this.opendate
-            this.close_date = this.closedate
-            this.max_score = this.maxscore
+            this.setdata()
             this.dialog = false
         },
     },

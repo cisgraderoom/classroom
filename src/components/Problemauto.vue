@@ -10,13 +10,25 @@
                     <h3>{{ problemname }}</h3>
                 </v-col>
                 <v-col cols="auto">
+                    <v-chip
+                        color="red"
+                        text-color="white"
+                        v-show="!isopen"
+                        class="mx-2"
+                    >
+                        ปิดการส่งแล้ว
+                    </v-chip>
                     <v-chip v-if="maxscore"> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>
             </v-row>
-            <p>
-                {{ problemtext }}
-            </p>
-            <h5 class="grey--text text--darken-1" v-if="opendate">
+            <p>{{ problemtext }}</p>
+            <a
+                href="https://drive.google.com/file/d/1hxuJJ_AstQBmwu5zSbeTrEjxxddBwZqp/view?usp=sharing"
+                target="_blank"
+            >
+                {{ problemtext }}.pdf
+            </a>
+            <h5 class="grey--text text--darken-1 mt-2" v-if="opendate">
                 Open {{ opendate }}
             </h5>
             <h5 class="grey--text text--darken-1" v-if="closedate">
@@ -32,25 +44,6 @@
                 v-show="checkRoleClassroom == 'student'"
                 @getsubmitTable="getsubmitTable"
             />
-
-            <!-- <v-row align="center">
-                <v-col>
-                    <v-file-input
-                        truncate-length="15"
-                        label="File input"
-                        v-show="!$store.state.getByIdProblem.isLoading"
-                    ></v-file-input>
-                </v-col>
-                <v-col cols="auto">
-                    <v-btn
-                        elevation="2"
-                        color="primary"
-                        class="mr-1"
-                        v-show="!$store.state.getByIdProblem.isLoading"
-                        >submit</v-btn
-                    >
-                </v-col>
-            </v-row> -->
         </v-sheet>
     </v-hover>
 </template>
@@ -70,6 +63,7 @@ export default {
         'opendate',
         'closedate',
         'maxscore',
+        'isopen',
     ],
     data: () => ({
         status: false,

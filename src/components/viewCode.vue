@@ -57,6 +57,7 @@ export default {
     data() {
         return {
             myusername: JSON.parse(localStorage.getItem('user')).username,
+            code: '',
             dialog: false,
             errormessage: '',
         }

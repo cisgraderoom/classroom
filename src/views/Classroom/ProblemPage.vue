@@ -4,7 +4,7 @@
         <v-container class="mb-10">
             <HeadClassroom />
             <div>
-                <v-row>
+                <v-row align="center">
                     <v-col md="8" offset-md="1" xl="6" offset-xl="2">
                         <h2 class="my-2">โจทย์</h2>
                     </v-col>
@@ -20,10 +20,11 @@
                             :problemname="problem.problem_name"
                             :problemid="problem.problem_id"
                             :problemtext="problem.problem_desc"
-                            :opendate="openDateFormat"
-                            :closedate="closeDateFormat"
+                            :open_date="problem.open_at"
+                            :close_date="problem.close_at"
                             :maxscore="problem.max_score"
                             @getList="getByIdProblem"
+                            :key="upDateKey"
                         />
                     </v-col>
                 </v-row>
@@ -38,6 +39,7 @@
                             :opendate="openDateFormat"
                             :closedate="closeDateFormat"
                             :maxscore="problem.max_score"
+                            :isopen="true"
                             @getsubmitTable="getsubmitTable"
                         /><v-alert
                             text
@@ -93,6 +95,7 @@ export default {
                 .then(() => {
                     this.problem = this.$store.state.getByIdProblem.problem
                     this.Loading = false
+                    this.upDateKey += 1
                     this.formatDate()
                 })
             return data
