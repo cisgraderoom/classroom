@@ -78,16 +78,11 @@ const editProblem = async (req) => {
     formData.append('openat', req.openat)
     formData.append('closeat', req.closeat)
     formData.append('asset', req.asset)
-    formData.append('score', req.score)
     formData.append('classcode', req.classcode)
     const { data } = await httpClient
-        .post(
-            `/submission/list/${req.classcode}/problem/${req.problemid}?page=${req.current}`,
-            formData,
-            {
-                headers: authHeader(),
-            }
-        )
+        .put(`/task/${req.problemid}`, formData, {
+            headers: authHeader(),
+        })
         .catch((err) => {
             res = err?.response?.data
             return res

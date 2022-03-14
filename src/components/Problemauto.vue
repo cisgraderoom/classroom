@@ -22,11 +22,8 @@
                 </v-col>
             </v-row>
             <p>{{ problemtext }}</p>
-            <a
-                href="https://drive.google.com/file/d/1hxuJJ_AstQBmwu5zSbeTrEjxxddBwZqp/view?usp=sharing"
-                target="_blank"
-            >
-                {{ problemtext }}.pdf
+            <a @click="DownloadFile">
+                {{ assetname }}
             </a>
             <h5 class="grey--text text--darken-1 mt-2" v-if="opendate">
                 Open {{ opendate }}
@@ -64,14 +61,29 @@ export default {
         'closedate',
         'maxscore',
         'isopen',
+        'asset',
     ],
+    mounted() {
+        this.assetname = this.asset.substring(this.asset.indexOf('_') + 1)
+    },
     data: () => ({
         status: false,
         checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
+        assetname: null,
     }),
     methods: {
         getsubmitTable() {
             this.$emit('getsubmitTable')
+        },
+        DownloadFile() {
+            // var fileURL = window.URL.createObjectURL(new Blob([this.asset]))
+            // var fileLink = document.createElement('a')
+            // fileLink.href = fileURL
+            // fileLink.setAttribute('download', this.assetname)
+            // document.body.appendChild(fileLink)
+            // console.log(fileLink)
+            // fileLink.click()
+            console.log(this.asset)
         },
     },
 }

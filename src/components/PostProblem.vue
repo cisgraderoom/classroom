@@ -35,9 +35,6 @@
                         Close {{ closeDateFormat }}
                     </h5>
                 </v-col>
-                <!-- <v-col cols="auto">
-                    <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
-                </v-col> -->
             </v-row>
         </v-card>
     </v-hover>

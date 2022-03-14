@@ -43,10 +43,7 @@
                                         label="คะแนนเต็ม"
                                         v-model="max_score"
                                         type="number"
-                                        :disabled="
-                                            this.$store.state.editProblem
-                                                .isLoading
-                                        "
+                                        disabled
                                     ></v-text-field>
                                     <v-file-input
                                         accept="image/*,application/*,.pdf,.html,.css,.json,.txt,.zip"
@@ -278,7 +275,6 @@ export default {
                 opendatetime,
                 closedatetime,
                 asset,
-                max_score,
             } = this
             if (problem_name == '') {
                 this.errormessage = 'Please enter your Text Post'
@@ -308,7 +304,6 @@ export default {
                     problemName: problem_name,
                     problemDesc: problem_text,
                     problemId: problem_id,
-                    score: max_score,
                     openat: formatopentime,
                     closeat: formatclosetime,
                     asset: asset,

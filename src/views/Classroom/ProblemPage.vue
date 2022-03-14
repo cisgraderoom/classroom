@@ -39,8 +39,10 @@
                             :opendate="openDateFormat"
                             :closedate="closeDateFormat"
                             :maxscore="problem.max_score"
+                            :asset="problem.asset"
                             :isopen="true"
                             @getsubmitTable="getsubmitTable"
+                            :key="upDateKey"
                         /><v-alert
                             text
                             type="error"
@@ -95,8 +97,8 @@ export default {
                 .then(() => {
                     this.problem = this.$store.state.getByIdProblem.problem
                     this.Loading = false
-                    this.upDateKey += 1
                     this.formatDate()
+                    this.upDateKey += 1
                 })
             return data
         },

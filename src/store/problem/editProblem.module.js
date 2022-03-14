@@ -25,7 +25,6 @@ export const editProblem = {
                 openat,
                 closeat,
                 asset,
-                score,
                 classcode,
             }
         ) {
@@ -42,7 +41,6 @@ export const editProblem = {
                 openat,
                 closeat,
                 asset,
-                score,
                 classcode,
             })
             if (!res?.status) {
