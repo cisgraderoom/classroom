@@ -91,10 +91,25 @@ const editProblem = async (req) => {
     return res
 }
 
+const setStatusProblem = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .put(`/task/status/${req.problemid}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
+    return res
+}
+
 export const problemService = {
     getByIdProblem,
     submitProblem,
     submitTable,
     submitList,
     editProblem,
+    setStatusProblem,
 }

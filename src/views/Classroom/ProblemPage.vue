@@ -5,8 +5,21 @@
             <HeadClassroom />
             <div>
                 <v-row align="center">
-                    <v-col md="8" offset-md="1" xl="6" offset-xl="2">
+                    <v-col md="6" offset-md="1" xl="4" offset-xl="2">
                         <h2 class="my-2">โจทย์</h2>
+                    </v-col>
+                    <v-col
+                        cols="2"
+                        v-show="
+                            checkRoleClassroom == 'superteacher' ||
+                            checkRoleClassroom == 'teacher'
+                        "
+                    >
+                        <SetStatusProblem
+                            :problem_id="problem.problem_id"
+                            :is_hidden="problem.is_hidden"
+                            :key="upDateKey"
+                        />
                     </v-col>
                     <v-col
                         md="2"
@@ -65,6 +78,7 @@ import HeadClassroom from '../../components/HeadClassroom'
 import EditProblem from '../../components/EditProblem'
 import Problemauto from '../../components/Problemauto'
 import SubmitTable from '../../components/SubmitTable'
+import SetStatusProblem from '../../components/SetStatusProblem'
 export default {
     name: 'Problem',
     components: {
@@ -73,6 +87,7 @@ export default {
         EditProblem,
         Problemauto,
         SubmitTable,
+        SetStatusProblem,
     },
     mounted() {
         this.getByIdProblem()

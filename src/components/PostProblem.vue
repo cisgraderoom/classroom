@@ -15,7 +15,7 @@
                     <v-chip
                         color="red"
                         text-color="white"
-                        v-show="nowdate > closedate"
+                        v-show="nowdate > closedate || ishidden == 1"
                         class="mx-2"
                     >
                         ปิดการส่งแล้ว
@@ -52,6 +52,7 @@ export default {
         'opendate',
         'closedate',
         'path',
+        'ishidden',
         'maxscore',
     ],
     data: () => ({

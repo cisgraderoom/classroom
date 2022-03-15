@@ -27,6 +27,7 @@
                         :opendate="problem.open_at"
                         :closedate="problem.close_at"
                         :maxscore="problem.max_score"
+                        :ishidden="problem.is_hidden"
                         :key="upDateKey"
                         :path="`/classroom/${$route.params.code}/problem/${problem.problem_id}`"
                 /></v-lazy>

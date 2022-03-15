@@ -62,6 +62,12 @@ export default {
         itemsPerPage: 20,
         headers: [
             {
+                text: 'Username',
+                align: 'start',
+                sortable: false,
+                value: 'username',
+            },
+            {
                 text: 'Date',
                 align: 'start',
                 sortable: false,
@@ -74,24 +80,39 @@ export default {
         ],
         score: [
             {
+                username: 'student01',
+                date: '01/01/2021',
+                case1: 1,
+                case2: 0,
+                score: '5',
+            },
+            {
+                username: 'student02',
                 date: '01/01/2021',
                 case1: 0,
                 case2: 0,
                 score: '0',
             },
+            {
+                username: 'student03',
+                date: '01/01/2021',
+                case1: 1,
+                case2: 1,
+                score: '10',
+            },
         ],
         status: true,
     }),
-    // mounted() {
-    //     if (
-    //         this.checkRoleClassroom == 'superteacher' ||
-    //         this.checkRoleClassroom == 'teacher'
-    //     ) {
-    //         this.submitList()
-    //     } else {
-    //         this.submitTable()
-    //     }
-    // },
+    mounted() {
+        if (
+            this.checkRoleClassroom == 'superteacher' ||
+            this.checkRoleClassroom == 'teacher'
+        ) {
+            this.submitList()
+        } else {
+            this.submitTable()
+        }
+    },
     methods: {
         submitTable() {
             const classcode = this.$route.params.code
@@ -102,8 +123,8 @@ export default {
                     problemid,
                 })
                 .then(() => {
-                    this.score = this.$store.state.submitTable.score
-                    this.status = this.$store.state.submitTable.status
+                    // this.score = this.$store.state.submitTable.score
+                    // this.status = this.$store.state.submitTable.status
                 })
             return data
         },
@@ -117,12 +138,12 @@ export default {
                     current: this.currentPage,
                 })
                 .then(() => {
-                    this.score = this.$store.state.submitList.score
-                    this.totalPage = Math.ceil(
-                        this.$store.state.submitList.totalUser / 20
-                    )
-                    this.hasNext = this.$store.state.submitList.hasNext
-                    this.status = this.$store.state.submitList.status
+                    // this.score = this.$store.state.submitList.score
+                    // this.totalPage = Math.ceil(
+                    //     this.$store.state.submitList.totalUser / 20
+                    // )
+                    // this.hasNext = this.$store.state.submitList.hasNext
+                    // this.status = this.$store.state.submitList.status
                 })
             return data
         },
