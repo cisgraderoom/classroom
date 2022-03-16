@@ -6,10 +6,13 @@
                     truncate-length="15"
                     label="File input"
                     v-model="file"
-                    accept="code/*"
+                    accept=".c,.cpp,.java"
                     show-size
                     v-show="!$store.state.getByIdProblem.isLoading"
-                    :disabled="$store.state.submitProblem.isLoading"
+                    :disabled="
+                        $store.state.submitProblem.isLoading ||
+                        $store.state.submitTable.isLoading
+                    "
                 ></v-file-input>
             </v-col>
             <v-col cols="auto">
@@ -18,7 +21,10 @@
                     color="primary"
                     class="mr-1"
                     v-show="!$store.state.getByIdProblem.isLoading"
-                    :disabled="$store.state.submitProblem.isLoading"
+                    :disabled="
+                        $store.state.submitProblem.isLoading ||
+                        $store.state.submitTable.isLoading
+                    "
                     @click="handleSubmit"
                     >submit</v-btn
                 >

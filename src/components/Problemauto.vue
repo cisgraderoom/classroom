@@ -64,7 +64,9 @@ export default {
         'asset',
     ],
     mounted() {
-        this.assetname = this.asset.substring(this.asset.indexOf('_') + 1)
+        if (this.asset) {
+            this.assetname = this.asset.substring(this.asset.indexOf('_') + 1)
+        }
     },
     data: () => ({
         status: false,

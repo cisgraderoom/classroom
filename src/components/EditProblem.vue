@@ -239,7 +239,9 @@ export default {
         errormessage: '',
     }),
     mounted() {
-        this.setdata()
+        if (this.open_date) {
+            this.setdata()
+        }
     },
     methods: {
         setdata() {

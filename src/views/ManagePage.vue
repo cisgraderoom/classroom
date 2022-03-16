@@ -8,10 +8,10 @@
                 </v-col>
             </v-row>
             <v-row>
-                <AddAccount />
-                <AddAccountManual />
+                <AddAccount @getlist="getList" />
+                <AddAccountManual @getlist="getList" />
             </v-row>
-            <AllUser />
+            <AllUser :key="upDateKey" />
         </v-container>
     </div>
 </template>
@@ -28,6 +28,14 @@ export default {
         AddAccount,
         AddAccountManual,
         AllUser,
+    },
+    data: () => ({
+        upDateKey: 0,
+    }),
+    methods: {
+        getList() {
+            this.upDateKey += 1
+        },
     },
 }
 </script>

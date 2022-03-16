@@ -66,7 +66,7 @@
                     </v-col>
                 </v-row>
             </div>
-            <SubmitTable :key="upDateKey" />
+            <SubmitTable :key="upDateKeyTable" />
         </v-container>
     </div>
 </template>
@@ -99,6 +99,7 @@ export default {
         closeDateFormat: null,
         errormessage: null,
         upDateKey: 0,
+        upDateKeyTable: 0,
     }),
     methods: {
         getByIdProblem() {
@@ -125,7 +126,7 @@ export default {
             )
         },
         getsubmitTable() {
-            this.upDateKey += 1
+            this.upDateKeyTable += 1
         },
     },
 }

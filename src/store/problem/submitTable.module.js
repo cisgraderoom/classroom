@@ -6,6 +6,7 @@ const initialState = {
     isSuccess: false,
     score: [],
     status: null,
+    state: null,
     error: '',
 }
 
@@ -24,22 +25,13 @@ export const submitTable = {
                 problemid,
                 classcode,
             })
-            // if (!res?.status) {
-            //     commit('submitTableFailure', {
-            //         ...initialState,
-            //         isLoading: false,
-            //         isFailed: true,
-            //         isSuccess: false,
-            //         error: res,
-            //     })
-            //     return res
-            // }
             commit('submitTableSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
                 status: res.status,
+                state: res.state,
                 score: res.data,
             })
         },

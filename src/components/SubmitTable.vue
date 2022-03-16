@@ -15,11 +15,8 @@
                     :page.sync="currentPage"
                     :items-per-page="itemsPerPage"
                     hide-default-footer
-                    :loading="
-                        this.$store.state.submitTable.isLoading ||
-                        this.$store.state.submitList.isLoading
-                    "
-                    loading-text="กำลังโหลด...."
+                    :loading="loading"
+                    :loading-text="loadingtext"
                     class="elevation-1"
                     @page-count="pageCount = $event"
                     v-if="status"
@@ -33,7 +30,7 @@
                 <div class="text-center pt-2">
                     <v-pagination
                         v-model="pageCount"
-                        :disabled="this.$store.state.submitList.isLoading"
+                        :disabled="loading"
                         :length="totalPage"
                         :total-visible="7"
                         @input="handlePageChange"
@@ -60,6 +57,8 @@ export default {
         pageCount: 1,
         totalPage: 1,
         itemsPerPage: 20,
+        loadingtext: 'กำลังโหลด....',
+        loading: false,
         headers: [
             {
                 text: 'Username',
@@ -78,29 +77,30 @@ export default {
             { text: 'Score', value: 'score', sortable: false },
             { text: 'viewcode', value: 'view_code', sortable: false },
         ],
-        score: [
-            {
-                username: 'student01',
-                date: '01/01/2021',
-                case1: 1,
-                case2: 0,
-                score: '5',
-            },
-            {
-                username: 'student02',
-                date: '01/01/2021',
-                case1: 0,
-                case2: 0,
-                score: '0',
-            },
-            {
-                username: 'student03',
-                date: '01/01/2021',
-                case1: 1,
-                case2: 1,
-                score: '10',
-            },
-        ],
+        score: [],
+        // score: [
+        //     {
+        //         username: 'student01',
+        //         date: '01/01/2021',
+        //         case1: 1,
+        //         case2: 0,
+        //         score: '5',
+        //     },
+        //     {
+        //         username: 'student02',
+        //         date: '01/01/2021',
+        //         case1: 0,
+        //         case2: 0,
+        //         score: '0',
+        //     },
+        //     {
+        //         username: 'student03',
+        //         date: '01/01/2021',
+        //         case1: 1,
+        //         case2: 1,
+        //         score: '10',
+        //     },
+        // ],
         status: true,
     }),
     mounted() {
@@ -115,20 +115,57 @@ export default {
     },
     methods: {
         submitTable() {
+            this.status = true
+            const { state, commit } = this.$store
             const classcode = this.$route.params.code
             const problemid = this.$route.params.problemid
-            let data = this.$store
-                .dispatch('submitTable/submitTable', {
-                    classcode,
-                    problemid,
-                })
-                .then(() => {
-                    // this.score = this.$store.state.submitTable.score
-                    // this.status = this.$store.state.submitTable.status
-                })
-            return data
+            if (classcode && problemid) {
+                this.loading = true
+                let data = this.$store
+                    .dispatch('submitTable/submitTable', {
+                        classcode,
+                        problemid,
+                    })
+                    .then(() => {
+                        if (state.submitTable.isFailed) {
+                            this.errormessage =
+                                state.submitTable.error ?? 'ไม่สามารถโหลดได้'
+                        }
+                        if (state.submitTable.isSuccess) {
+                            if (this.$store.state.submitTable.status) {
+                                if (this.$store.state.submitTable.state) {
+                                    this.score =
+                                        this.$store.state.submitTable.score
+                                    this.loading = false
+                                } else {
+                                    this.loadingtext = 'กำลังตรวจคำตอบ....'
+                                    commit('submitTable/submitTableLoading', {
+                                        isFailed: false,
+                                        isLoading: true,
+                                        isSuccess: false,
+                                    })
+                                    this.ReLoadsubmitTable()
+                                }
+                            } else {
+                                this.status =
+                                    this.$store.state.submitTable.status
+                                this.loading = false
+                                commit('submitTable/submitTableSuccess', {
+                                    isFailed: false,
+                                    isLoading: false,
+                                    isSuccess: true,
+                                })
+                            }
+                        }
+                    })
+                return data
+            }
+        },
+        ReLoadsubmitTable() {
+            setTimeout(() => this.submitTable(), 10000)
         },
         submitList() {
+            this.loading = true
             const classcode = this.$route.params.code
             const problemid = this.$route.params.problemid
             let data = this.$store
@@ -138,6 +175,7 @@ export default {
                     current: this.currentPage,
                 })
                 .then(() => {
+                    this.loading = false
                     // this.score = this.$store.state.submitList.score
                     // this.totalPage = Math.ceil(
                     //     this.$store.state.submitList.totalUser / 20
