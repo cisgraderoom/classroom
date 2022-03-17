@@ -7,10 +7,34 @@
                 >
             </v-col>
         </v-row>
+        <v-row
+            v-show="
+                this.$store.state.submitTable.isFailed &&
+                this.$store.state.submitList.isFailed
+            "
+        >
+            <v-col md="9" class="mx-auto" xl="7">
+                <v-alert text class="text-center" type="info">{{
+                    errormessage
+                }}</v-alert>
+            </v-col>
+        </v-row>
         <v-row>
             <v-col md="9" class="mx-auto" xl="7">
                 <v-data-table
                     :headers="headers"
+                    :items="score"
+                    hide-default-footer
+                    :loading="loading"
+                    :loading-text="loadingtext"
+                    class="elevation-1"
+                    v-if="status"
+                    v-show="checkRoleClassroom == 'student'"
+                >
+                </v-data-table>
+
+                <v-data-table
+                    :headers="headers2"
                     :items="score"
                     :page.sync="currentPage"
                     :items-per-page="itemsPerPage"
@@ -20,10 +44,20 @@
                     class="elevation-1"
                     @page-count="pageCount = $event"
                     v-if="status"
-                    ><template v-slot:[`item.view_code`]="{ item }">
+                    v-show="
+                        checkRoleClassroom == 'superteacher' ||
+                        checkRoleClassroom == 'teacher'
+                    "
+                >
+                    <template v-slot:[`item.view_code`]="{ item }">
                         <viewCode
                             :username="item.username"
+                            :code="item.code"
                             :is_delete="item.is_delete"
+                            v-show="
+                                checkRoleClassroom == 'superteacher' ||
+                                checkRoleClassroom == 'teacher'
+                            "
                         />
                     </template>
                 </v-data-table>
@@ -70,37 +104,29 @@ export default {
                 text: 'Date',
                 align: 'start',
                 sortable: false,
-                value: 'date',
+                value: 'created_at',
             },
-            { text: 'case1', value: 'case1', sortable: false },
-            { text: 'case2', value: 'case2', sortable: false },
+            { text: 'Result', value: 'result', sortable: false },
             { text: 'Score', value: 'score', sortable: false },
-            { text: 'viewcode', value: 'view_code', sortable: false },
+        ],
+        headers2: [
+            {
+                text: 'Username',
+                align: 'start',
+                sortable: false,
+                value: 'username',
+            },
+            {
+                text: 'Date',
+                align: 'start',
+                sortable: false,
+                value: 'created_at',
+            },
+            { text: 'Result', value: 'result', sortable: false },
+            { text: 'Score', value: 'score', sortable: false },
+            { text: 'Viewcode', value: 'view_code', sortable: false },
         ],
         score: [],
-        // score: [
-        //     {
-        //         username: 'student01',
-        //         date: '01/01/2021',
-        //         case1: 1,
-        //         case2: 0,
-        //         score: '5',
-        //     },
-        //     {
-        //         username: 'student02',
-        //         date: '01/01/2021',
-        //         case1: 0,
-        //         case2: 0,
-        //         score: '0',
-        //     },
-        //     {
-        //         username: 'student03',
-        //         date: '01/01/2021',
-        //         case1: 1,
-        //         case2: 1,
-        //         score: '10',
-        //     },
-        // ],
         status: true,
     }),
     mounted() {
@@ -134,8 +160,9 @@ export default {
                         if (state.submitTable.isSuccess) {
                             if (this.$store.state.submitTable.status) {
                                 if (this.$store.state.submitTable.state) {
-                                    this.score =
+                                    this.score.push(
                                         this.$store.state.submitTable.score
+                                    )
                                     this.loading = false
                                 } else {
                                     this.loadingtext = 'กำลังตรวจคำตอบ....'
@@ -166,6 +193,7 @@ export default {
         },
         submitList() {
             this.loading = true
+            const { state } = this.$store
             const classcode = this.$route.params.code
             const problemid = this.$route.params.problemid
             let data = this.$store
@@ -175,13 +203,19 @@ export default {
                     current: this.currentPage,
                 })
                 .then(() => {
-                    this.loading = false
-                    // this.score = this.$store.state.submitList.score
-                    // this.totalPage = Math.ceil(
-                    //     this.$store.state.submitList.totalUser / 20
-                    // )
-                    // this.hasNext = this.$store.state.submitList.hasNext
-                    // this.status = this.$store.state.submitList.status
+                    if (state.submitList.isFailed) {
+                        this.errormessage =
+                            state.submitList.error ?? 'ไม่สามารถโหลดได้'
+                    }
+                    if (state.submitList.isSuccess) {
+                        this.score = this.$store.state.submitList.score
+                        this.totalPage = Math.ceil(
+                            this.$store.state.submitList.totalUser / 20
+                        )
+                        this.hasNext = this.$store.state.submitList.hasNext
+                        this.status = this.$store.state.submitList.status
+                        this.loading = false
+                    }
                 })
             return data
         },

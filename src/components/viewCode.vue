@@ -7,7 +7,7 @@
                     color="secondary"
                     v-bind="attrs"
                     v-on="on"
-                    :disabled="username == myusername || is_delete == 1"
+                    :disabled="!code"
                     >ดู Code</v-btn
                 >
             </template>
@@ -16,9 +16,9 @@
                     <span class="cis-h5">ดู Code</span>
                 </v-card-title>
                 <v-card-text
-                    >Username : {{ username }}
+                    ><b>Username :</b> {{ username }}
                     <br />
-                    Code :
+                    <b>Code :</b>
                     <br />
                     {{ code }}
                 </v-card-text>
@@ -53,33 +53,14 @@
 <script>
 export default {
     name: 'viewCode',
-    props: ['username', 'is_delete'],
+    props: ['username', 'is_delete', 'code'],
     data() {
         return {
-            myusername: JSON.parse(localStorage.getItem('user')).username,
-            code: '',
             dialog: false,
             errormessage: '',
         }
     },
     methods: {
-        async handleSubmit() {
-            const { dispatch, state } = this.$store
-            const classcode = this.$route.params.code
-            const { username } = this
-            await dispatch('kickStudent/kickStudent', {
-                classcode,
-                username,
-            })
-            if (state.kickStudent.isSuccess) {
-                this.dialog = false
-            }
-
-            if (state.kickStudent.isFailed) {
-                this.errormessage =
-                    state.kickStudent.message ?? 'ไม่สามารถเตะออกได้'
-            }
-        },
         closeDialog() {
             const { commit } = this.$store
             commit('kickStudent/kickStudentFailure', {

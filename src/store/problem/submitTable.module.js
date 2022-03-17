@@ -5,6 +5,7 @@ const initialState = {
     isFailed: false,
     isSuccess: false,
     score: [],
+    arrayscore: [],
     status: null,
     state: null,
     error: '',
@@ -33,6 +34,7 @@ export const submitTable = {
                 status: res.status,
                 state: res.state,
                 score: res.data,
+                arrayscore: res.array_result,
             })
         },
     },

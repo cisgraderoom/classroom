@@ -11,7 +11,7 @@
                     <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
                         <v-data-table
                             :headers="headers"
-                            :items="desserts"
+                            :items="listScore"
                             :items-per-page="5"
                             hide-default-footer
                             :loading="
@@ -55,7 +55,9 @@ export default {
     },
     data() {
         return {
+            rawArray: [],
             listScore: [],
+            data: {},
             errormessage: null,
             headers: [
                 {
@@ -64,94 +66,8 @@ export default {
                     sortable: false,
                     value: 'name',
                 },
-                { text: 'Username', value: 'calories' },
-                { text: 'Password', value: 'fat' },
-                { text: 'Role', value: 'carbs' },
-                { text: 'Status', value: 'protein' },
-                { text: 'Manage', value: 'iron' },
             ],
-            desserts: [
-                {
-                    name: 'Frozen Yogurt',
-                    calories: 159,
-                    fat: 6.0,
-                    carbs: 24,
-                    protein: 4.0,
-                    iron: '1%',
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    calories: 237,
-                    fat: 9.0,
-                    carbs: 37,
-                    protein: 4.3,
-                    iron: '1%',
-                },
-                {
-                    name: 'Eclair',
-                    calories: 262,
-                    fat: 16.0,
-                    carbs: 23,
-                    protein: 6.0,
-                    iron: '7%',
-                },
-                {
-                    name: 'Cupcake',
-                    calories: 305,
-                    fat: 3.7,
-                    carbs: 67,
-                    protein: 4.3,
-                    iron: '8%',
-                },
-                {
-                    name: 'Gingerbread',
-                    calories: 356,
-                    fat: 16.0,
-                    carbs: 49,
-                    protein: 3.9,
-                    iron: '16%',
-                },
-                {
-                    name: 'Jelly bean',
-                    calories: 375,
-                    fat: 0.0,
-                    carbs: 94,
-                    protein: 0.0,
-                    iron: '0%',
-                },
-                {
-                    name: 'Lollipop',
-                    calories: 392,
-                    fat: 0.2,
-                    carbs: 98,
-                    protein: 0,
-                    iron: '2%',
-                },
-                {
-                    name: 'Honeycomb',
-                    calories: 408,
-                    fat: 3.2,
-                    carbs: 87,
-                    protein: 6.5,
-                    iron: '45%',
-                },
-                {
-                    name: 'Donut',
-                    calories: 452,
-                    fat: 25.0,
-                    carbs: 51,
-                    protein: 4.9,
-                    iron: '22%',
-                },
-                {
-                    name: 'KitKat',
-                    calories: 518,
-                    fat: 26.0,
-                    carbs: 65,
-                    protein: 7,
-                    iron: '6%',
-                },
-            ],
+            numproblem: 0,
         }
     },
     methods: {
@@ -161,13 +77,47 @@ export default {
             await dispatch('listAllScoreInClass/listAllScoreInClass', {
                 classcode,
             }).then(() => {
-                this.listScore = state.listAllScoreInClass.listScore
+                if (state.listAllScoreInClass.isFailed) {
+                    this.errormessage =
+                        state.listAllScoreInClass.message ??
+                        'ไม่สามารถโหลดข้อมูลได้'
+                }
+                if (state.listAllScoreInClass.isSuccess) {
+                    this.data = state.listAllScoreInClass.listScore
+                    this.numproblem = Object.keys(this.data).length
+                    for (let index = 0; index < this.numproblem; index++) {
+                        let problem = index + 1
+                        this.headers.push({
+                            text: index + 1,
+                            value: 'problem' + problem,
+                            sortable: false,
+                        })
+                    }
+                    Array.prototype.push.apply(this.data[1], this.data[2])
+                    this.rawArray = this.data[1]
+                    for (let i = 0; i < this.rawArray.length; i++) {
+                        this.listScore.push({
+                            username: this.rawArray[i].username,
+                            name: this.rawArray[i].name,
+                            ['problem' + this.rawArray[i].problem_id]:
+                                this.rawArray[i].score,
+                        })
+                    }
+                    console.log(this.listScore)
+                    let _ = require('lodash')
+                    var array = this.listScore
+                    let merged = _.uniqWith(array, (pre, cur) => {
+                        if (pre.name == cur.name) {
+                            cur = { ...cur, ...pre }
+                            return true
+                        }
+                        return false
+                    })
+                    console.log(merged)
+                    // console.log(this.listScore)
+                    // console.log({ ...this.listScore[0], ...this.listScore[2] })
+                }
             })
-            if (state.listAllScoreInClass.isFailed) {
-                this.errormessage =
-                    state.listAllScoreInClass.message ??
-                    'ไม่สามารถโหลดข้อมูลได้'
-            }
         },
     },
 }
