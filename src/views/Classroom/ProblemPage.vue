@@ -4,9 +4,41 @@
         <v-container class="mb-10">
             <HeadClassroom />
             <div>
-                <v-row>
-                    <v-col md="9" class="mx-auto" xl="7">
+                <v-row align="center">
+                    <v-col md="6" offset-md="1" xl="4" offset-xl="2">
                         <h2 class="my-2">โจทย์</h2>
+                    </v-col>
+                    <v-col
+                        cols="2"
+                        v-show="
+                            checkRoleClassroom == 'superteacher' ||
+                            checkRoleClassroom == 'teacher'
+                        "
+                    >
+                        <SetStatusProblem
+                            :problem_id="problem.problem_id"
+                            :is_hidden="problem.is_hidden"
+                            :key="upDateKey"
+                        />
+                    </v-col>
+                    <v-col
+                        md="2"
+                        xl="2"
+                        v-show="
+                            checkRoleClassroom == 'superteacher' ||
+                            checkRoleClassroom == 'teacher'
+                        "
+                    >
+                        <EditProblem
+                            :problemname="problem.problem_name"
+                            :problemid="problem.problem_id"
+                            :problemtext="problem.problem_desc"
+                            :open_date="problem.open_at"
+                            :close_date="problem.close_at"
+                            :maxscore="problem.max_score"
+                            @getList="getByIdProblem"
+                            :key="upDateKey"
+                        />
                     </v-col>
                 </v-row>
             </div>
@@ -20,6 +52,10 @@
                             :opendate="openDateFormat"
                             :closedate="closeDateFormat"
                             :maxscore="problem.max_score"
+                            :asset="problem.asset"
+                            :isopen="true"
+                            @getsubmitTable="getsubmitTable"
+                            :key="upDateKey"
                         /><v-alert
                             text
                             type="error"
@@ -30,17 +66,7 @@
                     </v-col>
                 </v-row>
             </div>
-            <!-- <SubmitTable /> -->
-            <!-- <v-row>
-                <v-col md="9" class="mx-auto" xl="7">
-                    <v-data-table
-                        :headers="headers"
-                        :items="score"
-                        :items-per-page="5"
-                        class="elevation-1"
-                    ></v-data-table>
-                </v-col>
-            </v-row> -->
+            <SubmitTable :key="upDateKeyTable" />
         </v-container>
     </div>
 </template>
@@ -49,49 +75,31 @@
 import TimeAgo from 'javascript-time-ago'
 import Navbar from '../../components/Navbar'
 import HeadClassroom from '../../components/HeadClassroom'
+import EditProblem from '../../components/EditProblem'
 import Problemauto from '../../components/Problemauto'
-// import SubmitTable from '../../components/SubmitTable'
+import SubmitTable from '../../components/SubmitTable'
+import SetStatusProblem from '../../components/SetStatusProblem'
 export default {
     name: 'Problem',
     components: {
         Navbar,
         HeadClassroom,
+        EditProblem,
         Problemauto,
-        // SubmitTable,
+        SubmitTable,
+        SetStatusProblem,
     },
     mounted() {
         this.getByIdProblem()
     },
     data: () => ({
         problem: [],
+        checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
         openDateFormat: null,
         closeDateFormat: null,
         errormessage: null,
-        // headers: [
-        //     {
-        //         text: 'Date',
-        //         align: 'start',
-        //         sortable: false,
-        //         value: 'date',
-        //     },
-        //     { text: 'case1', value: 'case1' },
-        //     { text: 'case2', value: 'case2' },
-        //     { text: 'case3', value: 'case3' },
-        //     { text: 'case4', value: 'case4' },
-        //     { text: 'case5', value: 'case5' },
-        //     { text: 'sum', value: 'sum' },
-        // ],
-        // score: [
-        //     {
-        //         date: '01/01/2021',
-        //         case1: 0,
-        //         case2: 0,
-        //         case3: 0,
-        //         case4: 0,
-        //         case5: 0,
-        //         sum: '0',
-        //     },
-        // ],
+        upDateKey: 0,
+        upDateKeyTable: 0,
     }),
     methods: {
         getByIdProblem() {
@@ -106,6 +114,7 @@ export default {
                     this.problem = this.$store.state.getByIdProblem.problem
                     this.Loading = false
                     this.formatDate()
+                    this.upDateKey += 1
                 })
             return data
         },
@@ -115,6 +124,9 @@ export default {
             this.closeDateFormat = timeAgo.format(
                 new Date(this.problem.close_at)
             )
+        },
+        getsubmitTable() {
+            this.upDateKeyTable += 1
         },
     },
 }

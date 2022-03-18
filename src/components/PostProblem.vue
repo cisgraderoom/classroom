@@ -12,10 +12,14 @@
                 </v-col>
                 <v-spacer />
                 <v-col cols="auto">
-                    <!-- <v-chip v-show="!status"> ยังไม่ส่ง </v-chip>
-                    <v-chip color="green" text-color="white" v-show="status">
-                        ส่งแล้ว
-                    </v-chip> -->
+                    <v-chip
+                        color="red"
+                        text-color="white"
+                        v-show="nowdate > closedate || ishidden == 1"
+                        class="mx-2"
+                    >
+                        ปิดการส่งแล้ว
+                    </v-chip>
                     <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>
             </v-row>
@@ -31,9 +35,6 @@
                         Close {{ closeDateFormat }}
                     </h5>
                 </v-col>
-                <!-- <v-col cols="auto">
-                    <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
-                </v-col> -->
             </v-row>
         </v-card>
     </v-hover>
@@ -51,12 +52,20 @@ export default {
         'opendate',
         'closedate',
         'path',
+        'ishidden',
         'maxscore',
     ],
     data: () => ({
         openDateFormat: null,
         closeDateFormat: null,
-        status: false,
+        nowdate:
+            new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                .toISOString()
+                .substr(0, 10) +
+            ' ' +
+            new Date().getHours() +
+            ':' +
+            new Date().getMinutes(),
     }),
     mounted() {
         this.formatDate()

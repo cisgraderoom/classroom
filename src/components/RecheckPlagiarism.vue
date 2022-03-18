@@ -1,9 +1,11 @@
 <template>
     <div>
         <v-row>
-            <v-col md="10" xl="7">
+            <v-col md="9" xl="8">
                 <h2 class="my-2">ตรวจใหม่ & ตรวจความคล้ายคลึง</h2>
-                <AddRecheckPlagiarism class="my-2 mx-1" />
+            </v-col>
+            <v-col md="2" xl="2">
+                <AddRecheckPlagiarism class="my-2 mx-lg-n4" />
             </v-col>
         </v-row>
         <div>

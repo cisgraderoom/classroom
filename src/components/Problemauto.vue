@@ -10,17 +10,22 @@
                     <h3>{{ problemname }}</h3>
                 </v-col>
                 <v-col cols="auto">
-                    <!-- <v-chip v-show="!status"> ยังไม่ส่ง </v-chip>
-                    <v-chip color="green" text-color="white" v-show="status">
-                        ส่งแล้ว
-                    </v-chip> -->
+                    <v-chip
+                        color="red"
+                        text-color="white"
+                        v-show="!isopen"
+                        class="mx-2"
+                    >
+                        ปิดการส่งแล้ว
+                    </v-chip>
                     <v-chip v-if="maxscore"> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>
             </v-row>
-            <p>
-                {{ problemtext }}
-            </p>
-            <h5 class="grey--text text--darken-1" v-if="opendate">
+            <p>{{ problemtext }}</p>
+            <a @click="DownloadFile">
+                {{ assetname }}
+            </a>
+            <h5 class="grey--text text--darken-1 mt-2" v-if="opendate">
                 Open {{ opendate }}
             </h5>
             <h5 class="grey--text text--darken-1" v-if="closedate">
@@ -31,25 +36,11 @@
                 color="primary"
                 v-show="$store.state.getByIdProblem.isLoading"
             ></v-progress-linear>
-            <SubmitProblem :problemid="problemid" />
-            <!-- <v-row align="center">
-                <v-col>
-                    <v-file-input
-                        truncate-length="15"
-                        label="File input"
-                        v-show="!$store.state.getByIdProblem.isLoading"
-                    ></v-file-input>
-                </v-col>
-                <v-col cols="auto">
-                    <v-btn
-                        elevation="2"
-                        color="primary"
-                        class="mr-1"
-                        v-show="!$store.state.getByIdProblem.isLoading"
-                        >submit</v-btn
-                    >
-                </v-col>
-            </v-row> -->
+            <SubmitProblem
+                :problemid="problemid"
+                v-show="checkRoleClassroom == 'student'"
+                @getsubmitTable="getsubmitTable"
+            />
         </v-sheet>
     </v-hover>
 </template>
@@ -69,10 +60,34 @@ export default {
         'opendate',
         'closedate',
         'maxscore',
+        'isopen',
+        'asset',
     ],
+    mounted() {
+        if (this.asset) {
+            this.assetname = this.asset.substring(this.asset.indexOf('_') + 1)
+        }
+    },
     data: () => ({
         status: false,
+        checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
+        assetname: null,
     }),
+    methods: {
+        getsubmitTable() {
+            this.$emit('getsubmitTable')
+        },
+        DownloadFile() {
+            // var fileURL = window.URL.createObjectURL(new Blob([this.asset]))
+            // var fileLink = document.createElement('a')
+            // fileLink.href = fileURL
+            // fileLink.setAttribute('download', this.assetname)
+            // document.body.appendChild(fileLink)
+            // console.log(fileLink)
+            // fileLink.click()
+            console.log(this.asset)
+        },
+    },
 }
 </script>
 

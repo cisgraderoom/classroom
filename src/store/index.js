@@ -32,7 +32,9 @@ import { deleteComment } from './classroom/deleteComment.module'
 import { getByIdProblem } from './problem/getByIdProblem.module'
 import { submitProblem } from './problem/submitProblem.module'
 import { submitTable } from './problem/submitTable.module'
-
+import { submitList } from './problem/submitList.module'
+import { editProblem } from './problem/editProblem.module'
+import { setStatusProblem } from './problem/setStatusProblem.module'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -68,5 +70,8 @@ export default new Vuex.Store({
         getByIdProblem,
         submitProblem,
         submitTable,
+        submitList,
+        editProblem,
+        setStatusProblem,
     },
 })

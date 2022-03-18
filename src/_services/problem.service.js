@@ -25,7 +25,7 @@ const submitProblem = async (req) => {
     formData.append('code', req.code)
     formData.append('classcode', req.classcode)
     const { data } = await httpClient
-        .post(`/submission/submit/${req.problemid}`, req, {
+        .post(`/submission/submit/${req.problemid}`, formData, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -49,9 +49,59 @@ const submitTable = async (req) => {
             return res
         })
     res = data
-    // if (data?.status) {
-    //     res = data
-    // }
+    return res
+}
+
+const submitList = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(
+            `/submission/list/${req.classcode}/problem/${req.problemid}?page=${req.current}`,
+            {
+                headers: authHeader(),
+            }
+        )
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
+    return res
+}
+
+const editProblem = async (req) => {
+    let res = null
+    let formData = new FormData()
+    formData.append('problemName', req.problemName)
+    formData.append('problemDesc', req.problemDesc)
+    formData.append('problemId', req.problemId)
+    formData.append('openat', req.openat)
+    formData.append('closeat', req.closeat)
+    formData.append('asset', req.asset)
+    formData.append('classcode', req.classcode)
+    const { data } = await httpClient
+        .put(`/task/${req.problemid}`, formData, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
+    return res
+}
+
+const setStatusProblem = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .put(`/task/status/${req.problemid}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
     return res
 }
 
@@ -59,4 +109,7 @@ export const problemService = {
     getByIdProblem,
     submitProblem,
     submitTable,
+    submitList,
+    editProblem,
+    setStatusProblem,
 }

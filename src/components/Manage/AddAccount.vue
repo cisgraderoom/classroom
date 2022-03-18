@@ -78,6 +78,7 @@ export default {
                 this.errormessage = state.addUser.error ?? 'ไม่สามารถอัพโหลดได้'
             }
             this.userfile = null
+            this.$emit('getlist')
         },
     },
 }

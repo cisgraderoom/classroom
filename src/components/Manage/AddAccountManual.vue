@@ -100,6 +100,7 @@ export default {
                 this.role = null
                 this.username = null
                 this.password = null
+                this.$emit('getlist')
             })
             if (state.addUser.isFailed) {
                 this.errormessage = state.addUser.error ?? 'ไม่สามารถอัพโหลดได้'

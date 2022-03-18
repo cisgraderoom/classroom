@@ -5,47 +5,59 @@ const initialState = {
     isFailed: false,
     isSuccess: false,
     score: [],
-    arrayscore: [],
     status: null,
-    state: null,
+    listUser: null,
+    totalUser: null,
+    hasNext: false,
     error: '',
 }
 
-export const submitTable = {
+export const submitList = {
     namespaced: true,
     state: initialState,
     actions: {
-        async submitTable({ commit }, { problemid, classcode }) {
-            commit('submitTableLoading', {
+        async submitList({ commit }, { problemid, classcode, current }) {
+            commit('submitListLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await problemService.submitTable({
+            const res = await problemService.submitList({
                 problemid,
                 classcode,
+                current,
             })
-            commit('submitTableSuccess', {
+            if (!res?.status) {
+                commit('submitListFailure', {
+                    ...initialState,
+                    isLoading: false,
+                    isFailed: true,
+                    isSuccess: false,
+                    error: res.message,
+                })
+                return res
+            }
+            commit('submitListSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
                 status: res.status,
-                state: res.state,
                 score: res.data,
-                arrayscore: res.array_result,
+                totalUser: res.pageInfo.totalItems,
+                hasNext: res.pageInfo.hasNext,
             })
         },
     },
     mutations: {
-        submitTableLoading(state, data) {
+        submitListLoading(state, data) {
             Object.assign(state, data)
         },
-        submitTableSuccess(state, data) {
+        submitListSuccess(state, data) {
             Object.assign(state, data)
         },
-        submitTableFailure(state, data) {
+        submitListFailure(state, data) {
             Object.assign(state, data)
         },
     },
