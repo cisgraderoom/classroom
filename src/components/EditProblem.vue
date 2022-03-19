@@ -313,7 +313,7 @@ export default {
                 })
                 if (state?.editProblem?.isSuccess) {
                     this.closedialog()
-                    this.$emit('getPost')
+                    this.$emit('getProblem')
                 }
                 if (state?.editProblem?.isFailed) {
                     this.errormessage =

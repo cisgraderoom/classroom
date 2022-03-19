@@ -218,7 +218,39 @@ export default {
             this.closedatetime = this.closedate + ' ' + this.closetime
             this.menu2 = false
         },
-
+        resetInput() {
+            this.problemsname = ''
+            this.problemstext = ''
+            this.maxscore = null
+            this.asset = null
+            this.testcase = null
+            this.menu = false
+            this.menu2 = false
+            this.opendate = new Date(
+                Date.now() - new Date().getTimezoneOffset() * 60000
+            )
+                .toISOString()
+                .substr(0, 10)
+            this.opentime = '00:00'
+            this.opendatetime =
+                new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                    .toISOString()
+                    .substr(0, 10) +
+                ' ' +
+                '00:00'
+            this.closedate = new Date(
+                Date.now() - new Date().getTimezoneOffset() * 60000
+            )
+                .toISOString()
+                .substr(0, 10)
+            this.closetime = '00:00'
+            this.closedatetime =
+                new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                    .toISOString()
+                    .substr(0, 10) +
+                ' ' +
+                '00:00'
+        },
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
@@ -279,7 +311,9 @@ export default {
                 this.errormessage =
                     state.addProblem.message ?? 'ไม่สามารถสร้างโจทย์ได้'
             }
-            this.text = ''
+            if (state.addProblem.isSuccess) {
+                this.resetInput()
+            }
         },
     },
 }

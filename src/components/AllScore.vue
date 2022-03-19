@@ -11,8 +11,7 @@
                     <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
                         <v-data-table
                             :headers="headers"
-                            :items="listScore"
-                            :items-per-page="5"
+                            :items="merged"
                             hide-default-footer
                             :loading="
                                 this.$store.state.listAllScoreInClass.isLoading
@@ -57,6 +56,7 @@ export default {
         return {
             rawArray: [],
             listScore: [],
+            merged: [],
             data: {},
             errormessage: null,
             headers: [
@@ -84,38 +84,52 @@ export default {
                 }
                 if (state.listAllScoreInClass.isSuccess) {
                     this.data = state.listAllScoreInClass.listScore
-                    this.numproblem = Object.keys(this.data).length
-                    for (let index = 0; index < this.numproblem; index++) {
-                        let problem = index + 1
+                    for (const key in this.data) {
                         this.headers.push({
-                            text: index + 1,
-                            value: 'problem' + problem,
+                            text: this.data[key][0].problem_name,
+                            value: 'problem' + this.data[key][0].problem_id,
                             sortable: false,
                         })
-                    }
-                    Array.prototype.push.apply(this.data[1], this.data[2])
-                    this.rawArray = this.data[1]
-                    for (let i = 0; i < this.rawArray.length; i++) {
-                        this.listScore.push({
-                            username: this.rawArray[i].username,
-                            name: this.rawArray[i].name,
-                            ['problem' + this.rawArray[i].problem_id]:
-                                this.rawArray[i].score,
-                        })
-                    }
-                    console.log(this.listScore)
-                    let _ = require('lodash')
-                    var array = this.listScore
-                    let merged = _.uniqWith(array, (pre, cur) => {
-                        if (pre.name == cur.name) {
-                            cur = { ...cur, ...pre }
-                            return true
+                        for (const keyj in this.data[key]) {
+                            this.listScore.push({
+                                username: this.data[key][keyj].username,
+                                name: this.data[key][keyj].name,
+                                ['problem' + this.data[key][keyj].problem_id]:
+                                    this.data[key][keyj].score.toString(),
+                            })
                         }
-                        return false
-                    })
-                    console.log(merged)
+                    }
+
                     // console.log(this.listScore)
-                    // console.log({ ...this.listScore[0], ...this.listScore[2] })
+                    // let _ = require('lodash')
+                    // this.merged = _.uniqWith(array, (pre, cur) => {
+                    //     console.log(pre, cur)
+                    //     if (pre.username == cur.username) {
+                    //         cur = { ...cur, ...pre }
+                    //         array.splice(pre, 1);
+                    //         return true
+                    //     }
+                    //     return false
+                    // })
+                    let arr = this.listScore
+                    let a = null
+                    for (const index in arr) {
+                        for (const indexj in arr) {
+                            if (
+                                indexj > index &&
+                                arr[index].username == arr[indexj].username
+                            ) {
+                                arr[index] = {
+                                    ...arr[index],
+                                    ...arr[indexj],
+                                }
+                                arr.splice(indexj, 1)
+                            }
+                        }
+                        a = arr[index]
+                        this.merged.push(a)
+                    }
+                    // console.log(this.merged)
                 }
             })
         },

@@ -82,6 +82,7 @@ export default {
             }
             if (state.submitProblem.isSuccess) {
                 this.$emit('getsubmitTable')
+                this.file = null
             }
         },
     },

@@ -127,6 +127,8 @@ export default {
             { text: 'Viewcode', value: 'view_code', sortable: false },
         ],
         score: [],
+        getclasscode: null,
+        getproblemid: null,
         status: true,
     }),
     mounted() {
@@ -136,7 +138,18 @@ export default {
         ) {
             this.submitList()
         } else {
-            this.submitTable()
+            // this.submitTable()
+            this.getclasscode = this.$route.params.code
+            this.getproblemid = this.$route.params.problemid
+            this.loadingtext = 'กำลังโหลด....'
+            this.loading = true
+            const { commit } = this.$store
+            commit('submitTable/submitTableLoading', {
+                isFailed: false,
+                isLoading: true,
+                isSuccess: false,
+            })
+            setTimeout(() => this.submitTable(), 3000)
         }
     },
     methods: {
@@ -189,7 +202,14 @@ export default {
             }
         },
         ReLoadsubmitTable() {
-            setTimeout(() => this.submitTable(), 10000)
+            if (
+                this.getclasscode == this.$route.params.code &&
+                this.getproblemid == this.$route.params.problemid
+            ) {
+                setTimeout(() => this.submitTable(), 5000)
+            } else {
+                console.log('stopTable')
+            }
         },
         submitList() {
             this.loading = true

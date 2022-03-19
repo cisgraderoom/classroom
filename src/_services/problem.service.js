@@ -78,6 +78,7 @@ const editProblem = async (req) => {
     formData.append('openat', req.openat)
     formData.append('closeat', req.closeat)
     formData.append('asset', req.asset)
+    formData.append('testcase', req.testcase)
     formData.append('classcode', req.classcode)
     const { data } = await httpClient
         .put(`/task/${req.problemid}`, formData, {
