@@ -1,10 +1,13 @@
 <template>
     <div>
         <v-row>
-            <v-col md="8" xl="7">
+            <v-col md="5" xl="5">
                 <h2 class="my-2">จัดการห้องเรียน</h2>
             </v-col>
-            <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-lg-10 mx-xl-n2">
+            <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-xl-n13">
+                <EditClass />
+            </v-col>
+            <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-xl-15">
                 <AddTeacherClassroom @getList="getListUser" />
             </v-col>
         </v-row>
@@ -70,9 +73,10 @@
 <script>
 import kickStudent from './kickStudent.vue'
 import AddTeacherClassroom from './AddTeacherClassroom.vue'
+import EditClass from './EditClass.vue'
 export default {
     name: 'EditClassroom',
-    components: { kickStudent, AddTeacherClassroom },
+    components: { kickStudent, AddTeacherClassroom, EditClass },
     mounted() {
         this.getListUser()
     },

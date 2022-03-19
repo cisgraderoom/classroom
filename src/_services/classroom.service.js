@@ -76,6 +76,7 @@ const listAllScoreInClass = async (req) => {
             return res
         })
     res = data
+    console.log(res)
     return res
 }
 
@@ -313,6 +314,22 @@ const kickStudent = async (req) => {
     return res
 }
 
+const editClass = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .put(`/post/${req.classcode}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
 export const classroomService = {
     createClassroom,
     joinClassroom,
@@ -333,4 +350,5 @@ export const classroomService = {
     deleteComment,
     kickStudent,
     addTeacherClassroom,
+    editClass,
 }

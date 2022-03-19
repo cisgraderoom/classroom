@@ -9,6 +9,7 @@ import { joinClassroom } from './classroom/joinClassroom.module'
 import { addPost } from './classroom/addPost.module'
 import { editPost } from './classroom/editPost.module'
 import { deletePost } from './classroom/deletePost.module'
+import { editClass } from './classroom/editClass.module'
 import { listClassroom } from './classroom/listClassroom.module'
 import { getInfoClassroom } from './classroom/getInfoClassroom.module'
 import { listPost } from './classroom/listPost.module'
@@ -35,6 +36,7 @@ import { submitTable } from './problem/submitTable.module'
 import { submitList } from './problem/submitList.module'
 import { editProblem } from './problem/editProblem.module'
 import { setStatusProblem } from './problem/setStatusProblem.module'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -50,6 +52,7 @@ export default new Vuex.Store({
         addPost,
         editPost,
         deletePost,
+        editClass,
         listPost,
         listUserInClass,
         addTeacherClassroom,

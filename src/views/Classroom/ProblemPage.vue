@@ -36,7 +36,7 @@
                             :open_date="problem.open_at"
                             :close_date="problem.close_at"
                             :maxscore="problem.max_score"
-                            @getList="getByIdProblem"
+                            @getProblem="getByIdProblem"
                             :key="upDateKey"
                         />
                     </v-col>
