@@ -317,7 +317,54 @@ const kickStudent = async (req) => {
 const editClass = async (req) => {
     let res = null
     const { data } = await httpClient
-        .put(`/post/${req.classcode}`, req, {
+        .put(`/classroom/${req.classcode}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const addRecheckPlagiarism = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .post(`/post/${req.problem_id}`, req, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+
+const getListItemPlagiarism = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/post/${req.classcode}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    return res
+}
+const listPlagiarism = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/post/${req.classcode}/${req.problem_id}`, {
             headers: authHeader(),
         })
         .catch((err) => {
@@ -351,4 +398,7 @@ export const classroomService = {
     kickStudent,
     addTeacherClassroom,
     editClass,
+    addRecheckPlagiarism,
+    getListItemPlagiarism,
+    listPlagiarism,
 }

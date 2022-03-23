@@ -20,7 +20,9 @@
                     <br />
                     <b>Code :</b>
                     <br />
-                    {{ code }}
+                    <pre>
+                        {{ code }}
+                    </pre>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>

@@ -49,6 +49,11 @@
                         checkRoleClassroom == 'teacher'
                     "
                 >
+                    <template v-slot:[`item.result`]="{ item }">
+                        <pre>
+                            {{ item.code }}
+                        </pre>
+                    </template>
                     <template v-slot:[`item.view_code`]="{ item }">
                         <viewCode
                             :username="item.username"

@@ -30,6 +30,9 @@ import { resetPassword } from './Manage/resetPassword.module'
 import { addProblem } from './classroom/addProblem.module'
 import { addComment } from './classroom/addComment.module'
 import { deleteComment } from './classroom/deleteComment.module'
+import { getListItemPlagiarism } from './classroom/getListItemPlagiarism.module'
+import { listPlagiarism } from './classroom/listPlagiarism.module'
+import { addRecheckPlagiarism } from './classroom/addRecheckPlagiarism.module'
 import { getByIdProblem } from './problem/getByIdProblem.module'
 import { submitProblem } from './problem/submitProblem.module'
 import { submitTable } from './problem/submitTable.module'
@@ -70,6 +73,9 @@ export default new Vuex.Store({
         addProblem,
         addComment,
         deleteComment,
+        getListItemPlagiarism,
+        listPlagiarism,
+        addRecheckPlagiarism,
         getByIdProblem,
         submitProblem,
         submitTable,

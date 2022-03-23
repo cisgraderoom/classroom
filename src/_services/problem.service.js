@@ -80,8 +80,9 @@ const editProblem = async (req) => {
     formData.append('asset', req.asset)
     formData.append('testcase', req.testcase)
     formData.append('classcode', req.classcode)
+    console.log(req.classcode)
     const { data } = await httpClient
-        .put(`/task/${req.problemid}`, formData, {
+        .put(`/task/${req.problemId}`, formData, {
             headers: authHeader(),
         })
         .catch((err) => {

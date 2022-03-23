@@ -5,7 +5,7 @@
                 <h2 class="my-2">จัดการห้องเรียน</h2>
             </v-col>
             <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-xl-n13">
-                <EditClass />
+                <EditClass :key="upDateKey" />
             </v-col>
             <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-xl-15">
                 <AddTeacherClassroom @getList="getListUser" />
@@ -82,6 +82,7 @@ export default {
     },
     data() {
         return {
+            classroom: null,
             currentPage: 1,
             pageCount: 1,
             totalPage: 1,
@@ -102,7 +103,8 @@ export default {
                 },
             ],
             listuser: [],
-
+            key: 0,
+            upDateKey: 0,
             errormessage: null,
         }
     },
@@ -125,6 +127,7 @@ export default {
                     state.listUserInClass.message ?? 'ไม่สามารถโหลดข้อมูลได้'
             }
         },
+
         handlePageChange(value) {
             if (this.currentPage != value) {
                 this.currentPage = value

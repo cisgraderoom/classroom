@@ -30,13 +30,7 @@
                 >
             </v-col>
         </v-row>
-        <v-alert
-            text
-            type="success"
-            v-show="this.$store.state.submitProblem.isSuccess"
-        >
-            ส่งแล้ว
-        </v-alert>
+        <v-alert text type="success" v-show="success"> ส่งแล้ว </v-alert>
         <v-alert
             text
             type="error"
@@ -55,6 +49,7 @@ export default {
         file: null,
         submitted: false,
         errormessage: '',
+        success: false,
     }),
     methods: {
         async handleSubmit() {
@@ -81,8 +76,10 @@ export default {
                     state.submitProblem.error ?? 'ไม่สามารถส่งได้'
             }
             if (state.submitProblem.isSuccess) {
-                this.$emit('getsubmitTable')
                 this.file = null
+                this.success = true
+                this.$emit('getsubmitTable')
+                setTimeout(() => (this.success = false), 5000)
             }
         },
     },

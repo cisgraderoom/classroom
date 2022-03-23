@@ -44,8 +44,8 @@
                                 </v-col>
                                 <v-col cols="12" sm="6">
                                     <v-select
-                                        :items="[2565, 2564, 2563]"
-                                        :value="2564"
+                                        :items="listyear"
+                                        :value="listyear[1]"
                                         v-model="year"
                                         label="ปีการศึกษา"
                                         :disabled="
@@ -114,10 +114,19 @@ export default {
         classname: '',
         section: 1,
         year: 2564,
+        listyear: [],
         term: 1,
         submitted: false,
         errormessage: '',
     }),
+    mounted() {
+        const d = new Date()
+        this.listyear = [
+            d.getFullYear() + 544,
+            d.getFullYear() + 543,
+            d.getFullYear() + 542,
+        ]
+    },
     methods: {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store

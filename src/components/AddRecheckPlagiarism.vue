@@ -16,26 +16,26 @@
                             <v-row>
                                 <v-col cols="12">
                                     <v-select
-                                        :items="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-                                        :value="1"
-                                        v-model="problem"
+                                        :items="list_item"
+                                        item-text="problem_name"
+                                        item-value="problem_id"
+                                        v-model="problemid"
                                         label="โจทย์"
                                         :disabled="
-                                            this.$store.state.createClassroom
-                                                .isLoading
+                                            this.$store.state
+                                                .addRecheckPlagiarism.isLoading
                                         "
                                     >
                                     </v-select>
                                     <v-select
-                                        :items="[
-                                            'ตรวจใหม่',
-                                            'ตรวจความคล้ายคลึง',
-                                        ]"
-                                        v-model="typecheck"
+                                        :items="typecheck"
+                                        item-text="text"
+                                        item-value="type"
+                                        v-model="type"
                                         label="ประเภทที่จะตรวจ"
                                         :disabled="
-                                            this.$store.state.createClassroom
-                                                .isLoading
+                                            this.$store.state
+                                                .addRecheckPlagiarism.isLoading
                                         "
                                     >
                                     </v-select>
@@ -43,8 +43,8 @@
                                         v-model="checkconfirm"
                                         label="พิมคำว่า ยืนยัน"
                                         :disabled="
-                                            this.$store.state.createClassroom
-                                                .isLoading
+                                            this.$store.state
+                                                .addRecheckPlagiarism.isLoading
                                         "
                                         required
                                     ></v-text-field>
@@ -54,7 +54,9 @@
                         <v-alert
                             text
                             type="error"
-                            v-show="this.$store.state.createClassroom.isFailed"
+                            v-show="
+                                this.$store.state.addRecheckPlagiarism.isFailed
+                            "
                         >
                             {{ errormessage }}
                         </v-alert>
@@ -63,24 +65,23 @@
                         class="mt-2"
                         indeterminate
                         color="primary"
-                        v-show="this.$store.state.createClassroom.isLoading"
+                        v-show="
+                            this.$store.state.addRecheckPlagiarism.isLoading
+                        "
                     ></v-progress-linear>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="closedialog"
-                        :disabled="this.$store.state.createClassroom.isLoading"
-                    >
+                    <v-btn color="blue darken-1" text @click="closedialog">
                         ยกเลิก
                     </v-btn>
                     <v-btn
                         color="primary"
                         text
                         @click="handleSubmit"
-                        :disabled="this.$store.state.createClassroom.isLoading"
+                        :disabled="
+                            this.$store.state.addRecheckPlagiarism.isLoading
+                        "
                     >
                         ตรวจ
                     </v-btn>
@@ -93,24 +94,29 @@
 <script>
 export default {
     name: 'AddRecheckPlagiarism',
+    props: ['list_item'],
     data: () => ({
         dialog: false,
-        problem: null,
-        typecheck: null,
+        problemid: null,
+        typecheck: [
+            { text: 'ตรวจใหม่', type: 'recheck' },
+            { text: 'ตรวจความคล้ายคลึง', type: 'plagiarism' },
+        ],
+        type: null,
         checkconfirm: null,
-        term: 1,
         submitted: false,
         errormessage: '',
     }),
     methods: {
         async handleSubmit() {
-            // const { dispatch, state, commit } = this.$store
-            const { commit } = this.$store
+            const { dispatch, state, commit } = this.$store
+            // const { commit } = this.$store
             this.submitted = true
-            const { problem, checkconfirm, typecheck } = this
-            if (problem == null) {
+            const { problemid, checkconfirm, typecheck } = this
+            console.log(this.problemid)
+            if (problemid == null) {
                 this.errormessage = 'โปรดเลือกโจทย์ที่ต้องการตรวจ'
-                commit('createClassroom/createClassFailure', {
+                commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
@@ -119,7 +125,7 @@ export default {
             }
             if (typecheck == null) {
                 this.errormessage = 'โปรดเลือกประเภทที่ต้องการตรวจ'
-                commit('createClassroom/createClassFailure', {
+                commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
@@ -128,31 +134,35 @@ export default {
             }
             if (checkconfirm != 'ยืนยัน') {
                 this.errormessage = 'โปรดพิมคำว่า ยืนยัน'
-                commit('createClassroom/createClassFailure', {
+                commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
                 })
                 return
             }
-            // if (problem != '' && typecheck != '' && checkconfirm == 'ยืนยัน') {
-            //     await dispatch('createClassroom/createClassroom', {
-            //         problem,
-            //         typecheck,
-            //     })
-            //     if (state?.createClassroom?.isFailed) {
-            //         this.errormessage = 'ไม่สามารถสร้างชั้นเรียนได้'
-            //         commit('createClassroom/createClassFailure', {
-            //             isFailed: true,
-            //             isLoading: false,
-            //             isSuccess: false,
-            //         })
-            //     }
-            //     if (state?.createClassroom?.isSuccess) {
-            //         this.dialog = false
-            //         this.closedialog()
-            //     }
-            // }
+            if (
+                problemid != '' &&
+                typecheck != '' &&
+                checkconfirm == 'ยืนยัน'
+            ) {
+                await dispatch('addRecheckPlagiarism/addRecheckPlagiarism', {
+                    problem_id: problemid,
+                    type: this.type,
+                })
+                if (state?.addRecheckPlagiarism?.isFailed) {
+                    this.errormessage = 'ไม่สามารถสร้างชั้นเรียนได้'
+                    commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
+                        isFailed: true,
+                        isLoading: false,
+                        isSuccess: false,
+                    })
+                }
+                if (state?.addRecheckPlagiarism?.isSuccess) {
+                    this.dialog = false
+                    this.closedialog()
+                }
+            }
         },
         closedialog() {
             const { commit } = this.$store
@@ -161,7 +171,7 @@ export default {
             this.year = 2564
             this.term = 1
             this.submitted = false
-            commit('createClassroom/createClassFailure', {
+            commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
                 isFailed: false,
                 isLoading: false,
                 isSuccess: false,
