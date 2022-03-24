@@ -19,6 +19,24 @@ const getByIdProblem = async (req) => {
     return res
 }
 
+const DownloadFile = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/task/asset/${req.classcode}/${req.problemid}`, {
+            headers: authHeader(),
+            responseType: 'blob',
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    if (data?.status) {
+        res = data
+    }
+    res = data
+    return res
+}
+
 const submitProblem = async (req) => {
     let res = null
     let formData = new FormData()
@@ -41,9 +59,12 @@ const submitProblem = async (req) => {
 const submitTable = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get(`/submission/score/${req.classcode}/${req.problemid}`, {
-            headers: authHeader(),
-        })
+        .get(
+            `/submission/score/${req.classcode}/${req.problemid}?submission_id=${req.submission_id}`,
+            {
+                headers: authHeader(),
+            }
+        )
         .catch((err) => {
             res = err?.response?.data
             return res
@@ -80,7 +101,6 @@ const editProblem = async (req) => {
     formData.append('asset', req.asset)
     formData.append('testcase', req.testcase)
     formData.append('classcode', req.classcode)
-    console.log(req.classcode)
     const { data } = await httpClient
         .put(`/task/${req.problemId}`, formData, {
             headers: authHeader(),
@@ -109,6 +129,7 @@ const setStatusProblem = async (req) => {
 
 export const problemService = {
     getByIdProblem,
+    DownloadFile,
     submitProblem,
     submitTable,
     submitList,

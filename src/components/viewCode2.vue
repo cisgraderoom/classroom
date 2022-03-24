@@ -18,9 +18,10 @@
                             <b>Code :</b>
                             <br />
                             <pre>
-                        {{ code_owner }}
-                    </pre
-                            >
+                                <code>
+                                    {{ code_owner }}
+                                </code>
+                            </pre>
                         </v-card-text>
                     </v-col>
                     <v-col>
@@ -30,9 +31,10 @@
                             <b>Code :</b>
                             <br />
                             <pre>
-                        {{ code_compar }}
-                    </pre
-                            >
+                                <code>
+                                    {{ code_compar }}
+                                </code>
+                            </pre>
                         </v-card-text>
                     </v-col>
                 </v-row>

@@ -1,56 +1,54 @@
-import { problemService } from '../../_services'
+import { classroomService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    data: null,
+    listScore: null,
     error: '',
 }
 
-export const submitProblem = {
+export const listMyScoreInClass = {
     namespaced: true,
     state: initialState,
     actions: {
-        async submitProblem({ commit }, { code, problemid, classcode }) {
-            commit('submitProblemLoading', {
+        async listMyScoreInClass({ commit }, { classcode }) {
+            commit('listMyScoreInClassLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await problemService.submitProblem({
-                code,
-                problemid,
+            const res = await classroomService.listMyScoreInClass({
                 classcode,
             })
             if (!res?.status) {
-                commit('submitProblemFailure', {
+                commit('listMyScoreInClassFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    error: res,
+                    error: res.msg,
                 })
                 return res
             }
-            commit('submitProblemSuccess', {
+            commit('listMyScoreInClassSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                data: res,
+                listScore: res.data,
             })
         },
     },
     mutations: {
-        submitProblemLoading(state, data) {
+        listMyScoreInClassLoading(state, data) {
             Object.assign(state, data)
         },
-        submitProblemSuccess(state, data) {
+        listMyScoreInClassSuccess(state, data) {
             Object.assign(state, data)
         },
-        submitProblemFailure(state, data) {
+        listMyScoreInClassFailure(state, data) {
             Object.assign(state, data)
         },
     },

@@ -7,6 +7,7 @@ import ClassroomPage from '../views/Classroom/ClassroomPage.vue'
 import ClassroomProblem from '../views/Classroom/ClassroomProblem.vue'
 import ClassroomAddProblem from '../views/Classroom/ClassroomAddProblem.vue'
 import ClassroomAllScore from '../views/Classroom/ClassroomAllScore.vue'
+import ClassroomMyScore from '../views/Classroom/ClassroomMyScore.vue'
 import ClassroomRecheckPlagiarism from '../views/Classroom/ClassroomRecheckPlagiarism.vue'
 import ClassroomEdit from '../views/Classroom/ClassroomEdit.vue'
 import ProblemPage from '../views/Classroom/ProblemPage.vue'
@@ -62,6 +63,12 @@ const routes = [
         name: 'Classroomallscore',
         component: ClassroomAllScore,
         meta: { title: 'All Score' },
+    },
+    {
+        path: '/classroom/:code/MyScore',
+        name: 'ClassroomMyScore',
+        component: ClassroomMyScore,
+        meta: { title: 'My Score' },
     },
     {
         path: '/classroom/:code/recheck',

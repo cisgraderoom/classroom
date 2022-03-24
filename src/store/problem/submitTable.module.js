@@ -15,7 +15,7 @@ export const submitTable = {
     namespaced: true,
     state: initialState,
     actions: {
-        async submitTable({ commit }, { problemid, classcode }) {
+        async submitTable({ commit }, { problemid, classcode, submission_id }) {
             commit('submitTableLoading', {
                 ...initialState,
                 isLoading: true,
@@ -25,6 +25,7 @@ export const submitTable = {
             const res = await problemService.submitTable({
                 problemid,
                 classcode,
+                submission_id,
             })
             commit('submitTableSuccess', {
                 ...initialState,

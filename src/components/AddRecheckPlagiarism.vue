@@ -110,10 +110,8 @@ export default {
     methods: {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
-            // const { commit } = this.$store
             this.submitted = true
             const { problemid, checkconfirm, typecheck } = this
-            console.log(this.problemid)
             if (problemid == null) {
                 this.errormessage = 'โปรดเลือกโจทย์ที่ต้องการตรวจ'
                 commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {

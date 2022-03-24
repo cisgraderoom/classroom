@@ -51,6 +51,18 @@
                         </v-list-item-content>
                     </v-list-item>
                     <v-list-item
+                        value="4"
+                        :to="`/classroom/${path}/myscore`"
+                        v-show="checkRoleClassroom == 'student'"
+                    >
+                        <v-list-item-icon>
+                            <v-icon> mdi-format-list-numbered </v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title>คะแนนของฉัน</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item
                         value="5"
                         :to="`/classroom/${path}/recheck`"
                         v-show="

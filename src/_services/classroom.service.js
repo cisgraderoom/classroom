@@ -76,7 +76,20 @@ const listAllScoreInClass = async (req) => {
             return res
         })
     res = data
-    console.log(res)
+    return res
+}
+
+const listMyScoreInClass = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(`/submission/score/${req.classcode}`, {
+            headers: authHeader(),
+        })
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
     return res
 }
 
@@ -388,6 +401,7 @@ export const classroomService = {
     listNextPostProblem,
     listAllComment,
     listAllScoreInClass,
+    listMyScoreInClass,
     getInfoClassroom,
     addPost,
     editPost,

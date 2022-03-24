@@ -78,8 +78,11 @@ export default {
             if (state.submitProblem.isSuccess) {
                 this.file = null
                 this.success = true
-                this.$emit('getsubmitTable')
-                setTimeout(() => (this.success = false), 5000)
+                this.$emit(
+                    'getsubmitTable',
+                    state.submitProblem.data.submission_id
+                )
+                setTimeout(() => (this.success = false), 3000)
             }
         },
     },

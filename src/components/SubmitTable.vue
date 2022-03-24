@@ -50,9 +50,7 @@
                     "
                 >
                     <template v-slot:[`item.result`]="{ item }">
-                        <pre>
-                            {{ item.code }}
-                        </pre>
+                        {{ item.result }}
                     </template>
                     <template v-slot:[`item.view_code`]="{ item }">
                         <viewCode
@@ -88,6 +86,7 @@
 import viewCode from './viewCode.vue'
 export default {
     name: 'SubmitTable',
+    props: ['submission_id'],
     components: { viewCode },
     data: () => ({
         checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
@@ -143,7 +142,7 @@ export default {
         ) {
             this.submitList()
         } else {
-            // this.submitTable()
+            this.submitTable()
             this.getclasscode = this.$route.params.code
             this.getproblemid = this.$route.params.problemid
             this.loadingtext = 'กำลังโหลด....'
@@ -154,7 +153,7 @@ export default {
                 isLoading: true,
                 isSuccess: false,
             })
-            setTimeout(() => this.submitTable(), 3000)
+            // setTimeout(() => this.submitTable(), 3000)
         }
     },
     methods: {
@@ -169,6 +168,7 @@ export default {
                     .dispatch('submitTable/submitTable', {
                         classcode,
                         problemid,
+                        submission_id: this.submission_id,
                     })
                     .then(() => {
                         if (state.submitTable.isFailed) {
@@ -211,9 +211,7 @@ export default {
                 this.getclasscode == this.$route.params.code &&
                 this.getproblemid == this.$route.params.problemid
             ) {
-                setTimeout(() => this.submitTable(), 5000)
-            } else {
-                console.log('stopTable')
+                setTimeout(() => this.submitTable(), 3000)
             }
         },
         submitList() {
