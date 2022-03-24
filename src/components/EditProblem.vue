@@ -55,6 +55,16 @@
                                         "
                                         show-size
                                     ></v-file-input>
+                                    <v-file-input
+                                        accept=".zip"
+                                        label="แนบไฟล์ TestCase .zip"
+                                        show-size
+                                        v-model="testcase"
+                                        :disabled="
+                                            this.$store.state.editProblem
+                                                .isLoading
+                                        "
+                                    ></v-file-input>
                                     <v-menu
                                         v-model="menu"
                                         :close-on-content-click="false"
@@ -212,6 +222,7 @@ export default {
         problem_id: null,
         problem_text: null,
         asset: null,
+        testcase: null,
         max_score: null,
         menu: false,
         menu2: false,
@@ -277,6 +288,7 @@ export default {
                 opendatetime,
                 closedatetime,
                 asset,
+                testcase,
             } = this
             if (problem_name == '') {
                 this.errormessage = 'Please enter your Text Post'
@@ -309,6 +321,7 @@ export default {
                     openat: formatopentime,
                     closeat: formatclosetime,
                     asset: asset,
+                    testcase: testcase,
                     classcode,
                 })
                 if (state?.editProblem?.isSuccess) {
@@ -317,7 +330,7 @@ export default {
                 }
                 if (state?.editProblem?.isFailed) {
                     this.errormessage =
-                        state.editProblem.message ?? 'ไม่สามารถแก้ไขโพสต์ได้'
+                        state.editProblem.error ?? 'ไม่สามารถแก้ไขโพสต์ได้'
                 }
             }
         },

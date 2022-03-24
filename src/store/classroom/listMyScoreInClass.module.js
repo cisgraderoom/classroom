@@ -1,48 +1,29 @@
-import { problemService } from '../../_services'
+import { classroomService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    status: null,
+    listScore: null,
     error: '',
 }
 
-export const editProblem = {
+export const listMyScoreInClass = {
     namespaced: true,
     state: initialState,
     actions: {
-        async editProblem(
-            { commit },
-            {
-                problemName,
-                problemDesc,
-                problemId,
-                openat,
-                closeat,
-                testcase,
-                asset,
-                classcode,
-            }
-        ) {
-            commit('editProblemLoading', {
+        async listMyScoreInClass({ commit }, { classcode }) {
+            commit('listMyScoreInClassLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await problemService.editProblem({
-                problemName,
-                problemDesc,
-                problemId,
-                openat,
-                closeat,
-                testcase,
-                asset,
+            const res = await classroomService.listMyScoreInClass({
                 classcode,
             })
             if (!res?.status) {
-                commit('editProblemFailure', {
+                commit('listMyScoreInClassFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -51,23 +32,23 @@ export const editProblem = {
                 })
                 return res
             }
-            commit('editProblemSuccess', {
+            commit('listMyScoreInClassSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                status: res.status,
+                listScore: res.data,
             })
         },
     },
     mutations: {
-        editProblemLoading(state, data) {
+        listMyScoreInClassLoading(state, data) {
             Object.assign(state, data)
         },
-        editProblemSuccess(state, data) {
+        listMyScoreInClassSuccess(state, data) {
             Object.assign(state, data)
         },
-        editProblemFailure(state, data) {
+        listMyScoreInClassFailure(state, data) {
             Object.assign(state, data)
         },
     },

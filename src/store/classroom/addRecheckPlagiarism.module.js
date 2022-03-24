@@ -1,56 +1,51 @@
-import { problemService } from '../../_services'
+import { classroomService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    data: null,
-    error: '',
 }
 
-export const submitProblem = {
+export const addRecheckPlagiarism = {
     namespaced: true,
     state: initialState,
     actions: {
-        async submitProblem({ commit }, { code, problemid, classcode }) {
-            commit('submitProblemLoading', {
+        async addRecheckPlagiarism({ commit }, { problem_id, type }) {
+            commit('addRecheckPlagiarismLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await problemService.submitProblem({
-                code,
-                problemid,
-                classcode,
+            const res = await classroomService.addRecheckPlagiarism({
+                problem_id,
+                type,
             })
             if (!res?.status) {
-                commit('submitProblemFailure', {
+                commit('addRecheckPlagiarismFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    error: res,
                 })
                 return res
             }
-            commit('submitProblemSuccess', {
+            commit('addRecheckPlagiarismSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                data: res,
             })
         },
     },
     mutations: {
-        submitProblemLoading(state, data) {
+        addRecheckPlagiarismLoading(state, data) {
             Object.assign(state, data)
         },
-        submitProblemSuccess(state, data) {
+        addRecheckPlagiarismSuccess(state, data) {
             Object.assign(state, data)
         },
-        submitProblemFailure(state, data) {
+        addRecheckPlagiarismFailure(state, data) {
             Object.assign(state, data)
         },
     },

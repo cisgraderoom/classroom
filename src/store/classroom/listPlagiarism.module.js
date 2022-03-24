@@ -1,48 +1,30 @@
-import { problemService } from '../../_services'
+import { classroomService } from '../../_services'
 
 const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    status: null,
+    list: null,
     error: '',
 }
 
-export const editProblem = {
+export const listPlagiarism = {
     namespaced: true,
     state: initialState,
     actions: {
-        async editProblem(
-            { commit },
-            {
-                problemName,
-                problemDesc,
-                problemId,
-                openat,
-                closeat,
-                testcase,
-                asset,
-                classcode,
-            }
-        ) {
-            commit('editProblemLoading', {
+        async listPlagiarism({ commit }, { classcode, problem_id }) {
+            commit('listPlagiarismLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await problemService.editProblem({
-                problemName,
-                problemDesc,
-                problemId,
-                openat,
-                closeat,
-                testcase,
-                asset,
+            const res = await classroomService.listPlagiarism({
                 classcode,
+                problem_id,
             })
             if (!res?.status) {
-                commit('editProblemFailure', {
+                commit('listPlagiarismFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -51,23 +33,23 @@ export const editProblem = {
                 })
                 return res
             }
-            commit('editProblemSuccess', {
+            commit('listPlagiarismSuccess', {
                 ...initialState,
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
-                status: res.status,
+                list: res.data,
             })
         },
     },
     mutations: {
-        editProblemLoading(state, data) {
+        listPlagiarismLoading(state, data) {
             Object.assign(state, data)
         },
-        editProblemSuccess(state, data) {
+        listPlagiarismSuccess(state, data) {
             Object.assign(state, data)
         },
-        editProblemFailure(state, data) {
+        listPlagiarismFailure(state, data) {
             Object.assign(state, data)
         },
     },

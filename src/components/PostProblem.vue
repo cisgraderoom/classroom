@@ -15,10 +15,14 @@
                     <v-chip
                         color="red"
                         text-color="white"
-                        v-show="nowdate > closedate || ishidden == 1"
+                        v-show="
+                            nowdate < opendate ||
+                            nowdate > closedate ||
+                            ishidden == 1
+                        "
                         class="mx-2"
                     >
-                        ปิดการส่งแล้ว
+                        ปิดการส่ง
                     </v-chip>
                     <v-chip> คะแนนเต็ม {{ maxscore }} </v-chip>
                 </v-col>

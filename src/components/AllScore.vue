@@ -99,18 +99,6 @@ export default {
                             })
                         }
                     }
-
-                    // console.log(this.listScore)
-                    // let _ = require('lodash')
-                    // this.merged = _.uniqWith(array, (pre, cur) => {
-                    //     console.log(pre, cur)
-                    //     if (pre.username == cur.username) {
-                    //         cur = { ...cur, ...pre }
-                    //         array.splice(pre, 1);
-                    //         return true
-                    //     }
-                    //     return false
-                    // })
                     let arr = this.listScore
                     let a = null
                     for (const index in arr) {
@@ -129,7 +117,6 @@ export default {
                         a = arr[index]
                         this.merged.push(a)
                     }
-                    // console.log(this.merged)
                 }
             })
         },

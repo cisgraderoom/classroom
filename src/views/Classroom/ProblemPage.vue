@@ -66,7 +66,7 @@
                     </v-col>
                 </v-row>
             </div>
-            <SubmitTable :key="upDateKeyTable" />
+            <SubmitTable :submission_id="submission_id" :key="upDateKeyTable" />
         </v-container>
     </div>
 </template>
@@ -98,6 +98,7 @@ export default {
         openDateFormat: null,
         closeDateFormat: null,
         errormessage: null,
+        submission_id: null,
         upDateKey: 0,
         upDateKeyTable: 0,
     }),
@@ -125,7 +126,8 @@ export default {
                 new Date(this.problem.close_at)
             )
         },
-        getsubmitTable() {
+        getsubmitTable(submissionid) {
+            this.submission_id = submissionid
             this.upDateKeyTable += 1
         },
     },

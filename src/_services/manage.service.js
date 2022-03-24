@@ -78,7 +78,6 @@ const resetPassword = async (req) => {
             }
         )
         .catch((err) => {
-            console.log(err)
             res = err?.response?.data
             return res
         })

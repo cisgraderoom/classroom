@@ -48,7 +48,7 @@
                                 </v-col>
                                 <v-col cols="12" sm="6">
                                     <v-select
-                                        :items="[2565, 2564, 2563]"
+                                        :items="listyear"
                                         :value="2564"
                                         v-model="year"
                                         label="ปีการศึกษา"
@@ -78,7 +78,7 @@
                         <v-alert
                             text
                             type="error"
-                            v-show="this.$store.state.getInfoClassroom.isFailed"
+                            v-show="this.$store.state.editClass.isFailed"
                         >
                             {{ errormessage }}
                         </v-alert>
@@ -93,6 +93,7 @@
                         "
                     ></v-progress-linear>
                 </v-card-text>
+
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -123,17 +124,24 @@
 <script>
 export default {
     name: 'EditClass',
-    props: ['classname', 'section', 'year', 'term'],
+    // props: ['classname', 'section', 'year', 'term'],
     data: () => ({
         dialog: false,
         classname: '',
         section: '',
+        listyear: [],
         year: '',
         term: '',
         submitted: false,
         errormessage: '',
     }),
     mounted() {
+        const d = new Date()
+        this.listyear = [
+            d.getFullYear() + 544,
+            d.getFullYear() + 543,
+            d.getFullYear() + 542,
+        ]
         this.classname = this.$store.state.getInfoClassroom.data.classname
         this.section = this.$store.state.getInfoClassroom.data.section
         this.year = this.$store.state.getInfoClassroom.data.year
@@ -177,18 +185,21 @@ export default {
                     term,
                     classcode,
                 })
-                if (state?.editClass?.isFailed) {
-                    this.errormessage = 'ไม่สามารถแก้ไขชั้นเรียนได้'
-                    commit('editClass/editClassFailure', {
-                        isFailed: true,
-                        isLoading: false,
-                        isSuccess: false,
-                    })
+                if (state.editClass.isFailed) {
+                    this.errormessage =
+                        state.editClass.message ?? 'ไม่สามารถแก้ไขชั้นเรียนได้'
                 }
                 if (state?.editClass?.isSuccess) {
                     this.dialog = false
                 }
             }
+        },
+        closedialog() {
+            this.dialog = false
+            // this.classname = this.$store.state.getInfoClassroom.data.classname
+            // this.section = this.$store.state.getInfoClassroom.data.section
+            // this.year = this.$store.state.getInfoClassroom.data.year
+            // this.term = this.$store.state.getInfoClassroom.data.term
         },
     },
 }

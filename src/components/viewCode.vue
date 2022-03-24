@@ -20,7 +20,12 @@
                     <br />
                     <b>Code :</b>
                     <br />
-                    {{ code }}
+                    <pre>
+                        <code>
+                            {{ code }}
+                        </code>
+                        
+                    </pre>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -74,4 +79,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="css" scoped>
+pre code {
+    background-color: #eee;
+    border: 1px solid #999;
+    display: block;
+    padding: 20px;
+}
+</style>

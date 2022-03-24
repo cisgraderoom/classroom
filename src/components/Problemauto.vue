@@ -39,7 +39,7 @@
             <SubmitProblem
                 :problemid="problemid"
                 v-show="checkRoleClassroom == 'student'"
-                @getsubmitTable="getsubmitTable"
+                @getsubmitTable="getsubmit_Table"
             />
         </v-sheet>
     </v-hover>
@@ -47,6 +47,7 @@
 
 <script>
 import SubmitProblem from './SubmitProblem'
+import { problemService } from '../_services'
 export default {
     name: 'Problemauto',
     components: {
@@ -70,22 +71,30 @@ export default {
     },
     data: () => ({
         status: false,
+        classcode: null,
         checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
         assetname: null,
+        downloadlink: null,
     }),
     methods: {
-        getsubmitTable() {
-            this.$emit('getsubmitTable')
+        getsubmit_Table(submissionid) {
+            this.$emit('getsubmitTable', submissionid)
         },
-        DownloadFile() {
-            // var fileURL = window.URL.createObjectURL(new Blob([this.asset]))
-            // var fileLink = document.createElement('a')
-            // fileLink.href = fileURL
-            // fileLink.setAttribute('download', this.assetname)
-            // document.body.appendChild(fileLink)
-            // console.log(fileLink)
-            // fileLink.click()
-            console.log(this.asset)
+        async DownloadFile() {
+            const classcode = this.$route.params.code
+            await problemService
+                .DownloadFile({
+                    problemid: this.problemid,
+                    classcode,
+                })
+                .then((res) => {
+                    var FILE = window.URL.createObjectURL(new Blob([res]))
+                    var docUrl = document.createElement('a')
+                    docUrl.href = FILE
+                    docUrl.setAttribute('download', this.assetname)
+                    document.body.appendChild(docUrl)
+                    docUrl.click()
+                })
         },
     },
 }
