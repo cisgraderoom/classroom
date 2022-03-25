@@ -264,6 +264,8 @@ const addProblem = async (req) => {
     formData.append('close', req.close)
     formData.append('asset', req.asset)
     formData.append('testcase', req.testcase)
+    formData.append('timeLimit', req.time_limit)
+    formData.append('memLimit', req.mem_limit)
     const { data } = await httpClient
         .post('/task/new', formData, {
             headers: authHeader(),
@@ -346,9 +348,13 @@ const editClass = async (req) => {
 const addRecheckPlagiarism = async (req) => {
     let res = null
     const { data } = await httpClient
-        .post(`/post/${req.problem_id}`, req, {
-            headers: authHeader(),
-        })
+        .post(
+            `/submission/manage/${req.classcode}/${req.type}/${req.problem_id}`,
+            req,
+            {
+                headers: authHeader(),
+            }
+        )
         .catch((err) => {
             res = err?.response?.data
             return res
@@ -359,34 +365,37 @@ const addRecheckPlagiarism = async (req) => {
     return res
 }
 
-const getListItemPlagiarism = async (req) => {
-    let res = null
-    const { data } = await httpClient
-        .get(`/post/${req.classcode}`, {
-            headers: authHeader(),
-        })
-        .catch((err) => {
-            res = err?.response?.data
-            return res
-        })
-    if (data?.status) {
-        res = data
-    }
-    return res
-}
 const listPlagiarism = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get(`/post/${req.classcode}/${req.problem_id}`, {
-            headers: authHeader(),
-        })
+        .get(
+            `/submission/manage/${req.classcode}/${req.problem_id}?page=${req.currentPage}`,
+            {
+                headers: authHeader(),
+            }
+        )
         .catch((err) => {
             res = err?.response?.data
             return res
         })
-    if (data?.status) {
-        res = data
-    }
+    res = data
+    return res
+}
+
+const getPlagiarismCode = async (req) => {
+    let res = null
+    const { data } = await httpClient
+        .get(
+            `/submission/manage/${req.classcode}/${req.problem_id}/${req.owner}/${req.compare}`,
+            {
+                headers: authHeader(),
+            }
+        )
+        .catch((err) => {
+            res = err?.response?.data
+            return res
+        })
+    res = data
     return res
 }
 
@@ -413,6 +422,6 @@ export const classroomService = {
     addTeacherClassroom,
     editClass,
     addRecheckPlagiarism,
-    getListItemPlagiarism,
     listPlagiarism,
+    getPlagiarismCode,
 }

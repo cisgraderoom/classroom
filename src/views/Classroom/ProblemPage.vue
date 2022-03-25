@@ -36,6 +36,8 @@
                             :open_date="problem.open_at"
                             :close_date="problem.close_at"
                             :maxscore="problem.max_score"
+                            :timelimit="problem.time_limit"
+                            :memlimit="problem.mem_limit"
                             @getProblem="getByIdProblem"
                             :key="upDateKey"
                         />

@@ -88,6 +88,19 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-snackbar v-model="snackbar" :timeout="timeout">
+            {{ text }}
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    color="primary"
+                    text
+                    v-bind="attrs"
+                    @click="snackbar = false"
+                >
+                    ปิด
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-row>
 </template>
 
@@ -99,18 +112,22 @@ export default {
         dialog: false,
         problemid: null,
         typecheck: [
-            { text: 'ตรวจใหม่', type: 'recheck' },
+            { text: 'ตรวจใหม่', type: 'judge' },
             { text: 'ตรวจความคล้ายคลึง', type: 'plagiarism' },
         ],
         type: null,
         checkconfirm: null,
         submitted: false,
+        text: 'สั่ง ตรวจใหม่,ตรวจความคล้ายคลึง สำเร็จได้',
+        snackbar: false,
+        timeout: 2000,
         errormessage: '',
     }),
     methods: {
         async handleSubmit() {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
+            const classcode = this.$route.params.code
             const { problemid, checkconfirm, typecheck } = this
             if (problemid == null) {
                 this.errormessage = 'โปรดเลือกโจทย์ที่ต้องการตรวจ'
@@ -145,30 +162,26 @@ export default {
                 checkconfirm == 'ยืนยัน'
             ) {
                 await dispatch('addRecheckPlagiarism/addRecheckPlagiarism', {
+                    classcode,
                     problem_id: problemid,
                     type: this.type,
                 })
-                if (state?.addRecheckPlagiarism?.isFailed) {
-                    this.errormessage = 'ไม่สามารถสร้างชั้นเรียนได้'
-                    commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
-                        isFailed: true,
-                        isLoading: false,
-                        isSuccess: false,
-                    })
+                if (state.addRecheckPlagiarism.isFailed) {
+                    this.errormessage =
+                        state.addRecheckPlagiarism.error ??
+                        'ไม่สามารถสั่ง ตรวจใหม่,ตรวจความคล้ายคลึง ได้'
                 }
                 if (state?.addRecheckPlagiarism?.isSuccess) {
-                    this.dialog = false
+                    this.text = state.addRecheckPlagiarism.message
                     this.closedialog()
                 }
             }
         },
         closedialog() {
+            this.problemid = null
+            this.type = null
+            this.checkconfirm = null
             const { commit } = this.$store
-            this.classname = ''
-            this.section = 1
-            this.year = 2564
-            this.term = 1
-            this.submitted = false
             commit('addRecheckPlagiarism/addRecheckPlagiarismFailure', {
                 isFailed: false,
                 isLoading: false,

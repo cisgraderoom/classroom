@@ -5,7 +5,7 @@
                 <h2 class="my-2">จัดการห้องเรียน</h2>
             </v-col>
             <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-xl-n13">
-                <EditClass :key="upDateKey" />
+                <EditClass :key="upDateKey" @updatehead="update_head" />
             </v-col>
             <v-col md="2" xl="2" class="mt-5 mx-md-5 mx-xl-15">
                 <AddTeacherClassroom @getList="getListUser" />
@@ -133,6 +133,10 @@ export default {
                 this.currentPage = value
                 this.getListUser()
             }
+        },
+
+        update_head() {
+            this.$emit('updatehead')
         },
     },
 }

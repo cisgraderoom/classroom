@@ -96,13 +96,15 @@ const editProblem = async (req) => {
     formData.append('problemName', req.problemName)
     formData.append('problemDesc', req.problemDesc)
     formData.append('problemId', req.problemId)
-    formData.append('openat', req.openat)
-    formData.append('closeat', req.closeat)
+    formData.append('open', req.openat)
+    formData.append('close', req.closeat)
     formData.append('asset', req.asset)
     formData.append('testcase', req.testcase)
     formData.append('classcode', req.classcode)
+    formData.append('timeLimit', req.time_limit)
+    formData.append('memLimit', req.mem_limit)
     const { data } = await httpClient
-        .put(`/task/${req.problemId}`, formData, {
+        .post(`/task/edit/${req.problemId}`, formData, {
             headers: authHeader(),
         })
         .catch((err) => {

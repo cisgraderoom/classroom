@@ -2,11 +2,11 @@
     <div>
         <Navbar />
         <v-container>
-            <HeadClassroom />
+            <HeadClassroom :key="upDateKey" />
             <v-row>
                 <MenuClassroom :path="$route.params.code" />
                 <v-col md="9" xl="8">
-                    <EditClassroom />
+                    <EditClassroom @updatehead="update_head" />
                 </v-col>
             </v-row>
         </v-container>
@@ -29,8 +29,14 @@ export default {
     },
     data: () => ({
         thisPage: 6,
+        upDateKey: 0,
         checkRoleClassroom: JSON.parse(localStorage.getItem('user')).role,
     }),
+    methods: {
+        update_head() {
+            this.upDateKey += 1
+        },
+    },
 }
 </script>
 

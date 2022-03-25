@@ -4,13 +4,18 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
+    message: null,
+    error: null,
 }
 
 export const addRecheckPlagiarism = {
     namespaced: true,
     state: initialState,
     actions: {
-        async addRecheckPlagiarism({ commit }, { problem_id, type }) {
+        async addRecheckPlagiarism(
+            { commit },
+            { classcode, problem_id, type }
+        ) {
             commit('addRecheckPlagiarismLoading', {
                 ...initialState,
                 isLoading: true,
@@ -18,6 +23,7 @@ export const addRecheckPlagiarism = {
                 isSuccess: false,
             })
             const res = await classroomService.addRecheckPlagiarism({
+                classcode,
                 problem_id,
                 type,
             })
@@ -27,6 +33,7 @@ export const addRecheckPlagiarism = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
+                    error: res.message,
                 })
                 return res
             }
@@ -35,6 +42,7 @@ export const addRecheckPlagiarism = {
                 isLoading: false,
                 isFailed: false,
                 isSuccess: true,
+                message: res.message,
             })
         },
     },

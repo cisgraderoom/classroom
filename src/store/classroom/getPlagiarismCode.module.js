@@ -4,33 +4,32 @@ const initialState = {
     isLoading: false,
     isFailed: false,
     isSuccess: false,
-    list: null,
-    totalUser: null,
-    hasNext: false,
+    data: null,
     error: '',
 }
 
-export const listPlagiarism = {
+export const getPlagiarismCode = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listPlagiarism(
+        async getPlagiarismCode(
             { commit },
-            { classcode, problem_id, currentPage }
+            { classcode, problem_id, owner, compare }
         ) {
-            commit('listPlagiarismLoading', {
+            commit('getPlagiarismCodeLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await classroomService.listPlagiarism({
+            const res = await classroomService.getPlagiarismCode({
                 classcode,
                 problem_id,
-                currentPage,
+                owner,
+                compare,
             })
             if (!res?.status) {
-                commit('listPlagiarismFailure', {
+                commit('getPlagiarismCodeFailure', {
                     ...initialState,
                     isLoading: false,
                     isFailed: true,
@@ -39,14 +38,12 @@ export const listPlagiarism = {
                 })
                 return res
             } else {
-                commit('listPlagiarismSuccess', {
+                commit('getPlagiarismCodeSuccess', {
                     ...initialState,
                     isLoading: false,
                     isFailed: false,
                     isSuccess: true,
-                    list: res.data,
-                    totalUser: res.pageInfo.totalItems,
-                    hasNext: res.pageInfo.hasNext,
+                    data: res.data,
                 })
             }
 
@@ -54,13 +51,13 @@ export const listPlagiarism = {
         },
     },
     mutations: {
-        listPlagiarismLoading(state, data) {
+        getPlagiarismCodeLoading(state, data) {
             Object.assign(state, data)
         },
-        listPlagiarismSuccess(state, data) {
+        getPlagiarismCodeSuccess(state, data) {
             Object.assign(state, data)
         },
-        listPlagiarismFailure(state, data) {
+        getPlagiarismCodeFailure(state, data) {
             Object.assign(state, data)
         },
     },

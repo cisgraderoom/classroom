@@ -34,6 +34,7 @@ import { deleteComment } from './classroom/deleteComment.module'
 import { getListItemPlagiarism } from './classroom/getListItemPlagiarism.module'
 import { listPlagiarism } from './classroom/listPlagiarism.module'
 import { addRecheckPlagiarism } from './classroom/addRecheckPlagiarism.module'
+import { getPlagiarismCode } from './classroom/getPlagiarismCode.module'
 import { getByIdProblem } from './problem/getByIdProblem.module'
 import { submitProblem } from './problem/submitProblem.module'
 import { submitTable } from './problem/submitTable.module'
@@ -78,6 +79,7 @@ export default new Vuex.Store({
         getListItemPlagiarism,
         listPlagiarism,
         addRecheckPlagiarism,
+        getPlagiarismCode,
         getByIdProblem,
         submitProblem,
         submitTable,
