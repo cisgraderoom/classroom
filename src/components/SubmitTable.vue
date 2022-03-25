@@ -163,7 +163,7 @@ export default {
             const classcode = this.$route.params.code
             const problemid = this.$route.params.problemid
             if (classcode && problemid) {
-                this.loading = true
+                // this.loading = true
                 let data = this.$store
                     .dispatch('submitTable/submitTable', {
                         classcode,
@@ -178,17 +178,23 @@ export default {
                         if (state.submitTable.isSuccess) {
                             if (this.$store.state.submitTable.status) {
                                 if (this.$store.state.submitTable.state) {
+                                    this.score.pop()
                                     this.score.push(
                                         this.$store.state.submitTable.score
                                     )
                                     this.loading = false
                                 } else {
-                                    this.loadingtext = 'กำลังตรวจคำตอบ....'
-                                    commit('submitTable/submitTableLoading', {
-                                        isFailed: false,
-                                        isLoading: true,
-                                        isSuccess: false,
-                                    })
+                                    // this.loadingtext = 'กำลังตรวจคำตอบ....'
+                                    // commit('submitTable/submitTableLoading', {
+                                    //     isFailed: false,
+                                    //     isLoading: true,
+                                    //     isSuccess: false,
+                                    // })
+                                    this.score.pop()
+                                    this.score.push(
+                                        this.$store.state.submitTable.score
+                                    )
+                                    this.loading = false
                                     this.ReLoadsubmitTable()
                                 }
                             } else {

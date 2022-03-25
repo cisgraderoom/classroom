@@ -42,6 +42,22 @@
                             v-model="testcase"
                             :disabled="this.$store.state.addProblem.isLoading"
                         ></v-file-input>
+                        <v-text-field
+                            label="จำกัดเวลาตรวจ 1-10 (วินาที)"
+                            v-model="timelimit"
+                            type="number"
+                            min="1"
+                            max="10"
+                            :disabled="this.$store.state.addProblem.isLoading"
+                        ></v-text-field>
+                        <v-text-field
+                            label="จำกัดหน่วยความจำตรวจ 1-256 (MB)"
+                            v-model="memlimit"
+                            type="number"
+                            min="1"
+                            max="256"
+                            :disabled="this.$store.state.addProblem.isLoading"
+                        ></v-text-field>
                         <p>
                             ตัวอย่างไฟล์
                             <a
@@ -184,6 +200,8 @@ export default {
         typetext: 'auto',
         asset: null,
         testcase: null,
+        memlimit: null,
+        timelimit: null,
         menu: false,
         menu2: false,
         opendate: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -226,6 +244,8 @@ export default {
             this.testcase = null
             this.menu = false
             this.menu2 = false
+            this.memlimit == null
+            this.timelimit == null
             this.opendate = new Date(
                 Date.now() - new Date().getTimezoneOffset() * 60000
             )
@@ -297,6 +317,31 @@ export default {
                 })
                 return
             }
+            if (this.memlimit == null || this.timelimit == null) {
+                this.errormessage =
+                    'โปรดใส่ จำกัดเวลาตรวจ และ จำกัดหน่วยความจำตรวจ'
+                commit('addProblem/addProblemFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
+            }
+            if (
+                this.memlimit > 256 ||
+                this.timelimit > 10 ||
+                this.memlimit == 0 ||
+                this.timelimit == 0
+            ) {
+                this.errormessage =
+                    'โปรดใส่ จำกัดเวลาตรวจ และ จำกัดหน่วยความจำตรวจ ให้ตรงเงือนไข'
+                commit('addProblem/addProblemFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
+            }
             await dispatch('addProblem/addProblem', {
                 problemName: this.problemsname,
                 problemDesc: this.problemstext,
@@ -306,6 +351,8 @@ export default {
                 close: formatclosetime,
                 asset: this.asset,
                 testcase: this.testcase,
+                time_limit: this.timelimit,
+                mem_limit: this.memlimit,
             })
             if (state.addProblem.isFailed) {
                 this.errormessage =

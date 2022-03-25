@@ -2,7 +2,12 @@
     <div>
         <v-dialog v-model="dialog" max-width="1400">
             <template v-slot:activator="{ on, attrs }">
-                <v-btn small color="secondary" v-bind="attrs" v-on="on"
+                <v-btn
+                    small
+                    color="secondary"
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="getPlagiarismCode"
                     >ดู Code</v-btn
                 >
             </template>
@@ -26,13 +31,13 @@
                     </v-col>
                     <v-col>
                         <v-card-text
-                            ><b>Compar :</b> {{ compar }}
+                            ><b>Compare :</b> {{ compare }}
                             <br />
                             <b>Code :</b>
                             <br />
                             <pre>
                                 <code>
-                                    {{ code_compar }}
+                                    {{ code_compare }}
                                 </code>
                             </pre>
                         </v-card-text>
@@ -47,14 +52,14 @@
                 <v-alert
                     text
                     type="error"
-                    v-show="this.$store.state.kickStudent.isFailed"
+                    v-show="this.$store.state.getPlagiarismCode.isFailed"
                 >
                     {{ errormessage }}
                 </v-alert>
                 <v-progress-linear
                     indeterminate
                     color="red"
-                    v-show="this.$store.state.kickStudent.isLoading"
+                    v-show="this.$store.state.getPlagiarismCode.isLoading"
                 ></v-progress-linear>
             </v-card>
         </v-dialog>
@@ -64,27 +69,64 @@
 <script>
 export default {
     name: 'viewCode2',
-    props: ['owner', 'compar', 'problem_id'],
+    props: ['owner', 'compare', 'problem_id'],
     data() {
         return {
             dialog: false,
             code_owner: '',
-            code_compar: '',
+            code_compare: '',
             errormessage: '',
         }
     },
     methods: {
+        async getPlagiarismCode() {
+            console.log(this.owner)
+            console.log(this.compare)
+            const { dispatch, state, commit } = this.$store
+            this.submitted = true
+            const classcode = this.$route.params.code
+            if (classcode && this.problem_id) {
+                this.loading = true
+                await dispatch('getPlagiarismCode/getPlagiarismCode', {
+                    classcode,
+                    problem_id: this.problem_id,
+                    owner: this.owner,
+                    compare: this.compare,
+                })
+                if (state.getPlagiarismCode.isFailed) {
+                    this.errormessage =
+                        state.getPlagiarismCode.error ?? 'ไม่สามารถแสดงได้'
+                    this.loading = false
+                }
+                if (state.getPlagiarismCode.isSuccess) {
+                    this.code_owner = state.getPlagiarismCode.data.owner
+                    this.code_compare = state.getPlagiarismCode.data.compare
+                }
+                return
+            } else {
+                commit('getPlagiarismCode/getPlagiarismCodeFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
+            }
+        },
         closeDialog() {
-            // const { commit } = this.$store
-            // commit('kickStudent/kickStudentFailure', {
-            //     isFailed: false,
-            //     isLoading: false,
-            //     isSuccess: false,
-            // })
+            this.code_owner = null
+            this.code_compare = null
             this.dialog = false
         },
     },
 }
 </script>
 
-<style></style>
+<style lang="css" scoped>
+pre code {
+    background-color: #eee;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    display: block;
+    padding: 20px;
+}
+</style>

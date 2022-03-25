@@ -190,7 +190,8 @@ export default {
                         state.editClass.message ?? 'ไม่สามารถแก้ไขชั้นเรียนได้'
                 }
                 if (state?.editClass?.isSuccess) {
-                    this.dialog = false
+                    this.$emit('updatehead')
+                    this.closedialog()
                 }
             }
         },

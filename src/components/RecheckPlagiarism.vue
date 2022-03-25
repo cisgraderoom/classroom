@@ -26,39 +26,47 @@
                         <v-select
                             md="4"
                             xl="5"
-                            :items="listresult"
+                            item-text="problem_name"
+                            item-value="problem_id"
+                            :items="listitem"
                             :disabled="loading"
                             :loading="loading"
                             v-model="problemid"
                             label="โจทย์ที่ตรวจความคล้ายคลึงแล้ว"
-                            @click="listPlagiarism"
+                            v-on:change="listPlagiarism"
                         >
                         </v-select>
-                        <v-text-field
-                            v-model="search"
-                            append-icon="mdi-magnify"
-                            label="ค้นหาชื่อผู้ใช้"
-                            single-line
-                            hide-details
-                        ></v-text-field>
                         <v-data-table
                             :headers="headers"
                             :items="tableresult"
-                            :items-per-page="5"
+                            :items-per-page="20"
+                            :page.sync="currentPage"
                             hide-default-footer
                             :disabled="loading"
                             :loading="loading"
                             :loading-text="loadingtext"
+                            @page-count="pageCount = $event"
                             class="elevation-1"
                         >
                             <template v-slot:[`item.view_code`]="{ item }">
                                 <viewCode2
                                     :owner="item.owner"
-                                    :compar="item.compar"
-                                    :problem_id="problem"
+                                    :compare="item.compare"
+                                    :problem_id="problemid"
                                 />
                             </template>
                         </v-data-table>
+                        <div class="text-center pt-2">
+                            <v-pagination
+                                v-model="pageCount"
+                                :disabled="
+                                    this.$store.state.listAllUser.isLoading
+                                "
+                                :length="totalPage"
+                                :total-visible="7"
+                                @input="handlePageChange"
+                            ></v-pagination>
+                        </div>
                     </v-sheet>
                 </v-col>
             </v-row>
@@ -78,16 +86,21 @@ export default {
     data() {
         return {
             problemid: null,
-            search: '',
+            currentPage: 1,
+            pageCount: 1,
+            totalPage: 1,
+            hasNext: false,
             headers: [
-                { text: 'Username1', value: 'owner', sortable: false },
-                { text: 'Username2', value: 'compar', sortable: false },
-                { text: 'Result', value: 'result', filterable: false },
+                { text: 'คนที่ 1', value: 'owner', sortable: false },
+                { text: 'คนที่ 2', value: 'compare', sortable: false },
+                {
+                    text: 'ผลตรวจสอบความคล้าย',
+                    value: 'result',
+                },
                 {
                     text: 'ดูเทียบ Code',
-                    sortable: false,
                     value: 'view_code',
-                    filterable: false,
+                    sortable: false,
                 },
             ],
             listitem: [],
@@ -143,18 +156,27 @@ export default {
         async listPlagiarism() {
             const { dispatch, state, commit } = this.$store
             this.submitted = true
+            const { currentPage } = this
             const classcode = this.$route.params.code
             if (classcode && this.problemid) {
                 this.loading = true
                 await dispatch('listPlagiarism/listPlagiarism', {
                     classcode,
+                    problem_id: this.problemid,
+                    currentPage,
                 })
                 if (state.listPlagiarism.isFailed) {
                     this.errormessage =
                         state.listPlagiarism.error ?? 'ไม่สามารถลิสโจทย์ได้'
+                    this.loading = false
                 }
                 if (state.listPlagiarism.isSuccess) {
                     this.tableresult = state.listPlagiarism.list
+                    this.totalPage = Math.ceil(
+                        state.listPlagiarism.totalUser / 20
+                    )
+                    this.hasNext = state.listPlagiarism.hasNext
+                    this.loading = false
                 }
                 return
             } else {
@@ -169,7 +191,7 @@ export default {
         handlePageChange(value) {
             if (this.currentPage != value) {
                 this.currentPage = value
-                this.submitList()
+                this.listPlagiarism()
             }
         },
     },

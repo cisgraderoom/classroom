@@ -23,6 +23,8 @@ export const editProblem = {
                 testcase,
                 asset,
                 classcode,
+                time_limit,
+                mem_limit,
             }
         ) {
             commit('editProblemLoading', {
@@ -40,6 +42,8 @@ export const editProblem = {
                 testcase,
                 asset,
                 classcode,
+                time_limit,
+                mem_limit,
             })
             if (!res?.status) {
                 commit('editProblemFailure', {
@@ -47,7 +51,7 @@ export const editProblem = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    error: res.msg,
+                    error: res.message,
                 })
                 return res
             }

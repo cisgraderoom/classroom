@@ -21,6 +21,8 @@ export const addProblem = {
                 close,
                 asset,
                 testcase,
+                time_limit,
+                mem_limit,
             }
         ) {
             commit('addProblemLoading', {
@@ -38,6 +40,8 @@ export const addProblem = {
                 close,
                 asset,
                 testcase,
+                time_limit,
+                mem_limit,
             })
             if (!res?.status) {
                 commit('addProblemFailure', {

@@ -65,6 +65,28 @@
                                                 .isLoading
                                         "
                                     ></v-file-input>
+                                    <v-text-field
+                                        label="จำกัดเวลาตรวจ 1-10 (วินาที)"
+                                        v-model="time_limit"
+                                        type="number"
+                                        min="1"
+                                        max="10"
+                                        :disabled="
+                                            this.$store.state.addProblem
+                                                .isLoading
+                                        "
+                                    ></v-text-field>
+                                    <v-text-field
+                                        label="จำกัดหน่วยความจำตรวจ 1-256 (วินาที)"
+                                        v-model="mem_limit"
+                                        type="number"
+                                        min="1"
+                                        max="256"
+                                        :disabled="
+                                            this.$store.state.addProblem
+                                                .isLoading
+                                        "
+                                    ></v-text-field>
                                     <v-menu
                                         v-model="menu"
                                         :close-on-content-click="false"
@@ -214,6 +236,8 @@ export default {
         'open_date',
         'close_date',
         'maxscore',
+        'timelimit',
+        'memlimit',
     ],
 
     data: () => ({
@@ -247,6 +271,8 @@ export default {
             ' ' +
             '00:00',
         submitted: false,
+        time_limit: 1,
+        mem_limit: 2,
         errormessage: '',
     }),
     mounted() {
@@ -266,6 +292,9 @@ export default {
             this.closetime = this.close_date.split(' ')[1]
             this.closedatetime = this.close_date
             this.max_score = this.maxscore
+            this.time_limit = this.timelimit
+            this.mem_limit = this.memlimit
+            console.log(this.timelimit)
         },
 
         setOpen() {
@@ -323,6 +352,8 @@ export default {
                     asset: asset,
                     testcase: testcase,
                     classcode,
+                    time_limit: this.time_limit,
+                    mem_limit: this.mem_limit,
                 })
                 if (state?.editProblem?.isSuccess) {
                     this.closedialog()

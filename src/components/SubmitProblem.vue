@@ -9,10 +9,7 @@
                     accept=".c,.cpp,.java"
                     show-size
                     v-show="!$store.state.getByIdProblem.isLoading"
-                    :disabled="
-                        $store.state.submitProblem.isLoading ||
-                        $store.state.submitTable.isLoading
-                    "
+                    :disabled="$store.state.submitProblem.isLoading"
                 ></v-file-input>
             </v-col>
             <v-col cols="auto">
@@ -21,10 +18,7 @@
                     color="primary"
                     class="mr-1"
                     v-show="!$store.state.getByIdProblem.isLoading"
-                    :disabled="
-                        $store.state.submitProblem.isLoading ||
-                        $store.state.submitTable.isLoading
-                    "
+                    :disabled="$store.state.submitProblem.isLoading"
                     @click="handleSubmit"
                     >submit</v-btn
                 >

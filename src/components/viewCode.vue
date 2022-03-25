@@ -82,7 +82,8 @@ export default {
 <style lang="css" scoped>
 pre code {
     background-color: #eee;
-    border: 1px solid #999;
+    border: 1px solid #eee;
+    border-radius: 10px;
     display: block;
     padding: 20px;
 }
