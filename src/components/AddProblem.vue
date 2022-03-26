@@ -244,8 +244,8 @@ export default {
             this.testcase = null
             this.menu = false
             this.menu2 = false
-            this.memlimit == null
-            this.timelimit == null
+            this.memlimit = null
+            this.timelimit = null
             this.opendate = new Date(
                 Date.now() - new Date().getTimezoneOffset() * 60000
             )
