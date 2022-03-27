@@ -1,4 +1,6 @@
+import 'dotenv/config'
+
 export const setting = {
-    backendURL: 'https://api-cis.t6tg.com/api/',
+    backendURL: process.env.APP_API_URL,
 }
 export default setting
