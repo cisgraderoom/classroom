@@ -96,7 +96,6 @@ export default {
                 }
                 if (state.listAllScoreInClass.isSuccess) {
                     this.data = state.listAllScoreInClass.listScore
-                    // console.log(this.data)
                     for (const key in this.data) {
                         this.headers.push({
                             text: this.data[key][0].problem_name,
@@ -135,7 +134,6 @@ export default {
                         a = arr[index]
                         this.merged.push(a)
                     }
-                    console.log(this.merged)
                 }
             })
         },
