@@ -360,6 +360,15 @@ export default {
             }
             if (state.addProblem.isSuccess) {
                 this.resetInput()
+                setTimeout(
+                    () =>
+                        commit('addProblem/addProblemFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
             }
         },
     },

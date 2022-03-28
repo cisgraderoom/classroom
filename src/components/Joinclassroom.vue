@@ -104,8 +104,14 @@ export default {
             }
         },
         closedialog() {
+            const { commit } = this.$store
             this.classcode = ''
             this.dialog = false
+            commit('joinClassroom/joinClassFailure', {
+                isFailed: false,
+                isLoading: false,
+                isSuccess: false,
+            })
         },
     },
 }

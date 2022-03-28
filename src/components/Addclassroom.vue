@@ -113,7 +113,7 @@ export default {
         dialog: false,
         classname: '',
         section: 1,
-        year: 2564,
+        year: new Date().getFullYear() + 543,
         listyear: [],
         term: 1,
         submitted: false,
@@ -133,7 +133,7 @@ export default {
             this.submitted = true
             const { classname, section, year, term } = this
             if (classname == '' && section == '' && year == '' && term == '') {
-                this.errormessage = 'Please enter your infomation'
+                this.errormessage = 'โปรดใส่รายละเอียด'
                 commit('createClassroom/createClassFailure', {
                     isFailed: true,
                     isLoading: false,
@@ -141,7 +141,7 @@ export default {
                 })
             }
             if (classname == '') {
-                this.errormessage = 'Please enter Classroom name'
+                this.errormessage = 'โปรดใส่ชื่อชั้นเรียน'
                 commit('createClassroom/createClassFailure', {
                     isFailed: true,
                     isLoading: false,
@@ -149,7 +149,7 @@ export default {
                 })
             }
             if (year == '') {
-                this.errormessage = 'Please enter Classroom Year'
+                this.errormessage = 'โปรดใส่ปีการศึกษา'
                 commit('createClassroom/createClassFailure', {
                     isFailed: true,
                     isLoading: false,
@@ -178,12 +178,18 @@ export default {
             }
         },
         closedialog() {
+            const { commit } = this.$store
             this.classname = ''
             this.section = 1
             this.year = 2564
             this.term = 1
             this.submitted = false
             this.dialog = false
+            commit('createClassroom/createClassFailure', {
+                isFailed: false,
+                isLoading: false,
+                isSuccess: false,
+            })
         },
     },
 }

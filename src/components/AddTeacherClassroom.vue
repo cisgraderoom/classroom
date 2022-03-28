@@ -120,8 +120,14 @@ export default {
             }
         },
         closedialog() {
+            const { commit } = this.$store
             this.username = ''
             this.dialog = false
+            commit('addTeacherClassroom/addTeacherClassroomFailure', {
+                isFailed: false,
+                isLoading: false,
+                isSuccess: false,
+            })
         },
     },
 }
