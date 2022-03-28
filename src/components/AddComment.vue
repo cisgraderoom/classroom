@@ -1,12 +1,5 @@
 <template>
     <div>
-        <v-alert
-            text
-            type="error"
-            v-show="this.$store.state.addComment.isLoading"
-        >
-            {{ errormessage }}
-        </v-alert>
         <v-row class="mx-auto align-center">
             <v-col>
                 <v-text-field
@@ -29,6 +22,13 @@
                 >
             </v-col>
         </v-row>
+        <v-alert
+            text
+            type="error"
+            v-show="this.$store.state.addComment.isFailed"
+        >
+            {{ errormessage }}
+        </v-alert>
         <v-progress-linear
             indeterminate
             color="primary"
@@ -64,6 +64,16 @@ export default {
                     isLoading: false,
                     isSuccess: false,
                 })
+                setTimeout(
+                    () =>
+                        commit('addComment/addCommentFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
+                this.isLoading = false
                 return
             }
             if (this.text.length < 5) {
@@ -74,6 +84,15 @@ export default {
                     isLoading: false,
                     isSuccess: false,
                 })
+                setTimeout(
+                    () =>
+                        commit('addComment/addCommentFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
                 this.isLoading = false
                 return
             }
@@ -93,6 +112,15 @@ export default {
                     state.addComment.message ?? 'ไม่สามารถโพสต์ได้'
                 this.isLoading = false
                 this.error = true
+                setTimeout(
+                    () =>
+                        commit('addComment/addCommentFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
             }
         },
     },

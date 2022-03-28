@@ -80,8 +80,6 @@ export default {
     },
     methods: {
         async getPlagiarismCode() {
-            console.log(this.owner)
-            console.log(this.compare)
             const { dispatch, state, commit } = this.$store
             this.submitted = true
             const classcode = this.$route.params.code
