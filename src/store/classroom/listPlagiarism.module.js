@@ -16,7 +16,7 @@ export const listPlagiarism = {
     actions: {
         async listPlagiarism(
             { commit },
-            { classcode, problem_id, currentPage }
+            { classcode, problem_id, currentPage, search }
         ) {
             commit('listPlagiarismLoading', {
                 ...initialState,
@@ -28,6 +28,7 @@ export const listPlagiarism = {
                 classcode,
                 problem_id,
                 currentPage,
+                search,
             })
             if (!res?.status) {
                 commit('listPlagiarismFailure', {

@@ -16,7 +16,10 @@ export const submitList = {
     namespaced: true,
     state: initialState,
     actions: {
-        async submitList({ commit }, { problemid, classcode, current }) {
+        async submitList(
+            { commit },
+            { problemid, classcode, current, search }
+        ) {
             commit('submitListLoading', {
                 ...initialState,
                 isLoading: true,
@@ -27,6 +30,7 @@ export const submitList = {
                 problemid,
                 classcode,
                 current,
+                search,
             })
             if (!res?.status) {
                 commit('submitListFailure', {

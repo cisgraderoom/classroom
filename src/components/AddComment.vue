@@ -1,9 +1,13 @@
 <template>
     <div>
-        <v-alert text type="error" v-show="error">
+        <v-alert
+            text
+            type="error"
+            v-show="this.$store.state.addComment.isLoading"
+        >
             {{ errormessage }}
         </v-alert>
-        <v-row class="mx-auto" align="center">
+        <v-row class="mx-auto align-center">
             <v-col>
                 <v-text-field
                     v-model="text"

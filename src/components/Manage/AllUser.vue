@@ -6,7 +6,26 @@
                     <h3>ผู้ใช้งานทั้งหมด</h3>
                 </v-col>
 
-                <br />
+                <v-row class="mx-auto align-center">
+                    <v-col>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="ค้นหา ชื่อ หรือ ชื่อผู้ใช้"
+                            v-on:keyup.enter="getListUser"
+                            :disabled="this.$store.state.listAllUser.isLoading"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-btn
+                            color="primary"
+                            @click="getListUser"
+                            :disabled="this.$store.state.listAllUser.isLoading"
+                            >ค้นหา</v-btn
+                        >
+                    </v-col>
+                </v-row>
+
                 <v-data-table
                     :headers="headers"
                     :items="listuser"
@@ -94,15 +113,17 @@ export default {
                 { text: 'Edit', value: 'edit_user', sortable: false },
             ],
             listuser: [],
+            search: null,
             errormessage: null,
         }
     },
     methods: {
         async getListUser() {
             const { dispatch, state } = this.$store
-            const { currentPage } = this
+            const { currentPage, search } = this
             await dispatch('listAllUser/listAllUser', {
                 currentPage,
+                search,
             }).then(() => {
                 this.listuser = state.listAllUser.listUser
                 this.totalPage = Math.ceil(state.listAllUser.totalUser / 20)

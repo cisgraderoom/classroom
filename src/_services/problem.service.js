@@ -76,12 +76,13 @@ const submitTable = async (req) => {
 const submitList = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get(
-            `/submission/list/${req.classcode}/problem/${req.problemid}?page=${req.current}`,
-            {
-                headers: authHeader(),
-            }
-        )
+        .get(`/submission/list/${req.classcode}/problem/${req.problemid}`, {
+            headers: authHeader(),
+            params: {
+                page: req.current,
+                search: req.search,
+            },
+        })
         .catch((err) => {
             res = err?.response?.data
             return res

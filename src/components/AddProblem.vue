@@ -42,6 +42,14 @@
                             v-model="testcase"
                             :disabled="this.$store.state.addProblem.isLoading"
                         ></v-file-input>
+                        <p>
+                            ตัวอย่างไฟล์
+                            <a
+                                href="https://drive.google.com/file/d/1hxuJJ_AstQBmwu5zSbeTrEjxxddBwZqp/view?usp=sharing"
+                                target="_blank"
+                                >testcase.zip</a
+                            >
+                        </p>
                         <v-text-field
                             label="จำกัดเวลาตรวจ 1-10 (วินาที)"
                             v-model="timelimit"
@@ -58,14 +66,6 @@
                             max="256"
                             :disabled="this.$store.state.addProblem.isLoading"
                         ></v-text-field>
-                        <p>
-                            ตัวอย่างไฟล์
-                            <a
-                                href="https://drive.google.com/file/d/1hxuJJ_AstQBmwu5zSbeTrEjxxddBwZqp/view?usp=sharing"
-                                target="_blank"
-                                >testcase.zip</a
-                            >
-                        </p>
                         <v-menu
                             v-model="menu"
                             :close-on-content-click="false"
@@ -362,7 +362,7 @@ export default {
                 this.resetInput()
                 setTimeout(
                     () =>
-                        commit('addProblem/addProblemFailure', {
+                        commit('addProblem/addProblemSuccess', {
                             isFailed: false,
                             isLoading: false,
                             isSuccess: false,

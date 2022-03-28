@@ -33,6 +33,32 @@
                 >
                 </v-data-table>
 
+                <v-row
+                    class="mx-auto align-center"
+                    v-show="
+                        checkRoleClassroom == 'superteacher' ||
+                        checkRoleClassroom == 'teacher'
+                    "
+                >
+                    <v-col>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="ค้นหาชื่อผู้ใช้"
+                            v-on:keyup.enter="submitList"
+                            :disabled="loading"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-btn
+                            color="primary"
+                            @click="submitList"
+                            :disabled="loading"
+                            >ค้นหา</v-btn
+                        >
+                    </v-col>
+                </v-row>
+
                 <v-data-table
                     :headers="headers2"
                     :items="score"
@@ -131,6 +157,7 @@ export default {
             { text: 'Viewcode', value: 'view_code', sortable: false },
         ],
         score: [],
+        search: null,
         getclasscode: null,
         getproblemid: null,
         status: true,
@@ -230,6 +257,7 @@ export default {
                     classcode,
                     problemid,
                     current: this.currentPage,
+                    search: this.search,
                 })
                 .then(() => {
                     if (state.submitList.isFailed) {
