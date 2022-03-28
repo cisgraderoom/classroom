@@ -70,6 +70,9 @@ const listAllScoreInClass = async (req) => {
     const { data } = await httpClient
         .get(`/submission/score/classroom/${req.classcode}/all`, {
             headers: authHeader(),
+            params: {
+                search: req.search,
+            },
         })
         .catch((err) => {
             res = err?.response?.data
@@ -368,12 +371,13 @@ const addRecheckPlagiarism = async (req) => {
 const listPlagiarism = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get(
-            `/submission/manage/${req.classcode}/${req.problem_id}?page=${req.currentPage}`,
-            {
-                headers: authHeader(),
-            }
-        )
+        .get(`/submission/manage/${req.classcode}/${req.problem_id}`, {
+            headers: authHeader(),
+            params: {
+                page: req.currentPage,
+                search: req.search,
+            },
+        })
         .catch((err) => {
             res = err?.response?.data
             return res

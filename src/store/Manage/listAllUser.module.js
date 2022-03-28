@@ -14,14 +14,14 @@ export const listAllUser = {
     namespaced: true,
     state: initialState,
     actions: {
-        async listAllUser({ commit }, { currentPage }) {
+        async listAllUser({ commit }, { currentPage, search }) {
             commit('listAllUserLoading', {
                 ...initialState,
                 isLoading: true,
                 isFailed: false,
                 isSuccess: false,
             })
-            const res = await manageService.listAllUser({ currentPage })
+            const res = await manageService.listAllUser({ currentPage, search })
             if (!res?.status) {
                 commit('listAllUserFailure', {
                     ...initialState,

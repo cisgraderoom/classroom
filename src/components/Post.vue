@@ -1,6 +1,6 @@
 <template>
     <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
-        <v-row>
+        <v-row class="align-center">
             <v-col cols="2" sm="1" md="1" lg="1" xl="1">
                 <v-icon color="deep-orange darken-1" large
                     >mdi-account-circle</v-icon

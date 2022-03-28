@@ -14,7 +14,7 @@
         </v-row>
         <div>
             <v-row v-show="this.$store.state.getListItemPlagiarism.isFailed">
-                <v-col md="9" class="mx-auto" xl="7">
+                <v-col md="10" class="mb-10" xl="9">
                     <v-alert text class="text-center" type="error">{{
                         errormessage
                     }}</v-alert>
@@ -36,6 +36,27 @@
                             v-on:change="listPlagiarism"
                         >
                         </v-select>
+
+                        <v-row class="mx-auto align-center">
+                            <v-col>
+                                <v-text-field
+                                    v-model="search"
+                                    append-icon="mdi-magnify"
+                                    label="ค้นหาชื่อผู้ใช้"
+                                    v-on:keyup.enter="listPlagiarism"
+                                    :disabled="!problemid || loading"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col>
+                                <v-btn
+                                    color="primary"
+                                    @click="listPlagiarism"
+                                    :disabled="!problemid || loading"
+                                    >ค้นหา</v-btn
+                                >
+                            </v-col>
+                        </v-row>
+
                         <v-data-table
                             :headers="headers"
                             :items="tableresult"
@@ -60,7 +81,7 @@
                             <v-pagination
                                 v-model="pageCount"
                                 :disabled="
-                                    this.$store.state.listAllUser.isLoading
+                                    this.$store.state.listPlagiarism.isLoading
                                 "
                                 :length="totalPage"
                                 :total-visible="7"
@@ -111,6 +132,7 @@ export default {
             loading: false,
             loadingtext: 'กำลังโหลด....',
             errormessage: '',
+            search: null,
             key: 0,
         }
     },
@@ -130,7 +152,7 @@ export default {
                 if (state.getListItemPlagiarism.isFailed) {
                     this.errormessage =
                         state.getListItemPlagiarism.error ??
-                        'ไม่สามารถลิสโจทย์ได้'
+                        'ไม่สามารถดึงรายการได้'
                 }
                 if (state.getListItemPlagiarism.isSuccess) {
                     this.list = state.getListItemPlagiarism.list
@@ -164,10 +186,11 @@ export default {
                     classcode,
                     problem_id: this.problemid,
                     currentPage,
+                    search: this.search,
                 })
                 if (state.listPlagiarism.isFailed) {
                     this.errormessage =
-                        state.listPlagiarism.error ?? 'ไม่สามารถลิสโจทย์ได้'
+                        state.listPlagiarism.error ?? 'ไม่สามารถดึงรายการได้'
                     this.loading = false
                 }
                 if (state.listPlagiarism.isSuccess) {

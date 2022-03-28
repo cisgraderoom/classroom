@@ -9,6 +9,17 @@
             <v-row>
                 <v-col md="10" class="mb-10" xl="9">
                     <v-sheet class="px-7 py-7 rounded white mb-5" elevation="3">
+                        <div class="d-flex justify-end mb-3">
+                            <v-btn
+                                color="primary"
+                                @click="onExport"
+                                :disabled="
+                                    this.$store.state.listAllScoreInClass
+                                        .isLoading
+                                "
+                                >Export</v-btn
+                            >
+                        </div>
                         <v-data-table
                             :headers="headers"
                             :items="merged"
@@ -47,6 +58,7 @@
 </template>
 
 <script>
+import { utils, writeFile } from 'xlsx' // import xlsx
 export default {
     name: 'AllScore',
     mounted() {
@@ -61,7 +73,7 @@ export default {
             errormessage: null,
             headers: [
                 {
-                    text: 'Name',
+                    text: 'ชื่อ',
                     align: 'start',
                     sortable: false,
                     value: 'name',
@@ -84,17 +96,23 @@ export default {
                 }
                 if (state.listAllScoreInClass.isSuccess) {
                     this.data = state.listAllScoreInClass.listScore
+                    // console.log(this.data)
                     for (const key in this.data) {
                         this.headers.push({
                             text: this.data[key][0].problem_name,
-                            value: 'problem' + this.data[key][0].problem_id,
+                            value:
+                                this.data[key][0].problem_name +
+                                '_' +
+                                this.data[key][0].problem_id,
                             sortable: false,
                         })
                         for (const keyj in this.data[key]) {
                             this.listScore.push({
                                 username: this.data[key][keyj].username,
                                 name: this.data[key][keyj].name,
-                                ['problem' + this.data[key][keyj].problem_id]:
+                                [this.data[key][keyj].problem_name +
+                                '_' +
+                                this.data[key][keyj].problem_id]:
                                     this.data[key][keyj].score.toString(),
                             })
                         }
@@ -117,8 +135,15 @@ export default {
                         a = arr[index]
                         this.merged.push(a)
                     }
+                    console.log(this.merged)
                 }
             })
+        },
+        onExport() {
+            const dataWS = utils.json_to_sheet(this.merged)
+            const wb = utils.book_new()
+            utils.book_append_sheet(wb, dataWS)
+            writeFile(wb, 'score.xlsx')
         },
     },
 }

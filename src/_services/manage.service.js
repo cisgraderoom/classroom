@@ -38,8 +38,12 @@ const addUserManual = async (req) => {
 const listAllUser = async (req) => {
     let res = null
     const { data } = await httpClient
-        .get(`/user/all?page=${req.currentPage}`, {
+        .get(`/user/all`, {
             headers: authHeader(),
+            params: {
+                page: req.currentPage,
+                search: req.search,
+            },
         })
         .catch((err) => {
             res = err?.response?.data

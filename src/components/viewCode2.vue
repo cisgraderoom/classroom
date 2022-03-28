@@ -99,8 +99,9 @@ export default {
                     this.loading = false
                 }
                 if (state.getPlagiarismCode.isSuccess) {
-                    this.code_owner = state.getPlagiarismCode.data.owner
-                    this.code_compare = state.getPlagiarismCode.data.compare
+                    this.code_owner = state.getPlagiarismCode.data.owner.code
+                    this.code_compare =
+                        state.getPlagiarismCode.data.compare.code
                 }
                 return
             } else {

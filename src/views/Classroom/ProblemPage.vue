@@ -4,7 +4,7 @@
         <v-container class="mb-10">
             <HeadClassroom />
             <div>
-                <v-row align="center">
+                <v-row class="align-center">
                     <v-col md="6" offset-md="1" xl="4" offset-xl="2">
                         <h2 class="my-2">โจทย์</h2>
                     </v-col>

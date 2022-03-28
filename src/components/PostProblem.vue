@@ -6,7 +6,7 @@
             :elevation="hover ? 5 : 2"
             :to="{ path }"
         >
-            <v-row align="center">
+            <v-row class="align-center">
                 <v-col>
                     <h3>{{ problemname }}</h3>
                 </v-col>
@@ -30,7 +30,7 @@
             <p>
                 {{ problemtext }}
             </p>
-            <v-row align="center">
+            <v-row class="align-center">
                 <v-col>
                     <h5 class="grey--text text--darken-1">
                         Open {{ openDateFormat }}

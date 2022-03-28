@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-row align="center">
+        <v-row class="align-center">
             <v-col>
                 <v-file-input
                     truncate-length="15"

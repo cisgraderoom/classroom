@@ -5,7 +5,7 @@
             :class="{ 'on-hover': hover }"
             :elevation="hover ? 5 : 2"
         >
-            <v-row align="center">
+            <v-row class="align-center">
                 <v-col>
                     <h3>{{ problemname }}</h3>
                 </v-col>
