@@ -98,6 +98,7 @@ const editProblem = async (req) => {
     formData.append('problemId', req.problemId)
     formData.append('open', req.openat)
     formData.append('close', req.closeat)
+    formData.append('max_score', req.score)
     formData.append('asset', req.asset)
     formData.append('testcase', req.testcase)
     formData.append('classcode', req.classcode)

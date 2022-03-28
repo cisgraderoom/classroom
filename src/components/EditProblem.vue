@@ -43,7 +43,6 @@
                                         label="คะแนนเต็ม"
                                         v-model="max_score"
                                         type="number"
-                                        disabled
                                     ></v-text-field>
                                     <v-file-input
                                         accept="image/*,application/*,.pdf,.html,.css,.json,.txt,.zip"
@@ -294,7 +293,6 @@ export default {
             this.max_score = this.maxscore
             this.time_limit = this.timelimit
             this.mem_limit = this.memlimit
-            console.log(this.timelimit)
         },
 
         setOpen() {
@@ -316,16 +314,27 @@ export default {
                 problem_text,
                 opendatetime,
                 closedatetime,
+                max_score,
                 asset,
                 testcase,
             } = this
             if (problem_name == '') {
-                this.errormessage = 'Please enter your Text Post'
+                this.errormessage = 'โปรดใส่ชื่อโจทย์'
                 commit('editProblem/editProblemFailure', {
                     isFailed: true,
                     isLoading: false,
                     isSuccess: false,
                 })
+                return
+            }
+            if (max_score == '') {
+                this.errormessage = 'โปรดใส่คะแนนเต็ม'
+                commit('editProblem/editProblemFailure', {
+                    isFailed: true,
+                    isLoading: false,
+                    isSuccess: false,
+                })
+                return
             }
             const formatopentime = Math.round(
                 new Date(opendatetime).getTime() / 1000
@@ -349,6 +358,7 @@ export default {
                     problemId: problem_id,
                     openat: formatopentime,
                     closeat: formatclosetime,
+                    score: max_score,
                     asset: asset,
                     testcase: testcase,
                     classcode,
@@ -361,7 +371,7 @@ export default {
                 }
                 if (state?.editProblem?.isFailed) {
                     this.errormessage =
-                        state.editProblem.error ?? 'ไม่สามารถแก้ไขโพสต์ได้'
+                        state.editProblem.error ?? 'ไม่สามารถแก้ไขโจทย์ได้'
                 }
             }
         },

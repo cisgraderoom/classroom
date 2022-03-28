@@ -87,6 +87,15 @@ export default {
                     isLoading: false,
                     isSuccess: false,
                 })
+                setTimeout(
+                    () =>
+                        commit('addUserManual/addUserManualFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
                 return
             }
             await dispatch('addUserManual/addUserManual', {
@@ -101,9 +110,27 @@ export default {
                 this.username = null
                 this.password = null
                 this.$emit('getlist')
+                setTimeout(
+                    () =>
+                        commit('addUserManual/addUserManualSuccess', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
             })
             if (state.addUser.isFailed) {
                 this.errormessage = state.addUser.error ?? 'ไม่สามารถอัพโหลดได้'
+                setTimeout(
+                    () =>
+                        commit('addUserManual/addUserManualFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
             }
         },
     },

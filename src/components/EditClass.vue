@@ -124,7 +124,6 @@
 <script>
 export default {
     name: 'EditClass',
-    // props: ['classname', 'section', 'year', 'term'],
     data: () => ({
         dialog: false,
         classname: '',

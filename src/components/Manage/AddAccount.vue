@@ -71,14 +71,41 @@ export default {
                     isLoading: false,
                     isSuccess: false,
                 })
+                setTimeout(
+                    () =>
+                        commit('addUser/addUserFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
                 return
             }
             await dispatch('addUser/addUser', this.userfile)
             if (state.addUser.isFailed) {
                 this.errormessage = state.addUser.error ?? 'ไม่สามารถอัพโหลดได้'
+                setTimeout(
+                    () =>
+                        commit('addUser/addUserFailure', {
+                            isFailed: false,
+                            isLoading: false,
+                            isSuccess: false,
+                        }),
+                    3000
+                )
             }
             this.userfile = null
             this.$emit('getlist')
+            setTimeout(
+                () =>
+                    commit('addUser/addUserSuccess', {
+                        isFailed: false,
+                        isLoading: false,
+                        isSuccess: false,
+                    }),
+                3000
+            )
         },
     },
 }

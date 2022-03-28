@@ -21,6 +21,7 @@ export const editProblem = {
                 openat,
                 closeat,
                 testcase,
+                score,
                 asset,
                 classcode,
                 time_limit,
@@ -40,6 +41,7 @@ export const editProblem = {
                 openat,
                 closeat,
                 testcase,
+                score,
                 asset,
                 classcode,
                 time_limit,
@@ -51,7 +53,7 @@ export const editProblem = {
                     isLoading: false,
                     isFailed: true,
                     isSuccess: false,
-                    error: res.message,
+                    error: res.msg,
                 })
                 return res
             }
