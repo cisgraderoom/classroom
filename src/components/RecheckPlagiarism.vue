@@ -69,6 +69,11 @@
                             @page-count="pageCount = $event"
                             class="elevation-1"
                         >
+                            <template v-slot:[`item.result`]="{ item }">
+                                <v-chip :color="getColor(item.result)" dark>
+                                    {{ item.result }}
+                                </v-chip>
+                            </template>
                             <template v-slot:[`item.view_code`]="{ item }">
                                 <viewCode2
                                     :owner="item.owner"
@@ -115,7 +120,7 @@ export default {
                 { text: 'คนที่ 1', value: 'owner', sortable: false },
                 { text: 'คนที่ 2', value: 'compare', sortable: false },
                 {
-                    text: 'ผลตรวจสอบความคล้าย',
+                    text: 'ผลตรวจสอบความคล้าย(%)',
                     value: 'result',
                 },
                 {
@@ -216,6 +221,11 @@ export default {
                 this.currentPage = value
                 this.listPlagiarism()
             }
+        },
+        getColor(result) {
+            if (result > 80) return 'red'
+            else if (result > 50) return 'orange'
+            else return 'green'
         },
     },
 }
