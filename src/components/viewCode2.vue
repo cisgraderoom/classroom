@@ -20,6 +20,8 @@
                         <v-card-text
                             ><b>Owner :</b> {{ owner }}
                             <br />
+                            <b>Name :</b> {{ name_owner }}
+                            <br />
                             <b>Code :</b>
                             <br />
                             <pre>
@@ -32,6 +34,8 @@
                     <v-col>
                         <v-card-text
                             ><b>Compare :</b> {{ compare }}
+                            <br />
+                            <b>Name :</b> {{ name_compare }}
                             <br />
                             <b>Code :</b>
                             <br />
@@ -74,7 +78,9 @@ export default {
         return {
             dialog: false,
             code_owner: '',
+            name_owner: '',
             code_compare: '',
+            name_compare: '',
             errormessage: '',
         }
     },
@@ -98,8 +104,11 @@ export default {
                 }
                 if (state.getPlagiarismCode.isSuccess) {
                     this.code_owner = state.getPlagiarismCode.data.owner.code
+                    this.name_owner = state.getPlagiarismCode.data.owner.name
                     this.code_compare =
                         state.getPlagiarismCode.data.compare.code
+                    this.name_compare =
+                        state.getPlagiarismCode.data.compare.name
                 }
                 return
             } else {
